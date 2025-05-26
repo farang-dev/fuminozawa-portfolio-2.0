@@ -439,18 +439,39 @@ export default function Home() {
             </div>
 
             {/* Projects Tab Content */}
-            <div
-              className={`tab-content ${activeTab === 'products' ? 'active' : ''}`}
-            >
-              {products.map((product) => (
-                <div key={product.title} className="achievement-item">
-                  <div className="achievement-details">
-                    <h3>{product.title}</h3>
-                    <p>{product.description}</p>
-                    <p>{product.detail}</p>
-                    <a href={product.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
-                      Visit Site
-                    </a>
+            <div className={`tab-content ${activeTab === 'products' ? 'active' : ''}`}>
+              {products.map((category) => (
+                <div key={category.title} className="achievement-category">
+                  <h3 className="text-lg font-semibold mb-2">{category.title}</h3>
+                  <div className="achievement-items">
+                    {category.items.map((item) => (
+                      <div key={item.title} className="achievement-item">
+                        <div className="achievement-details">
+                          <h4>{item.title}</h4>
+                          <p>{item.description}</p>
+                          {item.link && (
+                            <a href={item.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
+                              Visit Site
+                            </a>
+                          )}
+                          {item.links && (
+                            <div className="achievement-links">
+                              {item.links.map((link) => (
+                                <a
+                                  key={link.url}
+                                  href={link.url}
+                                  className="achievement-link"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {link.title}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
