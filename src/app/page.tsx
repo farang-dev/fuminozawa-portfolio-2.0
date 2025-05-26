@@ -318,9 +318,9 @@ export default function Home() {
                 <li className="chip">Global Brand Marketing</li>
                 <li className="chip">AI-powered Solutions</li>
                 <li className="chip">Solo Product Dev</li>
-                <li className="chip">Design Thinking</li>
                 <li className="chip">Paid Media (Google & Meta)</li>
                 <li className="chip">Content Creator & Writer</li>
+                <li className="chip">English Consultation</li>
                 <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
               </ul>
             </div>

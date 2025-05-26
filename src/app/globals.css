@@ -399,6 +399,24 @@ body.light .chip:hover {
   color: rgb(52, 90, 204);
 }
 
+/* Responsive adjustments for chips on mobile */
+@media (max-width: 768px) {
+  .bio-list {
+    display: flex; /* Ensures flex layout */
+    flex-wrap: wrap; /* Allows chips to wrap to the next line */
+    justify-content: center; /* Centers the chips */
+    gap: 0.3rem; /* Reduces gap between chips */
+  }
+
+  .chip {
+    padding: 0.2rem 0.5rem; /* Reduces padding inside chips */
+    font-size: 0.7rem; /* Reduces font size */
+    /* Optionally, you can set a max-width for chips if they are too long */
+    /* max-width: 150px; */ 
+    /* white-space: normal; */ /* Allows text to wrap within a chip if needed */
+  }
+}
+
 .badge {
   background-color: var(--badge-color);
   color: white;
