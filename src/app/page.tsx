@@ -412,7 +412,7 @@ export default function Home() {
                           <p>{item.description}</p>
                           {item.link && (
                             <a href={item.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
-                              Visit Site
+                              See the Sample
                             </a>
                           )}
                           {item.links && (
