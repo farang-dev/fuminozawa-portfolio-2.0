@@ -129,14 +129,113 @@ export default function Home() {
 
   const products = [
     {
-      title: 'Portfolio Website',
-      description: 'A modern portfolio built with Next.js and TypeScript',
-      detail: 'Featuring responsive design, dark mode, and smooth animations',
-      link: 'https://github.com/fuminozawa/portfolio'
+      title: 'Brand Localization',
+      items: [
+        {
+          title: 'Forex Product Landing Page (Freelance)',
+          description: 'Landing page creation and campaign localization for Forex product',
+          link: 'https://www.axiory.com/jp/trading-products/clash-cfds'
+        },
+        {
+          title: 'High Jewelry Collection Campaign (Boucheron)',
+          description: 'Product page and campaign localization for high jewelry collection',
+          link: 'https://www.boucheron.com/ja_jp/high-jewelry/collections-carte-blanche/ailleurs'
+        },
+        {
+          title: 'Sustainability Program (Boucheron)',
+          description: 'Sustainability program localization and content management',
+          link: 'https://www.boucheron.com/ja_jp/our-maison/sustainability'
+        },
+        {
+          title: 'Advertising Campaign (Boucheron)',
+          description: 'Campaign page localization and content strategy',
+          link: 'https://www.boucheron.com/ja_jp/our-maison/the-sense-of-style/the-quatre-icon'
+        },
+        {
+          title: 'Amazon Prime Day (Computer Futures)',
+          description: 'Program localization of Amazon Prime Day and related pages for the Japan market',
+          link: 'https://www.amazon.co.jp/primeday'
+        }
+      ]
+    },
+    {
+      title: 'Web, E-commerce, Social Media Account Growth',
+      items: [
+        {
+          title: 'Boucheron Japan E-commerce',
+          description: 'E-commerce management and content strategy',
+          link: 'https://www.boucheron.com/ja_jp/'
+        },
+        {
+          title: 'AXIORY Forex Broker Japan',
+          description: 'Website content management and localization',
+          link: 'https://www.axiory.com/jp/'
+        },
+        {
+          title: 'Boucheron Japan Social Media',
+          description: 'Management of LINE (200K followers), Facebook (246K followers), and X (9K followers) accounts',
+          link: 'https://page.line.me/625rfwps'
+        },
+        {
+          title: 'Paul Smith Japan Social Media',
+          description: 'Management of Instagram (120K followers), Facebook (68K followers), and X (52K followers) accounts',
+          link: 'https://www.instagram.com/paulsmithjapan/'
+        }
+      ]
+    },
+    {
+      title: 'Creative Direction and Production',
+      items: [
+        {
+          title: 'Paul Smith Japan Instagram Direction',
+          description: 'Photo-shooting direction for Instagram account (40+ photo-shoots)',
+          links: [
+            {
+              title: 'Sample Photo 01',
+              url: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1'
+            },
+            {
+              title: 'Sample Photo 02',
+              url: 'https://www.instagram.com/p/CB0DeHEDxdS/?img_index=1'
+            },
+            {
+              title: 'Sample Photo 03',
+              url: 'https://www.instagram.com/p/CAC8QtkDmJy/?img_index=1'
+            }
+          ]
+        },
+        {
+          title: 'Red Ear Campaign',
+          description: 'Campaign photo-shoot direction for Paul Smith',
+          links: [
+            {
+              title: 'AW19 Campaign',
+              url: 'https://www.paulsmith.co.jp/stories/aw19/red-ear'
+            },
+            {
+              title: 'SS20 Campaign',
+              url: 'https://www.paulsmith.co.jp/stories/ss20/red-ear'
+            }
+          ]
+        },
+        {
+          title: 'Personal Photography',
+          description: 'Photography portfolio',
+          link: 'https://www.instagram.com/fumi_fumar/'
+        }
+      ]
+    },
+    {
+      title: 'Data Visualization & Analytics Integration',
+      items: [
+        {
+          title: 'Looker Studio Dashboard',
+          description: 'Sample report with customizable data integration',
+          link: 'https://lookerstudio.google.com/u/0/reporting/37687a85-8c92-4e75-93a9-a081f4c41208/page/vXEHE'
+        }
+      ]
     }
-    // Add more work samples here
   ];
-
   const writings = [
     {
       title: 'Getting Started with Next.js 13',
@@ -301,18 +400,39 @@ export default function Home() {
             </div>
 
             {/* Works Tab Content */}
-            <div
-              className={`tab-content ${activeTab === 'works' ? 'active' : ''}`}
-            >
-              {products.map((product) => (
-                <div key={product.title} className="achievement-item">
-                  <div className="achievement-details">
-                    <h3>{product.title}</h3>
-                    <p>{product.description}</p>
-                    <p>{product.detail}</p>
-                    <a href={product.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
-                      Visit Site
-                    </a>
+            <div className={`tab-content ${activeTab === 'works' ? 'active' : ''}`}>
+              {products.map((category) => (
+                <div key={category.title} className="achievement-category">
+                  <h3 className="text-lg font-semibold mb-2">{category.title}</h3>
+                  <div className="achievement-items">
+                    {category.items.map((item) => (
+                      <div key={item.title} className="achievement-item">
+                        <div className="achievement-details">
+                          <h4>{item.title}</h4>
+                          <p>{item.description}</p>
+                          {item.link && (
+                            <a href={item.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
+                              Visit Site
+                            </a>
+                          )}
+                          {item.links && (
+                            <div className="achievement-links">
+                              {item.links.map((link) => (
+                                <a
+                                  key={link.url}
+                                  href={link.url}
+                                  className="achievement-link"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {link.title}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
