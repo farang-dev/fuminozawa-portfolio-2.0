@@ -239,7 +239,6 @@ export default function Home() {
 
   const projects = [
     {
-      title: 'Web Projects',
       items: [
         {
           title: 'GenAI ✖️ PLP (Product Listing)',
@@ -526,7 +525,7 @@ export default function Home() {
                           <p>{item.description}</p>
                           {item.link && (
                             <a href={item.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
-                              See the Sample
+                              {item.cta || 'See the Sample'}
                             </a>
                           )}
                           {item.links && (
