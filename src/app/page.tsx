@@ -239,6 +239,7 @@ export default function Home() {
 
   const projects = [
     {
+      title: 'Web Projects',
       items: [
         {
           title: 'GenAI ✖️ PLP (Product Listing)',
@@ -528,21 +529,7 @@ export default function Home() {
                               {item.cta || 'See the Sample'}
                             </a>
                           )}
-                          {item.links && (
-                            <div className="achievement-links">
-                              {item.links.map((link) => (
-                                <a
-                                  key={link.url}
-                                  href={link.url}
-                                  className="achievement-link"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {link.title}
-                                </a>
-                              ))}
-                            </div>
-                          )}
+
                         </div>
                       </div>
                     ))}
@@ -567,21 +554,7 @@ export default function Home() {
                               Visit Site
                             </a>
                           )}
-                          {item.links && (
-                            <div className="achievement-links">
-                              {item.links.map((link) => (
-                                <a
-                                  key={link.url}
-                                  href={link.url}
-                                  className="achievement-link"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {link.title}
-                                </a>
-                              ))}
-                            </div>
-                          )}
+
                         </div>
                       </div>
                     ))}
