@@ -236,6 +236,120 @@ export default function Home() {
       ]
     }
   ];
+
+  const projects = [
+    {
+      title: 'Web Projects',
+      items: [
+        {
+          title: 'GenAI ✖️ PLP (Product Listing)',
+          description: 'Created a genAI video transition from model/product image on e-commerce',
+          link: 'https://balenciaga-ambassador-clone.vercel.app/'
+        },
+        {
+          title: 'Unmanned Newsroom - AI powered',
+          description: 'Latest tech and AI news, automatically curated',
+          link: 'https://www.unmanned-newsroom.com/'
+        },
+        {
+          title: 'Georgia News - AI powered',
+          description: 'Read Georgian Local News in Japanese',
+          link: 'https://georgia-news-japan.online/'
+        }
+      ]
+    }
+  ];
+
+  const works = [
+    {
+      title: 'Brand Localization',
+      items: [
+        {
+          title: 'Forex Product Landing Page (Freelance)',
+          description: 'Landing page creation and campaign localization for Forex product',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'High Jewelry Collection Campaign (Boucheron)',
+          description: 'Product page and campaign localization for high jewelry collection',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'Sustainability Program (Boucheron)',
+          description: 'Sustainability program localization and content management',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'Advertising Campaign (Boucheron)',
+          description: 'Campaign page localization and content strategy',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'Amazon Prime Day (Computer Futures)',
+          description: 'Program localization of Amazon Prime Day and related pages for the Japan market',
+          link: '#',
+          cta: 'See the Sample'
+        }
+      ]
+    },
+    {
+      title: 'Web, E-commerce, Social Media Account Growth',
+      items: [
+        {
+          title: 'Boucheron Japan E-commerce',
+          description: 'E-commerce management and content strategy',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'AXIORY Forex Broker Japan',
+          description: 'Website content management and localization',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'Boucheron Japan Social Media',
+          description: 'Management of LINE (200K followers), Facebook (246K followers), and X (9K followers) accounts',
+          link: '#',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'Paul Smith Japan Social Media',
+          description: 'Management of Instagram (120K followers), Facebook (68K followers), and X (52K followers) accounts',
+          link: '#',
+          cta: 'See the Sample'
+        }
+      ]
+    },
+    {
+      title: 'Creative Direction and Production',
+      items: [
+        {
+          title: 'Paul Smith Japan Instagram Direction',
+          description: 'Photo-shooting direction for Instagram account (40+ photo-shoots)',
+          link: '#',
+          cta: 'Sample Photo 01Sample Photo 02Sample Photo 03'
+        },
+        {
+          title: 'Red Ear Campaign',
+          description: 'Campaign photo-shoot direction for Paul Smith',
+          link: '#',
+          cta: 'AW19 CampaignSS20 Campaign'
+        },
+        {
+          title: 'Personal Photography',
+          description: 'Photography portfolio',
+          link: '#',
+          cta: 'See the Sample'
+        }
+      ]
+    }
+  ];
+
   const writings = [
     {
       title: 'Getting Started with Next.js 13',
@@ -317,9 +431,9 @@ export default function Home() {
                 <li className="chip">Localization for Japan Market</li>
                 <li className="chip">Global Brand Marketing</li>
                 <li className="chip">AI-powered Solutions</li>
+                <li className="chip">Vibe Marketing</li>
                 <li className="chip">Solo Product Dev</li>
                 <li className="chip">Paid Media (Google & Meta)</li>
-                <li className="chip">Content Creator & Writer</li>
                 <li className="chip">English Consultation</li>
                 <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
               </ul>
@@ -401,7 +515,7 @@ export default function Home() {
 
             {/* Works Tab Content */}
             <div className={`tab-content ${activeTab === 'works' ? 'active' : ''}`}>
-              {products.map((category) => (
+              {works.map((category) => (
                 <div key={category.title} className="achievement-category">
                   <h3 className="text-lg font-semibold mb-2">{category.title}</h3>
                   <div className="achievement-items">
@@ -440,7 +554,7 @@ export default function Home() {
 
             {/* Projects Tab Content */}
             <div className={`tab-content ${activeTab === 'products' ? 'active' : ''}`}>
-              {products.map((category) => (
+              {projects.map((category) => (
                 <div key={category.title} className="achievement-category">
                   <h3 className="text-lg font-semibold mb-2">{category.title}</h3>
                   <div className="achievement-items">
