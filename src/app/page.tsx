@@ -9,6 +9,7 @@ export default function Home() {
   const [copyNotification, setCopyNotification] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showContactForm, setShowContactForm] = useState(false);
+  const [language, setLanguage] = useState<'en' | 'ja'>('en');
   const [particles, setParticles] = useState<Array<{id: number, left: number, delay: number}>>([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -363,6 +364,8 @@ export default function Home() {
     }
   ];
 
+  const toggleLanguage = () => setLanguage(language === 'en' ? 'ja' : 'en');
+
   return (
     <>
       <div className="loading-overlay">
@@ -392,11 +395,15 @@ export default function Home() {
       {/* Main Container */}
       <div className="container">
         <div className="profile-card">
-          {/* Dark Mode Toggle - 新しい位置 */}
+          {/* Language Switch Button - Top Left */}
+          <div className="lang-toggle" onClick={toggleLanguage} title={language === 'en' ? '日本語に切り替え' : 'Switch to English'}>
+            <span style={{fontSize: '1.3rem'}}>{language === 'en' ? '🇯🇵' : '🇬🇧'}</span>
+          </div>
+          {/* Dark Mode Toggle - Top Right */}
           <div className="dark-mode-toggle" onClick={toggleDarkMode}>
             <i className={isDarkMode ? 'fas fa-sun' : 'fas fa-moon'} />
           </div>
-          
+
           {/* Profile Header */}
           <div className="profile-header">
             <div className="gradient-circle" />
@@ -426,16 +433,33 @@ export default function Home() {
 
             <div className="bio-container">
               <ul className="bio-list">
-                <li className="chip">All-round Marketer</li>
-                <li className="chip">Web Developer</li>
-                <li className="chip">Localization for Japan Market</li>
-                <li className="chip">Global Brand Marketing</li>
-                <li className="chip">AI-powered Solutions</li>
-                <li className="chip">Vibe Marketing</li>
-                <li className="chip">Solo Product Dev</li>
-                <li className="chip">Paid Media (Google & Meta)</li>
-                <li className="chip">English Consultation</li>
-                <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
+                {language === 'en' ? (
+                  <>
+                    <li className="chip">All-round Marketer</li>
+                    <li className="chip">Web Developer</li>
+                    <li className="chip">Localization for Japan Market</li>
+                    <li className="chip">Global Brand Marketing</li>
+                    <li className="chip">AI-powered Solutions</li>
+                    <li className="chip">Vibe Marketing</li>
+                    <li className="chip">Solo Product Dev</li>
+                    <li className="chip">Paid Media (Google & Meta)</li>
+                    <li className="chip">English Consultation</li>
+                    <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
+                  </>
+                ) : (
+                  <>
+                    <li className="chip">オールラウンドマーケター</li>
+                    <li className="chip">ウェブ開発者</li>
+                    <li className="chip">日本市場向けローカライゼーション</li>
+                    <li className="chip">グローバルブランドマーケティング</li>
+                    <li className="chip">AI活用ソリューション</li>
+                    <li className="chip">バイブマーケティング</li>
+                    <li className="chip">ソロプロダクト開発</li>
+                    <li className="chip">広告運用（Google & Meta）</li>
+                    <li className="chip">英語学習・留学コンサル</li>
+                    <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 居住経験</li>
+                  </>
+                )}
               </ul>
             </div>
           </div>
@@ -597,19 +621,39 @@ export default function Home() {
           >
             ×
           </span>
-          <h2>野澤 眞史（Masafumi Nozawa）</h2>
-<h3>デジタルマーケター / クリエイティブストラテジスト</h3>
-<div className="modal-bio">
-  <p>
-    2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を的確かつ魅力的に伝えるマーケティング業務に携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに関わりながら、東京・ロンドン・トビリシ（ジョージア）を拠点に、国内外の多様なチームや文化に触れつつ、グローバルとローカルをつなぐ視点で戦略と実行を担ってきた。
-  </p>
-  <p>
-    SNS運用やWebサイトの管理、コンテンツ制作、メールマーケティング、SEO、データの可視化や分析など、オンライン上のさまざまな接点で一貫性あるコミュニケーションを設計。2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、より技術的な実装やシステム理解を強化。創造性と再現性のバランスを取りながら、ユーザー体験と成果の両立を目指してきた。
-  </p>
-  <p>
-    現在はフリーランスとして、日英バイリンガルの強みを活かしたローカライゼ支援や、ストーリーテリングを軸にしたブランド成長の伴走を行う。抽象的なビジョンを、現場で機能するかたちへと翻訳するプロセスに価値を置き、長期的な関係性の中で成果を育てていくスタイルを大切にしている。
-  </p>
-</div>
+          {language === 'en' ? (
+            <>
+              <h2>Masafumi Nozawa</h2>
+              <h3>Digital Marketer / Creative Strategist</h3>
+              <div className="modal-bio">
+                <p>
+                  Since 2016, I have been engaged in marketing for fashion, luxury, and technology brands, focusing on communicating brand value accurately and attractively. I have worked on projects for Paul Smith, Boucheron, Amazon Japan, and more, based in Tokyo, London, and Tbilisi (Georgia), bridging global and local perspectives while collaborating with diverse teams and cultures.
+                </p>
+                <p>
+                  I design consistent communication across various online touchpoints, including social media management, website administration, content creation, email marketing, SEO, and data visualization/analytics. In 2023, I studied full-stack web development at Le Wagon Tokyo to strengthen my technical implementation and system understanding. I strive to balance creativity and reproducibility, aiming for both user experience and results.
+                </p>
+                <p>
+                  Currently, as a freelancer, I support localization and brand growth with a focus on storytelling, leveraging my bilingual (Japanese/English) skills. I value the process of translating abstract visions into practical solutions and nurture results through long-term relationships.
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2>野澤 眞史（Masafumi Nozawa）</h2>
+              <h3>デジタルマーケター / クリエイティブストラテジスト</h3>
+              <div className="modal-bio">
+                <p>
+                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を的確かつ魅力的に伝えるマーケティング業務に携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに関わりながら、東京・ロンドン・トビリシ（ジョージア）を拠点に、国内外の多様なチームや文化に触れつつ、グローバルとローカルをつなぐ視点で戦略と実行を担ってきた。
+                </p>
+                <p>
+                  SNS運用やWebサイトの管理、コンテンツ制作、メールマーケティング、SEO、データの可視化や分析など、オンライン上のさまざまな接点で一貫性あるコミュニケーションを設計。2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、より技術的な実装やシステム理解を強化。創造性と再現性のバランスを取りながら、ユーザー体験と成果の両立を目指してきた。
+                </p>
+                <p>
+                  現在はフリーランスとして、日英バイリンガルの強みを活かしたローカライゼ支援や、ストーリーテリングを軸にしたブランド成長の伴走を行う。抽象的なビジョンを、現場で機能するかたちへと翻訳するプロセスに価値を置き、長期的な関係性の中で成果を育てていくスタイルを大切にしている。
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
