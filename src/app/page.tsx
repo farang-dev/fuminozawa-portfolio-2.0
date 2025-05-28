@@ -457,7 +457,7 @@ export default function Home() {
                     <li className="chip">ソロプロダクト開発</li>
                     <li className="chip">広告運用（Google & Meta）</li>
                     <li className="chip">英語・留学・移住相談</li>
-                    <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 居住経験</li>
+                    <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 住みました</li>
                   </>
                 )}
               </ul>
