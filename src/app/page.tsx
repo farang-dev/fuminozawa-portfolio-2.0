@@ -448,15 +448,15 @@ export default function Home() {
                   </>
                 ) : (
                   <>
-                    <li className="chip">オールラウンドマーケター</li>
-                    <li className="chip">ウェブ開発者</li>
+                    <li className="chip">割とオールラウンドなマーケター</li>
+                    <li className="chip">ウェブ開発</li>
                     <li className="chip">日本市場向けローカライゼーション</li>
                     <li className="chip">グローバルブランドマーケティング</li>
                     <li className="chip">AI活用ソリューション</li>
-                    <li className="chip">バイブマーケティング</li>
+                    <li className="chip">バイブマーケ</li>
                     <li className="chip">ソロプロダクト開発</li>
                     <li className="chip">広告運用（Google & Meta）</li>
-                    <li className="chip">英語学習・留学コンサル</li>
+                    <li className="chip">英語・留学・移住相談</li>
                     <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 居住経験</li>
                   </>
                 )}
