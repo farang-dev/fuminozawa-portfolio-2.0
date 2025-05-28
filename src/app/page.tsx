@@ -666,30 +666,30 @@ export default function Home() {
           >
             ×
           </span>
-          <h2>メールでのお問い合わせ</h2>
+          <h2>{language === 'en' ? 'Contact via Email' : 'メールでのお問い合わせ'}</h2>
 
           {!showContactForm ? (
             <div className="email-options">
               <button onClick={handleContactFormToggle} className="email-btn">
-                お問い合わせフォーム
+                {language === 'en' ? 'Contact Form' : 'お問い合わせフォーム'}
               </button>
               <a href="mailto:mf.nozawa@gmail.com" className="email-btn">
-                直接メールを送る
+                {language === 'en' ? 'Send Email Directly' : '直接メールを送る'}
               </a>
               <button onClick={handleEmailCopy} className="email-btn">
-                メールアドレスをコピー
+                {language === 'en' ? 'Copy Email Address' : 'メールアドレスをコピー'}
               </button>
               <div
                 id="copy-notification"
                 className={copyNotification ? 'show' : ''}
               >
-                コピーしました！
+                {language === 'en' ? 'Copied!' : 'コピーしました！'}
               </div>
             </div>
           ) : (
             <form className="contact-form" onSubmit={handleFormSubmit}>
               <div className="form-group">
-                <label htmlFor="name">お名前 *</label>
+                <label htmlFor="name">{language === 'en' ? 'Name *' : 'お名前 *'}</label>
                 <input
                   type="text"
                   id="name"
@@ -697,12 +697,12 @@ export default function Home() {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  placeholder="山田太郎"
+                  placeholder={language === 'en' ? 'John Smith' : '山田太郎'}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="email">メールアドレス *</label>
+                <label htmlFor="email">{language === 'en' ? 'Email Address *' : 'メールアドレス *'}</label>
                 <input
                   type="email"
                   id="email"
@@ -710,44 +710,44 @@ export default function Home() {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  placeholder="example@example.com"
+                  placeholder={language === 'en' ? 'example@example.com' : 'example@example.com'}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="subject">件名</label>
+                <label htmlFor="subject">{language === 'en' ? 'Subject' : '件名'}</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  placeholder="お問い合わせの件名"
+                  placeholder={language === 'en' ? 'Subject of your inquiry' : 'お問い合わせの件名'}
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="message">メッセージ *</label>
+                <label htmlFor="message">{language === 'en' ? 'Message *' : 'メッセージ *'}</label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
                   required
-                  placeholder="お問い合わせ内容をご記入ください..."
+                  placeholder={language === 'en' ? 'Please enter your message...' : 'お問い合わせ内容をご記入ください...'}
                 />
               </div>
 
               <div className="form-actions">
                 <button type="submit" className="form-btn primary">
-                  送信
+                  {language === 'en' ? 'Send' : '送信'}
                 </button>
                 <button
                   type="button"
                   className="form-btn secondary"
                   onClick={handleContactFormToggle}
                 >
-                  戻る
+                  {language === 'en' ? 'Back' : '戻る'}
                 </button>
               </div>
             </form>
