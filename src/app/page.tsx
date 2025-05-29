@@ -438,12 +438,12 @@ export default function Home() {
                     <li className="chip">All-round Marketer</li>
                     <li className="chip">Web Developer</li>
                     <li className="chip">Localization for Japan Market</li>
+                    <li className="chip">SaaS Localization</li>
                     <li className="chip">Global Brand Marketing</li>
-                    <li className="chip">AI-powered Solutions</li>
                     <li className="chip">Vibe Marketing</li>
-                    <li className="chip">Solo Product Dev</li>
                     <li className="chip">Paid Media (Google & Meta)</li>
-                    <li className="chip">English Consultation</li>
+                    <li className="chip">AI-powered Solutions</li>
+                    <li className="chip">Solo Product Dev</li>
                     <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
                   </>
                 ) : (
@@ -451,12 +451,12 @@ export default function Home() {
                     <li className="chip">割とオールラウンドなマーケター</li>
                     <li className="chip">ウェブ開発</li>
                     <li className="chip">日本市場向けローカライゼーション</li>
+                    <li className="chip">SaaSローカライゼーション</li>
                     <li className="chip">グローバルブランドマーケティング</li>
-                    <li className="chip">AI活用ソリューション</li>
                     <li className="chip">バイブマーケ</li>
-                    <li className="chip">ソロプロダクト開発</li>
                     <li className="chip">広告運用（Google & Meta）</li>
-                    <li className="chip">英語・留学・移住相談</li>
+                    <li className="chip">AI活用ソリューション</li>
+                    <li className="chip">ソロプロダクト開発</li>
                     <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 住みました</li>
                   </>
                 )}
