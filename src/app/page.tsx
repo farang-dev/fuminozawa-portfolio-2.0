@@ -624,7 +624,7 @@ export default function Home() {
           {language === 'en' ? (
             <>
               <h2>Masafumi Nozawa</h2>
-              <h3>Digital Marketer / Creative Strategist</h3>
+              <h3>Digital Marketer & Strategist</h3>
               <div className="modal-bio">
                 <p>
                   Since 2016, I have been engaged in marketing for fashion, luxury, and technology brands, focusing on communicating brand value accurately and attractively. I have worked on projects for Paul Smith, Boucheron, Amazon Japan, and more, based in Tokyo, London, and Tbilisi (Georgia), bridging global and local perspectives while collaborating with diverse teams and cultures.
@@ -640,7 +640,7 @@ export default function Home() {
           ) : (
             <>
               <h2>野澤 眞史（Masafumi Nozawa）</h2>
-              <h3>デジタルマーケター / クリエイティブストラテジスト</h3>
+              <h3>デジタルマーケター & ストラテジスト</h3>
               <div className="modal-bio">
                 <p>
                   2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を的確かつ魅力的に伝えるマーケティング業務に携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに関わりながら、東京・ロンドン・トビリシ（ジョージア）を拠点に、国内外の多様なチームや文化に触れつつ、グローバルとローカルをつなぐ視点で戦略と実行を担ってきた。
