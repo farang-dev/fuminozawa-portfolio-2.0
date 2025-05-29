@@ -111,7 +111,7 @@ export default function Home() {
     },
     {
       name: 'X (Twitter)',
-      url: 'https://x.com/ge_news_jp',
+      url: 'https://x.com/fuminozawa_',
       color: '#1DA1F2',
       icon: 'fab fa-twitter',
     }
