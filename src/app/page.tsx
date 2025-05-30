@@ -268,31 +268,31 @@ export default function Home() {
         {
           title: 'Forex Product Landing Page (Freelance)',
           description: 'Landing page creation and campaign localization for Forex product',
-          link: '#',
+          link: 'https://www.axiory.com/jp/trading-products/clash-cfds',
           cta: 'See the Sample'
         },
         {
           title: 'High Jewelry Collection Campaign (Boucheron)',
           description: 'Product page and campaign localization for high jewelry collection',
-          link: '#',
+          link: 'https://www.boucheron.com/ja_jp/high-jewelry/collections-carte-blanche/ailleurs',
           cta: 'See the Sample'
         },
         {
           title: 'Sustainability Program (Boucheron)',
           description: 'Sustainability program localization and content management',
-          link: '#',
+          link: 'https://www.boucheron.com/ja_jp/our-maison/sustainability',
           cta: 'See the Sample'
         },
         {
           title: 'Advertising Campaign (Boucheron)',
           description: 'Campaign page localization and content strategy',
-          link: '#',
+          link: 'https://www.boucheron.com/ja_jp/our-maison/the-sense-of-style/the-quatre-icon',
           cta: 'See the Sample'
         },
         {
           title: 'Amazon Prime Day (Computer Futures)',
           description: 'Program localization of Amazon Prime Day and related pages for the Japan market',
-          link: '#',
+          link: 'https://www.amazon.co.jp/primeday',
           cta: 'See the Sample'
         }
       ]
@@ -303,25 +303,25 @@ export default function Home() {
         {
           title: 'Boucheron Japan E-commerce',
           description: 'E-commerce management and content strategy',
-          link: '#',
+          link: 'https://www.boucheron.com/ja_jp/',
           cta: 'See the Sample'
         },
         {
           title: 'AXIORY Forex Broker Japan',
           description: 'Website content management and localization',
-          link: '#',
+          link: 'https://www.axiory.com/jp/',
           cta: 'See the Sample'
         },
         {
           title: 'Boucheron Japan Social Media',
           description: 'Management of LINE (200K followers), Facebook (246K followers), and X (9K followers) accounts',
-          link: '#',
+          link: 'https://page.line.me/625rfwps',
           cta: 'See the Sample'
         },
         {
           title: 'Paul Smith Japan Social Media',
           description: 'Management of Instagram (120K followers), Facebook (68K followers), and X (52K followers) accounts',
-          link: '#',
+          link: 'https://www.instagram.com/paulsmithjapan/',
           cta: 'See the Sample'
         }
       ]
@@ -332,19 +332,19 @@ export default function Home() {
         {
           title: 'Paul Smith Japan Instagram Direction',
           description: 'Photo-shooting direction for Instagram account (40+ photo-shoots)',
-          link: '#',
+          link: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1',
           cta: 'Sample Photo 01Sample Photo 02Sample Photo 03'
         },
         {
           title: 'Red Ear Campaign',
           description: 'Campaign photo-shoot direction for Paul Smith',
-          link: '#',
+          link: 'https://www.paulsmith.co.jp/stories/aw19/red-ear',
           cta: 'AW19 CampaignSS20 Campaign'
         },
         {
           title: 'Personal Photography',
           description: 'Photography portfolio',
-          link: '#',
+          link: 'https://www.instagram.com/fumi_fumar/',
           cta: 'See the Sample'
         }
       ]
