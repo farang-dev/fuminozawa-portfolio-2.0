@@ -7,7 +7,7 @@ export default function Home() {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [copyNotification, setCopyNotification] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [language, setLanguage] = useState<'en' | 'ja'>('en');
   const [particles, setParticles] = useState<Array<{id: number, left: number, delay: number}>>([]);
@@ -40,12 +40,12 @@ export default function Home() {
     setParticles(particleArray);
 
     // Apply initial theme
-    document.body.className = 'dark';
+    document.body.className = 'light';
   }, []);
 
   useEffect(() => {
     // Update theme when isDarkMode changes
-    document.body.className = isDarkMode ? '' : 'light';
+    document.body.className = isDarkMode ? 'dark' : 'light';
   }, [isDarkMode]);
 
   const handleTabClick = (tabName: string) => {
