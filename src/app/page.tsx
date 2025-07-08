@@ -243,6 +243,11 @@ export default function Home() {
       title: 'Web Projects',
       items: [
         {
+          title: 'Save GPT',
+          description: 'Google Chrome extension to save responses from ChatGPT to Notion',
+          link: 'https://chromewebstore.google.com/detail/save-gpt/nbkjfkkjfgacnebnboacljgdglfigmeg'
+        },
+        {
           title: 'GenAI ✖️ PLP (Product Listing)',
           description: 'Created a genAI video transition from model/product image on e-commerce',
           link: 'https://balenciaga-ambassador-clone.vercel.app/'
