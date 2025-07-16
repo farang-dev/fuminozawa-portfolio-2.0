@@ -453,7 +453,7 @@ export default function Home() {
                   </>
                 ) : (
                   <>
-                    <li className="chip">割とオールラウンドなマーケター</li>
+                    <li className="chip">オールラウンドマーケター</li>
                     <li className="chip">ウェブ開発</li>
                     <li className="chip">日本市場向けローカライゼーション</li>
                     <li className="chip">SaaSローカライゼーション</li>
@@ -462,7 +462,7 @@ export default function Home() {
                     <li className="chip">広告運用（Google & Meta）</li>
                     <li className="chip">AI活用ソリューション</li>
                     <li className="chip">ソロプロダクト開発</li>
-                    <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 住みました</li>
+                    <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 での居住経験</li>
                   </>
                 )}
               </ul>
