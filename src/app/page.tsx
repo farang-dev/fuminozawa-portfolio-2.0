@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { BlogPost } from '@/lib/notion';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('links');
@@ -356,18 +357,21 @@ export default function Home() {
     }
   ];
 
-  const writings = [
-    {
-      title: 'Getting Started with Next.js 13',
-      description: 'A comprehensive guide to Next.js 13 features',
-      link: 'https://dev.to/fuminozawa/getting-started-with-nextjs-13',
-    },
-    {
-      title: 'TypeScript Best Practices',
-      description: 'Writing clean and type-safe code with TypeScript',
-      link: 'https://dev.to/fuminozawa/typescript-best-practices',
+  const [writings, setWritings] = useState<BlogPost[]>([]);
+
+useEffect(() => {
+  const fetchWritings = async () => {
+    try {
+      const response = await fetch('/api/blog');
+      if (!response.ok) throw new Error('Failed to fetch');
+      const data = await response.json();
+      setWritings(data);
+    } catch (error) {
+      console.error('Error fetching writings:', error);
     }
-  ];
+  };
+  fetchWritings();
+}, []);
 
   const toggleLanguage = () => setLanguage(language === 'en' ? 'ja' : 'en');
 
@@ -597,11 +601,11 @@ export default function Home() {
               className={`tab-content ${activeTab === 'writing' ? 'active' : ''}`}
             >
               {writings.map((writing) => (
-                <div key={writing.title} className="achievement-item">
+                <div key={writing.id} className="achievement-item">
                   <div className="achievement-details">
                     <h3>{writing.title}</h3>
                     <p>{writing.description}</p>
-                    <a href={writing.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
+                    <a href={`/blog/${writing.id}`} className="achievement-link">
                       Read Article
                     </a>
                   </div>

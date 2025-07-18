@@ -7,6 +7,10 @@ const nextConfig = {
       "images.unsplash.com",
       "ext.same-assets.com",
       "ugc.same-assets.com",
+      "www.notion.so",
+      "notion.so",
+      "s3-us-west-2.amazonaws.com",
+      "prod-files-secure.s3.us-west-2.amazonaws.com",
     ],
     remotePatterns: [
       {
@@ -27,6 +31,26 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "ugc.same-assets.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.notion.so",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "notion.so",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s3-us-west-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "prod-files-secure.s3.us-west-2.amazonaws.com",
         pathname: "/**",
       },
     ],
