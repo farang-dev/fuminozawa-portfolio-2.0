@@ -476,31 +476,37 @@ useEffect(() => {
           {/* Tabs Navigation */}
           <div className="achievements-section">
             <div className="tabs-container">
-              <div
-                className={`tab ${activeTab === 'links' ? 'active' : ''}`}
-                onClick={() => handleTabClick('links')}
-              >
-                Links
-              </div>
-              <div
-                className={`tab ${activeTab === 'works' ? 'active' : ''}`}
-                onClick={() => handleTabClick('works')}
-              >
-                Works
-              </div>
-              <div
-                className={`tab ${activeTab === 'products' ? 'active' : ''}`}
-                onClick={() => handleTabClick('products')}
-              >
-                Projects
-              </div>
-              <div
-                className={`tab ${activeTab === 'writing' ? 'active' : ''}`}
-                onClick={() => handleTabClick('writing')}
-              >
-                Blog
-              </div>
+            <div
+              className={`tab ${activeTab === 'links' ? 'active' : ''}`}
+              onClick={() => handleTabClick('links')}
+            >
+              Links
             </div>
+            <div
+              className={`tab ${activeTab === 'works' ? 'active' : ''}`}
+              onClick={() => handleTabClick('works')}
+            >
+              Works
+            </div>
+            <div
+              className={`tab ${activeTab === 'products' ? 'active' : ''}`}
+              onClick={() => handleTabClick('products')}
+            >
+              Projects
+            </div>
+            <div
+              className={`tab ${activeTab === 'writing' ? 'active' : ''}`}
+              onClick={() => handleTabClick('writing')}
+            >
+              Blog
+            </div>
+            <div
+              className={`tab ${activeTab === 'gallery' ? 'active' : ''}`}
+              onClick={() => window.location.href = '/gallery'}
+            >
+              Gallery
+            </div>
+          </div>
 
             {/* Links Tab Content */}
             <div
