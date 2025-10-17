@@ -18,6 +18,9 @@ export default function Home() {
     subject: '',
     message: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState('');
 
   useEffect(() => {
     // Hide loading overlay after component mounts
@@ -71,17 +74,39 @@ export default function Home() {
     setShowContactForm(!showContactForm);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const subject = encodeURIComponent(formData.subject || 'お問い合わせ');
-    const body = encodeURIComponent(
-      `お名前: ${formData.name}\nメールアドレス: ${formData.email}\n\nメッセージ:\n${formData.message}`
-    );
-    window.open(`mailto:mf.nozawa@gmail.com?subject=${subject}&body=${body}`);
-    setIsEmailModalOpen(false);
-    setShowContactForm(false);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setSubmitting(true);
+    setSubmitStatus('idle');
+    setSubmitMessage('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const errMsg = (data && data.error) ? data.error : 'Failed to send';
+        throw new Error(errMsg);
+      }
+
+      setSubmitStatus('success');
+      setSubmitMessage('');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('Failed to send message:', err);
+      setSubmitStatus('error');
+      setSubmitMessage(err instanceof Error ? err.message : 'Failed to send');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -508,6 +533,7 @@ useEffect(() => {
             </div>
           </div>
 
+            <div className="tabs-scroll">
             {/* Links Tab Content */}
             <div
               className={`tab-content ${activeTab === 'links' ? 'active' : ''}`}
@@ -533,22 +559,7 @@ useEffect(() => {
                     <div className="link-text">{link.name}</div>
                   </a>
                 ))}
-                <div
-                  className="link-item"
-                  onClick={() => setIsEmailModalOpen(true)}
-                  style={{
-                    '--accent-color': '#EA4335',
-                    opacity: 1,
-                    transform: 'translateY(0px)',
-                    transition: '0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    cursor: 'pointer',
-                  } as React.CSSProperties}
-                >
-                  <div className="link-icon">
-                    <i className="fas fa-envelope" />
-                  </div>
-                  <div className="link-text">Contact via Email</div>
-                </div>
+
               </div>
             </div>
 
@@ -618,7 +629,93 @@ useEffect(() => {
                 </div>
               ))}
             </div>
+            </div>
           </div>
+
+          {/* Contact Form */}
+          <section className="contact-section" style={{ marginTop: '1rem' }}>
+            <h2 className="section-title">
+              {language === 'en' ? 'Contact me / Consultation' : 'お問い合わせ / コンサルティング'}
+            </h2>
+            <form className="contact-form" onSubmit={handleFormSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">{language === 'en' ? 'Name *' : 'お名前 *'}</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  placeholder={language === 'en' ? 'John Smith' : '山田太郎'}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email">{language === 'en' ? 'Email Address *' : 'メールアドレス *'}</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  placeholder={language === 'en' ? 'example@example.com' : 'example@example.com'}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="subject">{language === 'en' ? 'Subject' : '件名'}</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  placeholder={language === 'en' ? 'Subject of your inquiry' : 'お問い合わせの件名'}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="message">{language === 'en' ? 'Message *' : 'メッセージ *'}</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  placeholder={language === 'en' ? 'Please enter your message...' : 'お問い合わせ内容をご記入ください...'}
+                />
+              </div>
+
+              <div className="form-actions">
+                <button
+                  type="submit"
+                  className="form-btn primary"
+                  disabled={submitting}
+                >
+                  {submitting
+                    ? (language === 'en' ? 'Sending...' : '送信中...')
+                    : (language === 'en' ? 'Send' : '送信')}
+                </button>
+              </div>
+
+              {submitStatus === 'success' && (
+                <p style={{ color: '#4ade80', marginTop: '0.5rem' }}>
+                  {language === 'en'
+                    ? 'Message sent successfully. Thank you!'
+                    : 'メッセージが送信されました。ありがとうございます！'}
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p style={{ color: '#f87171', marginTop: '0.5rem' }}>
+                  {submitMessage || (language === 'en'
+                    ? 'Failed to send. Please try again later.'
+                    : '送信に失敗しました。時間を置いて再度お試しください。')}
+                </p>
+              )}
+            </form>
+          </section>
 
           {/* Footer */}
           <footer>
@@ -672,103 +769,7 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* Email Modal */}
-      <div className={`modal ${isEmailModalOpen ? 'show' : ''}`}>
-        <div className="modal-content">
-          <span
-            className="close-modal"
-            onClick={() => setIsEmailModalOpen(false)}
-          >
-            ×
-          </span>
-          <h2>{language === 'en' ? 'Contact via Email' : 'メールでのお問い合わせ'}</h2>
-
-          {!showContactForm ? (
-            <div className="email-options">
-              <button onClick={handleContactFormToggle} className="email-btn">
-                {language === 'en' ? 'Contact Form' : 'お問い合わせフォーム'}
-              </button>
-              <a href="mailto:mf.nozawa@gmail.com" className="email-btn">
-                {language === 'en' ? 'Send Email Directly' : '直接メールを送る'}
-              </a>
-              <button onClick={handleEmailCopy} className="email-btn">
-                {language === 'en' ? 'Copy Email Address' : 'メールアドレスをコピー'}
-              </button>
-              <div
-                id="copy-notification"
-                className={copyNotification ? 'show' : ''}
-              >
-                {language === 'en' ? 'Copied!' : 'コピーしました！'}
-              </div>
-            </div>
-          ) : (
-            <form className="contact-form" onSubmit={handleFormSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">{language === 'en' ? 'Name *' : 'お名前 *'}</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  placeholder={language === 'en' ? 'John Smith' : '山田太郎'}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">{language === 'en' ? 'Email Address *' : 'メールアドレス *'}</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  placeholder={language === 'en' ? 'example@example.com' : 'example@example.com'}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="subject">{language === 'en' ? 'Subject' : '件名'}</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  placeholder={language === 'en' ? 'Subject of your inquiry' : 'お問い合わせの件名'}
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">{language === 'en' ? 'Message *' : 'メッセージ *'}</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  placeholder={language === 'en' ? 'Please enter your message...' : 'お問い合わせ内容をご記入ください...'}
-                />
-              </div>
-
-              <div className="form-actions">
-                <button type="submit" className="form-btn primary">
-                  {language === 'en' ? 'Send' : '送信'}
-                </button>
-                <button
-                  type="button"
-                  className="form-btn secondary"
-                  onClick={handleContactFormToggle}
-                >
-                  {language === 'en' ? 'Back' : '戻る'}
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-      </div>
+      {/* Removed Email Modal; replaced with inline footer contact form */}
     </>
   );
 }
