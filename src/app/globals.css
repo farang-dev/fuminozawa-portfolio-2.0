@@ -271,7 +271,7 @@ body.light .dark-mode-toggle:hover {
 /* Profile header */
 .profile-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   position: relative;
 }
 
@@ -374,7 +374,7 @@ body.light .dark-mode-toggle:hover {
 /* Bio section */
 .bio-container {
   text-align: left;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .bio-list {

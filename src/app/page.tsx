@@ -635,7 +635,7 @@ useEffect(() => {
           {/* Contact Form */}
           <section className="contact-section" style={{ marginTop: '1rem' }}>
             <h2 className="section-title">
-              {language === 'en' ? 'Contact me / Consultation' : 'お問い合わせ / コンサルティング'}
+              {language === 'en' ? 'Contact me / Work inquery' : 'お問い合わせ / コンサルティング'}
             </h2>
             <form className="contact-form" onSubmit={handleFormSubmit}>
               <div className="form-group">
