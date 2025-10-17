@@ -476,7 +476,7 @@ useEffect(() => {
                     <li className="chip">Global Brand Marketing</li>
                     <li className="chip">Vibe Marketing</li>
                     <li className="chip">Paid Media (Google & Meta)</li>
-                    <li className="chip">AI-powered Solutions</li>
+                    <li className="chip">AI Workflow Design</li>
                     <li className="chip">Solo Product Dev</li>
                     <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
                   </>
@@ -739,13 +739,16 @@ useEffect(() => {
               <h3>Digital Marketer & Strategist</h3>
               <div className="modal-bio">
                 <p>
-                  Since 2016, I have been engaged in marketing for fashion, luxury, and technology brands, focusing on communicating brand value accurately and attractively. I have worked on projects for Paul Smith, Boucheron, Amazon Japan, and more, based in Tokyo, London, and Tbilisi (Georgia), bridging global and local perspectives while collaborating with diverse teams and cultures.
+                  Since 2016, I have worked in marketing focused on communicating brand value accurately and compellingly across fashion, luxury, and technology. I have contributed to projects for Paul Smith, Boucheron, and Amazon Japan, operating from Tokyo, London, and Tbilisi (Georgia), and designing and executing brand strategies from both global and local perspectives.
                 </p>
                 <p>
-                  I design consistent communication across various online touchpoints, including social media management, website administration, content creation, email marketing, SEO, and data visualization/analytics. In 2023, I studied full-stack web development at Le Wagon Tokyo to strengthen my technical implementation and system understanding. I strive to balance creativity and reproducibility, aiming for both user experience and results.
+                  Grounded in data analysis and UX design, I manage end-to-end initiatives including digital campaign design, website development, content creation, paid advertising, social media operations, and CRM programs. I drive brand growth and optimize user experience from both creative and technological angles.
                 </p>
                 <p>
-                  Currently, as a freelancer, I support localization and brand growth with a focus on storytelling, leveraging my bilingual (Japanese/English) skills. I value the process of translating abstract visions into practical solutions and nurture results through long-term relationships.
+                  In 2023, I studied full-stack web development at Le Wagon Tokyo, gaining hands-on implementation skills and system understanding at the code level. Owning the workflow from strategy through development has improved the reproducibility of marketing initiatives and the precision of outcomes.
+                </p>
+                <p>
+                  Currently, as a freelancer, I support European companies entering the Japanese market and design bilingual (Japanese/English) digital communications. I translate brand principles and messages into strategies that perform in Japan and work as a long-term partner to build sustainable growth together.
                 </p>
               </div>
             </>
@@ -755,13 +758,16 @@ useEffect(() => {
               <h3>デジタルマーケター & ストラテジスト</h3>
               <div className="modal-bio">
                 <p>
-                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を的確かつ魅力的に伝えるマーケティング業務に携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに関わりながら、東京・ロンドン・トビリシ（ジョージア）を拠点に、国内外の多様なチームや文化に触れつつ、グローバルとローカルをつなぐ視点で戦略と実行を担ってきた。
+                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を正確かつ魅力的に伝えるマーケティングに携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに参画し、東京・ロンドン・トビリシ（ジョージア）を拠点に、グローバルとローカル双方の視点からブランド戦略を設計・実行してきた。
                 </p>
                 <p>
-                  SNS運用やWebサイトの管理、コンテンツ制作、メールマーケティング、SEO、データの可視化や分析など、オンライン上のさまざまな接点で一貫性あるコミュニケーションを設計。2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、より技術的な実装やシステム理解を強化。創造性と再現性のバランスを取りながら、ユーザー体験と成果の両立を目指してきた。
+                  データ分析やUX設計をもとに、デジタルキャンペーン設計、Webサイト構築、コンテンツ開発、広告運用、SNS運用、CRM施策までを一貫してマネジメント。クリエイティブとテクノロジーの両面から、ブランドの成長とユーザー体験の最適化を推進している。
                 </p>
                 <p>
-                  現在はフリーランスとして、日英バイリンガルの強みを活かしたローカライゼ支援や、ストーリーテリングを軸にしたブランド成長の伴走を行う。抽象的なビジョンを、現場で機能するかたちへと翻訳するプロセスに価値を置き、長期的な関係性の中で成果を育てていくスタイルを大切にしている。
+                  2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、コードレベルでの実装力とシステム理解を習得。戦略から開発までを一気通貫で担うことで、マーケティング施策の再現性と成果の精度を高めてきた。
+                </p>
+                <p>
+                  現在はフリーランスとして、ヨーロッパ企業の日本市場進出支援や、日英バイリンガルの強みを生かしたデジタルコミュニケーション設計を手がける。ブランドの理念やメッセージを日本市場で成果につながる戦略へと落とし込み、長期的な成長をともに築くパートナーとして活動している。
                 </p>
               </div>
             </>
