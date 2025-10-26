@@ -223,7 +223,7 @@ export default function BlogPostPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-3xl mx-auto px-6 py-16">
+      <div className="max-w-full sm:max-w-3xl mx-auto px-3 sm:px-6 py-10 sm:py-16">
         {/* Top Navigation */}
         <div className="mb-12">
           <div className="flex items-center justify-between">
@@ -237,14 +237,14 @@ export default function BlogPostPage() {
         </div>
 
         {/* Article */}
-        <article className="bg-white shadow-sm rounded-lg p-8">
+        <article className="bg-white shadow-sm rounded-lg p-6 sm:p-8">
           {/* Article Header */}
-          <header className="mb-12 border-b pb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">
+          <header className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
               {post.title}
             </h1>
             
-            <div className="flex items-center text-gray-500 text-sm space-x-4 mb-6">
+            <div className="flex items-center text-gray-500 text-sm space-x-4 mb-4">
               {post.publishedDate && (
                 <time className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
                   {new Date(post.publishedDate).toLocaleDateString('en-US', {
@@ -257,7 +257,7 @@ export default function BlogPostPage() {
             </div>
             
             {post.description && (
-              <p className="text-gray-600 text-lg leading-relaxed mt-4">
+              <p className="text-gray-600 text-lg leading-relaxed">
                 {post.description}
               </p>
             )}
