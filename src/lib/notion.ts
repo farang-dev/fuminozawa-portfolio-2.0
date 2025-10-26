@@ -66,7 +66,21 @@ for (const block of blocks.results) {
 export const getBlogPostById = async (postId: string): Promise<BlogPost> => {
   const notion = getNotionClient();
   const page = await notion.pages.retrieve({ page_id: postId }) as PageObjectResponse;
-  const blocks = await notion.blocks.children.list({ block_id: postId });
+  
+  // Fetch all blocks with pagination
+  let allBlocks: BlockObjectResponse[] = [];
+  let cursor: string | undefined = undefined;
+  
+  do {
+    const response = await notion.blocks.children.list({ 
+      block_id: postId,
+      start_cursor: cursor,
+      page_size: 100 // Maximum allowed by Notion API
+    });
+    
+    allBlocks = [...allBlocks, ...(response.results as BlockObjectResponse[])];
+    cursor = response.next_cursor || undefined;
+  } while (cursor);
 
   let title = 'Untitled';
   const titleProp = page.properties.title;
@@ -91,6 +105,6 @@ export const getBlogPostById = async (postId: string): Promise<BlogPost> => {
     title,
     publishedDate,
     description,
-    content: blocks.results as BlockObjectResponse[],
+    content: allBlocks,
   };
 };

@@ -18,9 +18,6 @@ export default function Home() {
     subject: '',
     message: ''
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [submitMessage, setSubmitMessage] = useState('');
 
   useEffect(() => {
     // Hide loading overlay after component mounts
@@ -74,39 +71,17 @@ export default function Home() {
     setShowContactForm(!showContactForm);
   };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
-    setSubmitStatus('idle');
-    setSubmitMessage('');
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        }),
-      });
-
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        const errMsg = (data && data.error) ? data.error : 'Failed to send';
-        throw new Error(errMsg);
-      }
-
-      setSubmitStatus('success');
-      setSubmitMessage('');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err) {
-      console.error('Failed to send message:', err);
-      setSubmitStatus('error');
-      setSubmitMessage(err instanceof Error ? err.message : 'Failed to send');
-    } finally {
-      setSubmitting(false);
-    }
+    // Create mailto link with form data
+    const subject = encodeURIComponent(formData.subject || 'お問い合わせ');
+    const body = encodeURIComponent(
+      `お名前: ${formData.name}\nメールアドレス: ${formData.email}\n\nメッセージ:\n${formData.message}`
+    );
+    window.open(`mailto:mf.nozawa@gmail.com?subject=${subject}&body=${body}`);
+    setIsEmailModalOpen(false);
+    setShowContactForm(false);
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -471,12 +446,12 @@ useEffect(() => {
                   <>
                     <li className="chip">All-round Marketer</li>
                     <li className="chip">Web Developer</li>
-                    <li className="chip">Japan Market Entry & Growth</li>
+                    <li className="chip">Localization for Japan Market</li>
+                    <li className="chip">SaaS Localization</li>
                     <li className="chip">Global Brand Marketing</li>
-                    <li className="chip">GEO/SEO</li>
-                    <li className="chip">Paid Media (Google & Meta)</li>
                     <li className="chip">Vibe Marketing</li>
-                    <li className="chip">AI Workflow Design</li>
+                    <li className="chip">Paid Media (Google & Meta)</li>
+                    <li className="chip">AI-powered Solutions</li>
                     <li className="chip">Solo Product Dev</li>
                     <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
                   </>
@@ -484,11 +459,11 @@ useEffect(() => {
                   <>
                     <li className="chip">オールラウンドマーケター</li>
                     <li className="chip">ウェブ開発</li>
-                    <li className="chip">日本市場グロース</li>
+                    <li className="chip">日本市場向けローカライゼーション</li>
+                    <li className="chip">SaaSローカライゼーション</li>
                     <li className="chip">グローバルブランドマーケティング</li>
-                    <li className="chip">GEO/SEO</li>
-                    <li className="chip">広告運用（Google & Meta）</li>
                     <li className="chip">バイブマーケ</li>
+                    <li className="chip">広告運用（Google & Meta）</li>
                     <li className="chip">AI活用ソリューション</li>
                     <li className="chip">ソロプロダクト開発</li>
                     <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 での居住経験</li>
@@ -533,7 +508,6 @@ useEffect(() => {
             </div>
           </div>
 
-            <div className="tabs-scroll">
             {/* Links Tab Content */}
             <div
               className={`tab-content ${activeTab === 'links' ? 'active' : ''}`}
@@ -559,7 +533,22 @@ useEffect(() => {
                     <div className="link-text">{link.name}</div>
                   </a>
                 ))}
-
+                <div
+                  className="link-item"
+                  onClick={() => setIsEmailModalOpen(true)}
+                  style={{
+                    '--accent-color': '#EA4335',
+                    opacity: 1,
+                    transform: 'translateY(0px)',
+                    transition: '0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    cursor: 'pointer',
+                  } as React.CSSProperties}
+                >
+                  <div className="link-icon">
+                    <i className="fas fa-envelope" />
+                  </div>
+                  <div className="link-text">Contact via Email</div>
+                </div>
               </div>
             </div>
 
@@ -629,14 +618,90 @@ useEffect(() => {
                 </div>
               ))}
             </div>
-            </div>
           </div>
 
-          {/* Contact Form */}
-          <section className="contact-section" style={{ marginTop: '1rem' }}>
-            <h2 className="section-title">
-              {language === 'en' ? 'Contact me / Work inquery' : 'お問い合わせ / お仕事のご依頼'}
-            </h2>
+          {/* Footer */}
+          <footer>
+            <p className="copyright">© 2025 fuminozawa - All Rights Reserved</p>
+          </footer>
+        </div>
+      </div>
+
+      {/* Profile Modal */}
+      <div className={`modal ${isProfileModalOpen ? 'show' : ''}`}>
+        <div className="modal-content">
+          <span
+            className="close-modal"
+            onClick={() => setIsProfileModalOpen(false)}
+          >
+            ×
+          </span>
+          {language === 'en' ? (
+            <>
+              <h2>Masafumi Nozawa</h2>
+              <h3>Digital Marketer & Strategist</h3>
+              <div className="modal-bio">
+                <p>
+                  Since 2016, I have been engaged in marketing for fashion, luxury, and technology brands, focusing on communicating brand value accurately and attractively. I have worked on projects for Paul Smith, Boucheron, Amazon Japan, and more, based in Tokyo, London, and Tbilisi (Georgia), bridging global and local perspectives while collaborating with diverse teams and cultures.
+                </p>
+                <p>
+                  I design consistent communication across various online touchpoints, including social media management, website administration, content creation, email marketing, SEO, and data visualization/analytics. In 2023, I studied full-stack web development at Le Wagon Tokyo to strengthen my technical implementation and system understanding. I strive to balance creativity and reproducibility, aiming for both user experience and results.
+                </p>
+                <p>
+                  Currently, as a freelancer, I support localization and brand growth with a focus on storytelling, leveraging my bilingual (Japanese/English) skills. I value the process of translating abstract visions into practical solutions and nurture results through long-term relationships.
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2>野澤 眞史（Masafumi Nozawa）</h2>
+              <h3>デジタルマーケター & ストラテジスト</h3>
+              <div className="modal-bio">
+                <p>
+                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を的確かつ魅力的に伝えるマーケティング業務に携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに関わりながら、東京・ロンドン・トビリシ（ジョージア）を拠点に、国内外の多様なチームや文化に触れつつ、グローバルとローカルをつなぐ視点で戦略と実行を担ってきた。
+                </p>
+                <p>
+                  SNS運用やWebサイトの管理、コンテンツ制作、メールマーケティング、SEO、データの可視化や分析など、オンライン上のさまざまな接点で一貫性あるコミュニケーションを設計。2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、より技術的な実装やシステム理解を強化。創造性と再現性のバランスを取りながら、ユーザー体験と成果の両立を目指してきた。
+                </p>
+                <p>
+                  現在はフリーランスとして、日英バイリンガルの強みを活かしたローカライゼ支援や、ストーリーテリングを軸にしたブランド成長の伴走を行う。抽象的なビジョンを、現場で機能するかたちへと翻訳するプロセスに価値を置き、長期的な関係性の中で成果を育てていくスタイルを大切にしている。
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Email Modal */}
+      <div className={`modal ${isEmailModalOpen ? 'show' : ''}`}>
+        <div className="modal-content">
+          <span
+            className="close-modal"
+            onClick={() => setIsEmailModalOpen(false)}
+          >
+            ×
+          </span>
+          <h2>{language === 'en' ? 'Contact via Email' : 'メールでのお問い合わせ'}</h2>
+
+          {!showContactForm ? (
+            <div className="email-options">
+              <button onClick={handleContactFormToggle} className="email-btn">
+                {language === 'en' ? 'Contact Form' : 'お問い合わせフォーム'}
+              </button>
+              <a href="mailto:mf.nozawa@gmail.com" className="email-btn">
+                {language === 'en' ? 'Send Email Directly' : '直接メールを送る'}
+              </a>
+              <button onClick={handleEmailCopy} className="email-btn">
+                {language === 'en' ? 'Copy Email Address' : 'メールアドレスをコピー'}
+              </button>
+              <div
+                id="copy-notification"
+                className={copyNotification ? 'show' : ''}
+              >
+                {language === 'en' ? 'Copied!' : 'コピーしました！'}
+              </div>
+            </div>
+          ) : (
             <form className="contact-form" onSubmit={handleFormSubmit}>
               <div className="form-group">
                 <label htmlFor="name">{language === 'en' ? 'Name *' : 'お名前 *'}</label>
@@ -689,93 +754,21 @@ useEffect(() => {
               </div>
 
               <div className="form-actions">
+                <button type="submit" className="form-btn primary">
+                  {language === 'en' ? 'Send' : '送信'}
+                </button>
                 <button
-                  type="submit"
-                  className="form-btn primary"
-                  disabled={submitting}
+                  type="button"
+                  className="form-btn secondary"
+                  onClick={handleContactFormToggle}
                 >
-                  {submitting
-                    ? (language === 'en' ? 'Sending...' : '送信中...')
-                    : (language === 'en' ? 'Send' : '送信')}
+                  {language === 'en' ? 'Back' : '戻る'}
                 </button>
               </div>
-
-              {submitStatus === 'success' && (
-                <p style={{ color: '#4ade80', marginTop: '0.5rem' }}>
-                  {language === 'en'
-                    ? 'Message sent successfully. Thank you!'
-                    : 'メッセージが送信されました。ありがとうございます！'}
-                </p>
-              )}
-              {submitStatus === 'error' && (
-                <p style={{ color: '#f87171', marginTop: '0.5rem' }}>
-                  {submitMessage || (language === 'en'
-                    ? 'Failed to send. Please try again later.'
-                    : '送信に失敗しました。時間を置いて再度お試しください。')}
-                </p>
-              )}
             </form>
-          </section>
-
-          {/* Footer */}
-          <footer>
-            <p className="copyright">© 2025 fuminozawa - All Rights Reserved</p>
-          </footer>
-        </div>
-      </div>
-
-      {/* Profile Modal */}
-      <div className={`modal ${isProfileModalOpen ? 'show' : ''}`}>
-        <div className="modal-content">
-          <span
-            className="close-modal"
-            onClick={() => setIsProfileModalOpen(false)}
-          >
-            ×
-          </span>
-          {language === 'en' ? (
-            <>
-              <h2>Masafumi Nozawa</h2>
-              <h3>Digital Marketer & Strategist</h3>
-              <div className="modal-bio">
-                <p>
-                  Since 2016, I have worked in marketing focused on communicating brand value accurately and compellingly across fashion, luxury, and technology. I have contributed to projects for Paul Smith, Boucheron, and Amazon Japan, operating from Tokyo, London, and Tbilisi (Georgia), and designing and executing brand strategies from both global and local perspectives.
-                </p>
-                <p>
-                  Grounded in data analysis and UX design, I manage end-to-end initiatives including digital campaign design, website development, content creation, paid advertising, social media operations, and CRM programs. I drive brand growth and optimize user experience from both creative and technological angles.
-                </p>
-                <p>
-                  In 2023, I studied full-stack web development at Le Wagon Tokyo, gaining hands-on implementation skills and system understanding at the code level. Owning the workflow from strategy through development has improved the reproducibility of marketing initiatives and the precision of outcomes.
-                </p>
-                <p>
-                  Currently, as a freelancer, I support European companies entering the Japanese market and design bilingual (Japanese/English) digital communications. I translate brand principles and messages into strategies that perform in Japan and work as a long-term partner to build sustainable growth together.
-                </p>
-              </div>
-            </>
-          ) : (
-            <>
-              <h2>野澤 眞史（Masafumi Nozawa）</h2>
-              <h3>デジタルマーケター & ストラテジスト</h3>
-              <div className="modal-bio">
-                <p>
-                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を正確かつ魅力的に伝えるマーケティングに携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに参画し、東京・ロンドン・トビリシ（ジョージア）を拠点に、グローバルとローカル双方の視点からブランド戦略を設計・実行してきた。
-                </p>
-                <p>
-                  データ分析やUX設計をもとに、デジタルキャンペーン設計、Webサイト構築、コンテンツ開発、広告運用、SNS運用、CRM施策までを一貫してマネジメント。クリエイティブとテクノロジーの両面から、ブランドの成長とユーザー体験の最適化を推進している。
-                </p>
-                <p>
-                  2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、コードレベルでの実装力とシステム理解を習得。戦略から開発までを一気通貫で担うことで、マーケティング施策の再現性と成果の精度を高めてきた。
-                </p>
-                <p>
-                  現在はフリーランスとして、ヨーロッパ企業の日本市場進出支援や、日英バイリンガルの強みを生かしたデジタルコミュニケーション設計を手がける。ブランドの理念やメッセージを日本市場で成果につながる戦略へと落とし込み、長期的な成長をともに築くパートナーとして活動している。
-                </p>
-              </div>
-            </>
           )}
         </div>
       </div>
-
-      {/* Removed Email Modal; replaced with inline footer contact form */}
     </>
   );
 }

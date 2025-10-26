@@ -222,31 +222,31 @@ export default function BlogPostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-3xl mx-auto px-6 py-16">
         {/* Top Navigation */}
         <div className="mb-12">
           <div className="flex items-center justify-between">
-            <Link href="/" className="inline-flex items-center text-gray-500 hover:text-gray-700 transition-colors text-sm">
+            <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
               ← Back to fuminozawa Page
             </Link>
-            <Link href="/blog" className="inline-flex items-center text-gray-500 hover:text-gray-700 transition-colors text-sm">
+            <Link href="/blog" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
               ← Back to All Posts
             </Link>
           </div>
         </div>
 
         {/* Article */}
-        <article>
+        <article className="bg-white shadow-sm rounded-lg p-8">
           {/* Article Header */}
-          <header className="mb-12">
+          <header className="mb-12 border-b pb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">
               {post.title}
             </h1>
             
             <div className="flex items-center text-gray-500 text-sm space-x-4 mb-6">
               {post.publishedDate && (
-                <time>
+                <time className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
                   {new Date(post.publishedDate).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -257,14 +257,14 @@ export default function BlogPostPage() {
             </div>
             
             {post.description && (
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p className="text-gray-600 text-lg leading-relaxed mt-4">
                 {post.description}
               </p>
             )}
           </header>
 
           {/* Article Content */}
-          <div className="prose max-w-none">
+          <div className="prose prose-lg max-w-none">
             {post.content?.map((block) => (
               <div key={block.id}>{renderBlock(block)}</div>
             ))}
@@ -274,10 +274,10 @@ export default function BlogPostPage() {
         {/* Footer Navigation */}
         <div className="mt-16 pt-8 border-t border-gray-200">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-gray-500 hover:text-gray-700 transition-colors text-sm">
+            <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
               ← Back to fuminozawa Page
             </Link>
-            <Link href="/blog" className="text-gray-500 hover:text-gray-700 transition-colors text-sm">
+            <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
               ← Back to All Posts
             </Link>
           </div>

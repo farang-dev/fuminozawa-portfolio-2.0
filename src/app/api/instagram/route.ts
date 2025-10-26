@@ -76,12 +76,7 @@ export async function GET() {
     
     const allMedia = await fetchAllMedia();
     
-    // Sort media by timestamp in descending order (newest first)
-    const sortedMedia = allMedia.sort((a, b) => {
-      return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
-    });
-    
-    return NextResponse.json(sortedMedia);
+    return NextResponse.json(allMedia);
   } catch (error) {
     console.error('Error fetching Instagram media:', error);
     return NextResponse.json({ error: 'Failed to fetch Instagram media' }, { status: 500 });
