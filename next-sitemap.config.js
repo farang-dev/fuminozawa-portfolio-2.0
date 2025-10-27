@@ -2,5 +2,5 @@
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://fuminozawa-info.site',
   generateRobotsTxt: true,
-  outDir: '.next',
+  outDir: 'public',
 }
