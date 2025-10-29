@@ -1,0 +1,17 @@
+name: Scheduled Deployment
+
+on:
+  schedule:
+    # 毎日午前3時（UTC）に実行 - 日本時間だと正午頃
+    - cron: '0 3 * * *'
+  
+  # 手動でワークフローを実行できるようにする
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deployment
+        run: |
+          curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_JciTlmAuAooKyjPlGyUtC6fueaFJ/GJTdU63TlM"
