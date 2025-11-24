@@ -948,3 +948,261 @@ body.light .lang-toggle:hover {
 .profile-card {
   position: relative;
 }
+
+/* Services Tab Styles */
+.service-card {
+  margin-bottom: 40px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.service-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(52, 90, 204, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(52, 90, 204, 0.15);
+}
+
+.service-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.service-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(52, 90, 204, 0.3);
+  line-height: 1;
+  margin: 0;
+}
+
+.service-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.service-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.service-description {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.service-deliverables {
+  margin-bottom: 24px;
+}
+
+.service-deliverables h4,
+.service-intent h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #429bd8;
+  margin-bottom: 12px;
+}
+
+.service-deliverables ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-deliverables li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.service-deliverables li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #345acc;
+  font-weight: bold;
+}
+
+.service-intent p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* Methodology Section */
+.methodology-section {
+  margin-top: 50px;
+  padding: 30px;
+  background: rgba(52, 90, 204, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(52, 90, 204, 0.2);
+}
+
+.methodology-section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.methodology-intro {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.methodology-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.methodology-step {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.methodology-step h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #429bd8;
+  margin-bottom: 8px;
+}
+
+.methodology-step p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Stance Section */
+.stance-section {
+  margin-top: 30px;
+  padding: 24px;
+  background: rgba(66, 155, 216, 0.08);
+  border-radius: 12px;
+  border-left: 4px solid #429bd8;
+}
+
+.stance-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #429bd8;
+  margin-bottom: 12px;
+}
+
+.stance-section p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+}
+
+/* Light Mode Styles for Services */
+body.light .service-card {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light .service-card:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(52, 90, 204, 0.3);
+}
+
+body.light .service-number {
+  color: rgba(52, 90, 204, 0.2);
+}
+
+body.light .service-title {
+  color: #1a202c;
+}
+
+body.light .service-subtitle {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+body.light .service-description {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+body.light .service-deliverables li {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+body.light .service-intent p {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+body.light .methodology-section {
+  background: rgba(52, 90, 204, 0.05);
+  border-color: rgba(52, 90, 204, 0.15);
+}
+
+body.light .methodology-section h3 {
+  color: #1a202c;
+}
+
+body.light .methodology-intro {
+  color: rgba(0, 0, 0, 0.85);
+}
+
+body.light .methodology-step {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light .methodology-step p {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+body.light .stance-section {
+  background: rgba(66, 155, 216, 0.05);
+  border-left-color: #345acc;
+}
+
+body.light .stance-section h3 {
+  color: #345acc;
+}
+
+body.light .stance-section p {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+/* Responsive adjustments for Services */
+@media (max-width: 768px) {
+  .service-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .service-number {
+    font-size: 2rem;
+  }
+
+  .service-title {
+    font-size: 1.4rem;
+  }
+
+  .methodology-steps {
+    grid-template-columns: 1fr;
+  }
+}
