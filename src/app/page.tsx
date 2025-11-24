@@ -11,7 +11,7 @@ export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [language, setLanguage] = useState<'en' | 'ja'>('en');
-  const [particles, setParticles] = useState<Array<{id: number, left: number, delay: number}>>([]);
+  const [particles, setParticles] = useState<Array<{ id: number, left: number, delay: number }>>([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -359,19 +359,19 @@ export default function Home() {
 
   const [writings, setWritings] = useState<BlogPost[]>([]);
 
-useEffect(() => {
-  const fetchWritings = async () => {
-    try {
-      const response = await fetch('/api/blog');
-      if (!response.ok) throw new Error('Failed to fetch');
-      const data = await response.json();
-      setWritings(data);
-    } catch (error) {
-      console.error('Error fetching writings:', error);
-    }
-  };
-  fetchWritings();
-}, []);
+  useEffect(() => {
+    const fetchWritings = async () => {
+      try {
+        const response = await fetch('/api/blog');
+        if (!response.ok) throw new Error('Failed to fetch');
+        const data = await response.json();
+        setWritings(data);
+      } catch (error) {
+        console.error('Error fetching writings:', error);
+      }
+    };
+    fetchWritings();
+  }, []);
 
   const toggleLanguage = () => setLanguage(language === 'en' ? 'ja' : 'en');
 
@@ -406,7 +406,7 @@ useEffect(() => {
         <div className="profile-card">
           {/* Language Switch Button - Top Left */}
           <div className="lang-toggle" onClick={toggleLanguage} title={language === 'en' ? '日本語に切り替え' : 'Switch to English'}>
-            <span style={{fontSize: '1.3rem'}}>{language === 'en' ? '🇯🇵' : '🇬🇧'}</span>
+            <span style={{ fontSize: '1.3rem' }}>{language === 'en' ? '🇯🇵' : '🇬🇧'}</span>
           </div>
           {/* Dark Mode Toggle - Top Right */}
           <div className="dark-mode-toggle" onClick={toggleDarkMode}>
@@ -446,7 +446,7 @@ useEffect(() => {
                   <>
                     <li className="chip">All-round Marketer</li>
                     <li className="chip">Web Developer</li>
-                    <li className="chip">Localization for Japan Market</li>
+                    <li className="chip">Japan Market Entry</li>
                     <li className="chip">SaaS Localization</li>
                     <li className="chip">Global Brand Marketing</li>
                     <li className="chip">Vibe Marketing</li>
@@ -459,7 +459,7 @@ useEffect(() => {
                   <>
                     <li className="chip">オールラウンドマーケター</li>
                     <li className="chip">ウェブ開発</li>
-                    <li className="chip">日本市場向けローカライゼーション</li>
+                    <li className="chip">日本市場向けマーケット戦略</li>
                     <li className="chip">SaaSローカライゼーション</li>
                     <li className="chip">グローバルブランドマーケティング</li>
                     <li className="chip">バイブマーケ</li>
@@ -476,37 +476,37 @@ useEffect(() => {
           {/* Tabs Navigation */}
           <div className="achievements-section">
             <div className="tabs-container">
-            <div
-              className={`tab ${activeTab === 'links' ? 'active' : ''}`}
-              onClick={() => handleTabClick('links')}
-            >
-              Links
+              <div
+                className={`tab ${activeTab === 'links' ? 'active' : ''}`}
+                onClick={() => handleTabClick('links')}
+              >
+                Links
+              </div>
+              <div
+                className={`tab ${activeTab === 'works' ? 'active' : ''}`}
+                onClick={() => handleTabClick('works')}
+              >
+                Works
+              </div>
+              <div
+                className={`tab ${activeTab === 'products' ? 'active' : ''}`}
+                onClick={() => handleTabClick('products')}
+              >
+                Projects
+              </div>
+              <div
+                className={`tab ${activeTab === 'writing' ? 'active' : ''}`}
+                onClick={() => handleTabClick('writing')}
+              >
+                Blog
+              </div>
+              <div
+                className={`tab ${activeTab === 'gallery' ? 'active' : ''}`}
+                onClick={() => window.location.href = '/gallery'}
+              >
+                Gallery
+              </div>
             </div>
-            <div
-              className={`tab ${activeTab === 'works' ? 'active' : ''}`}
-              onClick={() => handleTabClick('works')}
-            >
-              Works
-            </div>
-            <div
-              className={`tab ${activeTab === 'products' ? 'active' : ''}`}
-              onClick={() => handleTabClick('products')}
-            >
-              Projects
-            </div>
-            <div
-              className={`tab ${activeTab === 'writing' ? 'active' : ''}`}
-              onClick={() => handleTabClick('writing')}
-            >
-              Blog
-            </div>
-            <div
-              className={`tab ${activeTab === 'gallery' ? 'active' : ''}`}
-              onClick={() => window.location.href = '/gallery'}
-            >
-              Gallery
-            </div>
-          </div>
 
             {/* Links Tab Content */}
             <div
