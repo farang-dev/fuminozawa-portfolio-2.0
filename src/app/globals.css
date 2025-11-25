@@ -102,11 +102,11 @@ body.light .modal-bio p {
 
 body.light .gradient-circle {
   background: linear-gradient(135deg,
-    #345acc 0%,
-    #4a7cde 25%,
-    #429bd8 50%,
-    #8ba3e3 75%,
-    #d8b4bf 100%);
+      #345acc 0%,
+      #4a7cde 25%,
+      #429bd8 50%,
+      #8ba3e3 75%,
+      #d8b4bf 100%);
   box-shadow:
     0 0 30px rgba(52, 90, 204, 0.3),
     0 0 60px rgba(216, 180, 191, 0.15),
@@ -148,9 +148,12 @@ body.light .gradient-circle {
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -191,12 +194,15 @@ body.light .gradient-circle {
     transform: translateY(100vh) rotate(0deg);
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     transform: translateY(-100px) rotate(360deg);
     opacity: 0;
@@ -283,11 +289,11 @@ body.light .dark-mode-toggle:hover {
   width: 152px;
   height: 152px;
   background: linear-gradient(135deg,
-    #345acc 0%,
-    #4a7cde 25%,
-    #429bd8 50%,
-    #8ba3e3 75%,
-    #d8b4bf 100%);
+      #345acc 0%,
+      #4a7cde 25%,
+      #429bd8 50%,
+      #8ba3e3 75%,
+      #d8b4bf 100%);
   border-radius: 50%;
   z-index: 0;
   box-shadow:
@@ -298,28 +304,32 @@ body.light .dark-mode-toggle:hover {
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+
+  0%,
+  100% {
     background: linear-gradient(135deg,
-      #345acc 0%,
-      #4a7cde 25%,
-      #429bd8 50%,
-      #8ba3e3 75%,
-      #d8b4bf 100%);
+        #345acc 0%,
+        #4a7cde 25%,
+        #429bd8 50%,
+        #8ba3e3 75%,
+        #d8b4bf 100%);
   }
+
   50% {
     background: linear-gradient(135deg,
-      #4a7cde 0%,
-      #345acc 25%,
-      #8ba3e3 50%,
-      #429bd8 75%,
-      #e8c4cf 100%);
+        #4a7cde 0%,
+        #345acc 25%,
+        #8ba3e3 50%,
+        #429bd8 75%,
+        #e8c4cf 100%);
   }
 }
 
 .profile-img {
   position: relative;
   z-index: 1;
-  margin-bottom: 35px;  /* 20pxから35pxに増加 */
+  margin-bottom: 35px;
+  /* 20pxから35pxに増加 */
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -327,7 +337,8 @@ body.light .dark-mode-toggle:hover {
 }
 
 #taishiyade-title {
-  font-size: 2.2rem;  /* 2.5remから2.2remに減少 */
+  font-size: 2.2rem;
+  /* 2.5remから2.2remに減少 */
   font-weight: 700;
   margin-bottom: 20px;
   cursor: pointer;
@@ -338,7 +349,8 @@ body.light .dark-mode-toggle:hover {
   width: 112px;
   height: 112px;
   border-radius: 50%;
-  border: 4px solid #FF3040; /* 白色から赤色に変更 */
+  border: 4px solid #FF3040;
+  /* 白色から赤色に変更 */
   display: block;
   object-fit: cover;
   position: relative;
@@ -363,12 +375,29 @@ body.light .dark-mode-toggle:hover {
 }
 
 @keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 
 /* Bio section */
@@ -421,18 +450,25 @@ body.light .chip:hover {
 /* Responsive adjustments for chips on mobile */
 @media (max-width: 768px) {
   .bio-list {
-    display: flex; /* Ensures flex layout */
-    flex-wrap: wrap; /* Allows chips to wrap to the next line */
-    justify-content: center; /* Centers the chips */
-    gap: 0.3rem; /* Reduces gap between chips */
+    display: flex;
+    /* Ensures flex layout */
+    flex-wrap: wrap;
+    /* Allows chips to wrap to the next line */
+    justify-content: center;
+    /* Centers the chips */
+    gap: 0.3rem;
+    /* Reduces gap between chips */
   }
 
   .chip {
-    padding: 0.2rem 0.5rem; /* Reduces padding inside chips */
-    font-size: 0.7rem; /* Reduces font size */
+    padding: 0.2rem 0.5rem;
+    /* Reduces padding inside chips */
+    font-size: 0.7rem;
+    /* Reduces font size */
     /* Optionally, you can set a max-width for chips if they are too long */
     /* max-width: 150px; */
-    /* white-space: normal; */ /* Allows text to wrap within a chip if needed */
+    /* white-space: normal; */
+    /* Allows text to wrap within a chip if needed */
   }
 }
 
@@ -528,6 +564,7 @@ body.light .badge:hover {
     opacity: 0;
     transform: translateY(30px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -535,8 +572,15 @@ body.light .badge:hover {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Links */
@@ -675,8 +719,10 @@ footer {
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  overflow-y: auto; /* Allow vertical scrolling */
-  max-height: 90vh; /* Set a max-height relative to viewport height */
+  overflow-y: auto;
+  /* Allow vertical scrolling */
+  max-height: 90vh;
+  /* Set a max-height relative to viewport height */
 }
 
 body.light .close-modal {
@@ -887,8 +933,15 @@ body.light .form-btn.secondary:hover {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .profile-img.clickable {
@@ -896,17 +949,49 @@ body.light .form-btn.secondary:hover {
 }
 
 @keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
 }
 
 .lang-toggle {
@@ -1188,6 +1273,21 @@ body.light .stance-section p {
 
 /* Responsive adjustments for Services */
 @media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .profile-card {
+    padding: 24px 16px;
+    max-width: 100%;
+    border-radius: 16px;
+  }
+
+  .service-card {
+    padding: 20px 16px;
+    margin-bottom: 24px;
+  }
+
   .service-header {
     flex-direction: column;
     align-items: flex-start;
@@ -1202,7 +1302,65 @@ body.light .stance-section p {
     font-size: 1.4rem;
   }
 
+  .service-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .service-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .service-deliverables li {
+    font-size: 0.85rem;
+    padding: 6px 0 6px 20px;
+  }
+
+  .service-intent p {
+    font-size: 0.85rem;
+  }
+
+  .methodology-section {
+    padding: 20px 16px;
+    margin-top: 30px;
+  }
+
+  .methodology-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .methodology-intro {
+    font-size: 0.95rem;
+  }
+
   .methodology-steps {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .methodology-step {
+    padding: 16px;
+  }
+
+  .methodology-step h4 {
+    font-size: 1rem;
+  }
+
+  .methodology-step p {
+    font-size: 0.85rem;
+  }
+
+  .stance-section {
+    padding: 16px;
+    margin-top: 20px;
+  }
+
+  .stance-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .stance-section p {
+    font-size: 0.85rem;
   }
 }
