@@ -1299,26 +1299,26 @@ body.light .stance-section p {
   }
 
   .service-title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   .service-subtitle {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-
-  .service-description {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     line-height: 1.6;
   }
 
+  .service-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
   .service-deliverables li {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     padding: 6px 0 6px 20px;
   }
 
   .service-intent p {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
   }
 
   .methodology-section {
@@ -1327,11 +1327,11 @@ body.light .stance-section p {
   }
 
   .methodology-section h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .methodology-intro {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .methodology-steps {
@@ -1344,11 +1344,11 @@ body.light .stance-section p {
   }
 
   .methodology-step h4 {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   .methodology-step p {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
   .stance-section {
@@ -1357,10 +1357,10 @@ body.light .stance-section p {
   }
 
   .stance-section h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .stance-section p {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 }
