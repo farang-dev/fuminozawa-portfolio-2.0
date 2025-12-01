@@ -22,8 +22,8 @@ const LazyImage = ({ item, index }: { item: InstagramMedia; index: number }) => 
     <div ref={ref} className="relative overflow-hidden bg-gray-900 w-full" style={{ aspectRatio: '4/5' }}>
       {inView ? (
         <>
-          <Image 
-            src={item.media_url} 
+          <Image
+            src={item.media_url}
             alt={item.caption || 'Instagram photo'}
             width={800}
             height={800}
@@ -83,8 +83,9 @@ export default function GalleryPage() {
         const data = await getInstagramMedia();
         setMedia(data); // Images are now in chronological order (newest first)
       } catch (err) {
-        setError('Error loading Instagram media');
         console.error('Error fetching Instagram media:', err);
+        // Set a more user-friendly error message
+        setError('Unable to load Instagram gallery at the moment. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -102,7 +103,7 @@ export default function GalleryPage() {
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -137,11 +138,11 @@ export default function GalleryPage() {
                 </a>
               </div>
             ))}
-            
+
             {/* Enhanced loading indicator and infinite scroll trigger */}
             {visibleCount < media.length && (
-              <div 
-                ref={ref} 
+              <div
+                ref={ref}
                 className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center items-center py-12"
               >
                 <div className="flex flex-col items-center">
@@ -153,7 +154,7 @@ export default function GalleryPage() {
             )}
           </div>
         )}
-        
+
         {media.length > 0 && (
           <>
             <Link href="/" className="fixed top-8 left-8 z-10 p-3 bg-black bg-opacity-70 rounded-full hover:bg-opacity-90 transition-all duration-300">

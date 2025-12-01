@@ -17,15 +17,16 @@ export interface InstagramMedia {
 export async function getInstagramMedia(): Promise<InstagramMedia[]> {
   try {
     const response = await fetch('/api/instagram');
-    
+
     if (!response.ok) {
-      throw new Error(`Instagram API responded with status: ${response.status}`);
+      console.error(`Instagram API responded with status: ${response.status}`);
+      return []; // Return empty array instead of throwing
     }
-    
+
     const data: InstagramMedia[] = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching Instagram media:', error);
-    throw error;
+    return []; // Return empty array on error
   }
 }

@@ -10,14 +10,7 @@ export default function Home() {
   const [copyNotification, setCopyNotification] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'ja'>(() => {
-    // Detect browser language on initial load
-    if (typeof window !== 'undefined') {
-      const browserLang = navigator.language || navigator.languages?.[0];
-      return browserLang?.startsWith('ja') ? 'ja' : 'en';
-    }
-    return 'en';
-  });
+  const [language, setLanguage] = useState<'en' | 'ja'>('en');
   const [particles, setParticles] = useState<Array<{ id: number, left: number, delay: number }>>([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -50,7 +43,7 @@ export default function Home() {
     // Apply initial theme
     document.body.className = 'light';
 
-    // Detect browser language and set initial language if not already set
+    // Detect browser language and set initial language (client-side only)
     const browserLang = navigator.language || navigator.languages?.[0];
     const detectedLang = browserLang?.startsWith('ja') ? 'ja' : 'en';
     setLanguage(detectedLang);
