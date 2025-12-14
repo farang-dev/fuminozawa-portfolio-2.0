@@ -270,7 +270,13 @@ export default function Home() {
       title: 'Brand Localization',
       items: [
         {
-          title: 'Forex Product Landing Page (Freelance)',
+          title: 'EIRE Systems Corporate Website Relaunch',
+          description: 'Implemented a corporate website redesign for an IT support company (≈200 employees) including data analysis, setting requirements, SEO strategy, UX/UI design, writing site content and site build',
+          link: 'https://www.eiresystems.com/ja/',
+          cta: 'Visit Site'
+        },
+        {
+          title: 'Forex Product Website Management and Marketing Execution',
           description: 'Landing page creation and campaign localization for Forex product',
           link: 'https://www.axiory.com/jp/trading-products/clash-cfds',
           cta: 'See the Sample'
