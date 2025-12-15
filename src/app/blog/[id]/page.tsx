@@ -1,16 +1,21 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BlogPost } from '@/lib/notion';
+import { getBlogPostById, getBlogPosts } from '@/lib/notion';
 import { BlockObjectResponse, RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
+import { notFound } from 'next/navigation';
+
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({
+    id: post.id,
+  }));
+}
 
 function renderRichText(richText: RichTextItemResponse[]) {
   return richText.map((text, index) => {
     let element: React.ReactNode = text.plain_text;
-    
+
     if (text.annotations.bold) {
       element = <strong key={index} className="font-semibold">{element}</strong>;
     }
@@ -29,7 +34,7 @@ function renderRichText(richText: RichTextItemResponse[]) {
     if (text.href) {
       element = <a key={index} href={text.href} className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">{element}</a>;
     }
-    
+
     return element;
   });
 }
@@ -146,79 +151,18 @@ function renderBlock(block: BlockObjectResponse) {
   }
 }
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = await fetch(`/api/blog/${params.id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch post');
-        }
-        const data = await response.json();
-        setPost(data);
-      } catch (err) {
-        setError('Error loading post');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPost();
-  }, [params.id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-5xl font-black text-blue-500 animate-pulse">
-          F
-        </div>
-      </div>
-    );
+  let post;
+  try {
+    post = await getBlogPostById(id);
+  } catch (error) {
+    notFound();
   }
-  
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-4">Error</h1>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <div className="space-x-4">
-            <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors">
-              ← Back to Blog
-            </Link>
-            <span className="text-gray-300">|</span>
-            <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors">
-              Back to Home
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
+
   if (!post) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900 mb-4">Post Not Found</h1>
-          <p className="text-gray-600 mb-6">The blog post you're looking for doesn't exist.</p>
-          <div className="space-x-4">
-            <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors">
-              ← Back to Blog
-            </Link>
-            <span className="text-gray-300">|</span>
-            <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors">
-              Back to Home
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
   return (
@@ -243,7 +187,7 @@ export default function BlogPostPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
               {post.title}
             </h1>
-            
+
             <div className="flex items-center text-gray-500 text-sm space-x-4 mb-4">
               {post.publishedDate && (
                 <time className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
@@ -255,7 +199,7 @@ export default function BlogPostPage() {
                 </time>
               )}
             </div>
-            
+
             {post.description && (
               <p className="text-gray-600 text-lg leading-relaxed">
                 {post.description}
