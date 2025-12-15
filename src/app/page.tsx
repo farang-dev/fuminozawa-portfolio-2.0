@@ -267,13 +267,25 @@ export default function Home() {
 
   const works = [
     {
-      title: 'Brand Localization',
+      title: 'Strategic Web & Digital Marketing',
       items: [
         {
           title: 'EIRE Systems Corporate Website Relaunch',
           description: 'Implemented a corporate website redesign for an IT support company (≈200 employees) including data analysis, setting requirements, SEO strategy, UX/UI design, writing site content and site build',
           link: 'https://www.eiresystems.com/ja/',
           cta: 'Visit Site'
+        },
+        {
+          title: 'AXIORY Forex Broker Japan',
+          description: 'Website content management and localization',
+          link: 'https://www.axiory.com/jp/',
+          cta: 'See the Sample'
+        },
+        {
+          title: 'Boucheron Japan E-commerce',
+          description: 'E-commerce management and content strategy',
+          link: 'https://www.boucheron.com/ja_jp/',
+          cta: 'See the Sample'
         },
         {
           title: 'Forex Product Website Management and Marketing Execution',
@@ -308,20 +320,8 @@ export default function Home() {
       ]
     },
     {
-      title: 'Web, E-commerce, Social Media Account Growth',
+      title: 'Social Media & Community Growth',
       items: [
-        {
-          title: 'Boucheron Japan E-commerce',
-          description: 'E-commerce management and content strategy',
-          link: 'https://www.boucheron.com/ja_jp/',
-          cta: 'See the Sample'
-        },
-        {
-          title: 'AXIORY Forex Broker Japan',
-          description: 'Website content management and localization',
-          link: 'https://www.axiory.com/jp/',
-          cta: 'See the Sample'
-        },
         {
           title: 'Boucheron Japan Social Media',
           description: 'Management of LINE (200K followers), Facebook (246K followers), and X (9K followers) accounts',
