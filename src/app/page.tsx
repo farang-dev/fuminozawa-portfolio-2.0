@@ -342,8 +342,11 @@ export default function Home() {
         {
           title: 'Paul Smith Japan Instagram Direction',
           description: 'Photo-shooting direction for Instagram account (40+ photo-shoots)',
-          link: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1',
-          cta: 'Sample Photo 01Sample Photo 02Sample Photo 03'
+          links: [
+            { title: 'Sample Photo 01', url: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1' },
+            { title: 'Sample Photo 02', url: 'https://www.instagram.com/p/CB0DeHEDxdS/?img_index=1' },
+            { title: 'Sample Photo 03', url: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1' }
+          ]
         },
         {
           title: 'Red Ear Campaign',
@@ -354,7 +357,7 @@ export default function Home() {
         {
           title: 'Personal Photography',
           description: 'Photography portfolio',
-          link: 'https://www.instagram.com/fumi_fumar/',
+          link: '/gallery',
           cta: 'See the Sample'
         }
       ]
@@ -396,6 +399,145 @@ export default function Home() {
           description: 'Read Georgian Local News in Japanese',
           link: 'https://georgia-news-japan.online/',
           cta: 'Visit Site'
+        }
+      ]
+    }
+  ];
+
+  const worksJa = [
+    {
+      title: 'デジタルマーケティング・戦略的Web構築・運用',
+      items: [
+        {
+          title: 'EIRE Systems コーポレートサイトリニューアル',
+          description: 'ITサポート企業（約200名規模）のコーポレートサイトリニューアルを実施。データ分析、要件定義、SEO戦略、UX/UIデザイン、コンテンツ制作、サイト構築までを一貫して担当',
+          link: 'https://www.eiresystems.com/ja/',
+          cta: 'サイトを見る'
+        },
+        {
+          title: 'AXIORY Forex Broker Japan',
+          description: 'Webサイトのコンテンツ管理およびローカライゼーション',
+          link: 'https://www.axiory.com/jp/',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: 'Boucheron Japan Eコマース',
+          description: 'Eコマース管理およびコンテンツ戦略',
+          link: 'https://www.boucheron.com/ja_jp/',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: 'FXプロダクトサイト運用・マーケティング実行',
+          description: 'FXプロダクトのランディングページ作成およびキャンペーンローカライゼーション',
+          link: 'https://www.axiory.com/jp/trading-products/clash-cfds',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: 'ハイジュエリーコレクション キャンペーン (Boucheron)',
+          description: 'ハイジュエリーコレクションの商品ページおよびキャンペーンローカライゼーション',
+          link: 'https://www.boucheron.com/ja_jp/high-jewelry/collections-carte-blanche/ailleurs',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: 'サステナビリティプログラム (Boucheron)',
+          description: 'サステナビリティプログラムのローカライゼーションおよびコンテンツ管理',
+          link: 'https://www.boucheron.com/ja_jp/our-maison/sustainability',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: '広告キャンペーン (Boucheron)',
+          description: 'キャンペーンページのローカライゼーションおよびコンテンツ戦略',
+          link: 'https://www.boucheron.com/ja_jp/our-maison/the-sense-of-style/the-quatre-icon',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: 'Amazonプライムデー (Computer Futures)',
+          description: '日本市場向けAmazonプライムデーおよび関連ページのプログラムローカライゼーション',
+          link: 'https://www.amazon.co.jp/primeday',
+          cta: 'サンプルを見る'
+        }
+      ]
+    },
+    {
+      title: 'ソーシャルメディア・コミュニティグロース',
+      items: [
+        {
+          title: 'Boucheron Japan ソーシャルメディア',
+          description: 'LINE (20万人)、Facebook (24.6万人)、X (9千人) アカウントの管理・運用',
+          link: 'https://page.line.me/625rfwps',
+          cta: 'サンプルを見る'
+        },
+        {
+          title: 'Paul Smith Japan ソーシャルメディア',
+          description: 'Instagram (12万人)、Facebook (6.8万人)、X (5.2万人) アカウントの管理・運用',
+          link: 'https://www.instagram.com/paulsmithjapan/',
+          cta: 'サンプルを見る'
+        }
+      ]
+    },
+    {
+      title: 'クリエイティブディレクション・制作',
+      items: [
+        {
+          title: 'Paul Smith Japan Instagram ディレクション',
+          description: 'Instagramアカウントの写真撮影ディレクション (40回以上の撮影)',
+          links: [
+            { title: 'サンプル写真 01', url: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1' },
+            { title: 'サンプル写真 02', url: 'https://www.instagram.com/p/CB0DeHEDxdS/?img_index=1' },
+            { title: 'サンプル写真 03', url: 'https://www.instagram.com/p/CEoUtZADLyG/?img_index=1' }
+          ]
+        },
+        {
+          title: 'Red Ear キャンペーン',
+          description: 'Paul Smithのキャンペーン写真撮影ディレクション',
+          link: 'https://www.paulsmith.co.jp/stories/aw19/red-ear',
+          cta: 'AW19 キャンペーンSS20 キャンペーン'
+        },
+        {
+          title: '個人写真作品',
+          description: '写真ポートフォリオ',
+          link: '/gallery',
+          cta: 'サンプルを見る'
+        }
+      ]
+    },
+    {
+      title: 'データ可視化・分析統合',
+      items: [
+        {
+          title: 'Looker Studio ダッシュボード',
+          description: 'カスタマイズ可能なデータ統合を含むサンプルレポート （顧客データのため、あくまでダッシュボードのサンプルになります）',
+          link: 'https://lookerstudio.google.com/u/0/reporting/37687a85-8c92-4e75-93a9-a081f4c41208/page/vXEHE',
+          cta: 'サンプルを見る'
+        }
+      ]
+    },
+    {
+      title: 'Webプロジェクト',
+      items: [
+        {
+          title: 'Save GPT',
+          description: 'ChatGPTの回答をNotionに保存するGoogle Chrome拡張機能',
+          link: 'https://chromewebstore.google.com/detail/save-gpt/nbkjfkkjfgacnebnboacljgdglfigmeg',
+          cta: 'サイトを見る'
+        },
+        {
+          title: 'GenAI ✖️ PLP (商品一覧)',
+          description: 'Eコマース上のモデル/商品画像から生成AIビデオへの遷移を作成',
+          link: 'https://balenciaga-ambassador-clone.vercel.app/',
+          cta: 'サイトを見る'
+        },
+        {
+          title: 'Unmanned Newsroom - AI powered',
+          description: '最新のテック・AIニュースを自動キュレーション',
+          link: 'https://www.unmanned-newsroom.com/',
+          cta: 'サイトを見る'
+        },
+        {
+          title: 'Georgia News - AI powered',
+          description: 'ジョージアのローカルニュースを日本語で読む',
+          link: 'https://georgia-news-japan.online/',
+          cta: 'サイトを見る'
         }
       ]
     }
@@ -666,7 +808,7 @@ export default function Home() {
 
             {/* Works Tab Content */}
             <div className={`tab-content ${activeTab === 'works' ? 'active' : ''}`}>
-              {works.map((category) => (
+              {(language === 'ja' ? worksJa : works).map((category) => (
                 <div key={category.title} className="achievement-category">
                   <h3 className="text-lg font-semibold mb-2">{category.title}</h3>
                   <div className="achievement-items">
@@ -675,8 +817,23 @@ export default function Home() {
                         <div className="achievement-details">
                           <h4>{item.title}</h4>
                           <p>{item.description}</p>
-                          {item.link && (
-                            <a href={item.link} className="achievement-link" target="_blank" rel="noopener noreferrer">
+                          {/* @ts-ignore - handling mixed types for links */}
+                          {item.links ? (
+                            <div className="flex flex-col gap-2 mt-2">
+                              {/* @ts-ignore - handling mixed types for links */}
+                              {item.links.map((link, i) => (
+                                <a key={i} href={link.url} className="achievement-link" target="_blank" rel="noopener noreferrer">
+                                  {link.title}
+                                </a>
+                              ))}
+                            </div>
+                          ) : item.link && (
+                            <a
+                              href={item.link}
+                              className="achievement-link"
+                              target={item.link.startsWith('/') ? undefined : "_blank"}
+                              rel={item.link.startsWith('/') ? undefined : "noopener noreferrer"}
+                            >
                               {item.cta || 'See the Sample'}
                             </a>
                           )}
