@@ -886,13 +886,16 @@ export default function Home() {
               <h3>Digital Marketer & Strategist</h3>
               <div className="modal-bio">
                 <p>
-                  Since 2016, I have been engaged in marketing for fashion, luxury, and technology brands, focusing on communicating brand value accurately and attractively. I have worked on projects for Paul Smith, Boucheron, Amazon Japan, and more, based in Tokyo, London, and Tbilisi (Georgia), bridging global and local perspectives while collaborating with diverse teams and cultures.
+                  Since 2016, I have led the end-to-end design and execution of digital marketing strategies that connect brands with users, primarily in the fashion, luxury, and technology sectors. Working with major global brands and platforms like Paul Smith, Boucheron, and Amazon Japan, I have driven projects from Tokyo, London, and Tbilisi, collaborating with diverse, multinational teams.
                 </p>
                 <p>
-                  I design consistent communication across various online touchpoints, including social media management, website administration, content creation, email marketing, SEO, and data visualization/analytics. In 2023, I studied full-stack web development at Le Wagon Tokyo to strengthen my technical implementation and system understanding. I strive to balance creativity and reproducibility, aiming for both user experience and results.
+                  My strength lies in bridging creative, technology, and data to translate high-level strategies into practical, on-the-ground operations. Starting from the brand's core message, I integrate owned and paid media, content strategy, UX, SEO, and data analytics to deliver both exceptional user experiences and tangible business results. I focus not just on execution, but on building reproducible systems rooted in a clear understanding of 'why' and 'where' value is created.
                 </p>
                 <p>
-                  Currently, as a freelancer, I support localization and brand growth with a focus on storytelling, leveraging my bilingual (Japanese/English) skills. I value the process of translating abstract visions into practical solutions and nurture results through long-term relationships.
+                  In 2023, I completed a full-stack web development bootcamp at Le Wagon Tokyo. This technical foundation empowers my decision-making as a marketer, allowing me to bridge the gap between strategy and technology through web implementation, data visualization, and marketing automation.
+                </p>
+                <p>
+                  Currently, as a bilingual (Japanese/English) freelancer, I support global brands and international companies with marketing, localization, and growth strategies centered on storytelling. I value a collaborative partnership style, breaking down abstract visions into actionable operations and SOPs to cultivate both short-term wins and long-term brand value.
                 </p>
               </div>
             </>
@@ -902,13 +905,16 @@ export default function Home() {
               <h3>デジタルマーケター & ストラテジスト</h3>
               <div className="modal-bio">
                 <p>
-                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドの価値を的確かつ魅力的に伝えるマーケティング業務に携わる。Paul Smith、Boucheron、Amazon Japanなどのプロジェクトに関わりながら、東京・ロンドン・トビリシ（ジョージア）を拠点に、国内外の多様なチームや文化に触れつつ、グローバルとローカルをつなぐ視点で戦略と実行を担ってきた。
+                  2016年より、ファッション、ラグジュアリー、テクノロジー領域を中心に、ブランドとユーザーをつなぐデジタルマーケティング戦略の設計から実行までを一貫して担ってきた。Paul Smith、Boucheron、Amazon Japanをはじめとする国内外のブランド／プラットフォームに携わり、東京・ロンドン・トビリシを拠点に、多国籍・多文化なチームと協働しながらプロジェクトを推進してきた。
                 </p>
                 <p>
-                  SNS運用やWebサイトの管理、コンテンツ制作、メールマーケティング、SEO、データの可視化や分析など、オンライン上のさまざまな接点で一貫性あるコミュニケーションを設計。2023年にはLe Wagon TokyoにてフルスタックWeb開発を学び、より技術的な実装やシステム理解を強化。創造性と再現性のバランスを取りながら、ユーザー体験と成果の両立を目指してきた。
+                  強みは、クリエイティブ、テクノロジー、データを横断し、戦略を「現場で機能する形」に落とし込むこと。ブランドの世界観やメッセージを起点に、オウンド・ペイドメディア、コンテンツ、UX、SEO、データ分析までを統合的に設計し、ユーザー体験とビジネス成果の両立を実現してきた。単なる施策実行にとどまらず、「なぜやるのか」「どこで成果を出すのか」を明確にした上で、再現性のある仕組みとして構築することを重視している。
                 </p>
                 <p>
-                  現在はフリーランスとして、日英バイリンガルの強みを活かしたローカライゼ支援や、ストーリーテリングを軸にしたブランド成長の伴走を行う。抽象的なビジョンを、現場で機能するかたちへと翻訳するプロセスに価値を置き、長期的な関係性の中で成果を育てていくスタイルを大切にしている。
+                  2023年にはLe Wagon TokyoにてフルスタックWeb開発を修了。マーケターとしての意思決定を支えるための技術理解を深め、Web実装、データ可視化、マーケティングオートメーションなど、戦略とテクノロジーの橋渡しが可能なポジションを確立している。
+                </p>
+                <p>
+                  現在はフリーランスとして、日英バイリンガルのバックグラウンドを活かし、グローバルブランドや海外企業のマーケティング支援、ローカライゼーション、ブランドストーリーテリングを軸とした成長支援に取り組んでいる。抽象度の高いビジョンや戦略を、オペレーションやSOP単位で落とし込み、短期成果と中長期的なブランド価値の双方を育てていく伴走型のスタイルを大切にしている。
                 </p>
               </div>
             </>
