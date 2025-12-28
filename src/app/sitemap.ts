@@ -4,12 +4,12 @@ import { MetadataRoute } from 'next';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // ブログ記事を取得
   const posts = await getBlogPosts();
-  
+
   // ブログ記事のサイトマップエントリを作成
   const blogEntries = posts.map((post) => ({
     url: `https://fuminozawa-info.site/blog/${post.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
+    changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
 

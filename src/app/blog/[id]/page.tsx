@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { getBlogPostById, getBlogPosts } from '@/lib/notion';
+import { generateSEOMetadata, generateArticleJSONLD } from '@/lib/seo';
 import { BlockObjectResponse, RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notFound } from 'next/navigation';
 
@@ -10,6 +12,41 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     id: post.id,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+
+  let post;
+  try {
+    post = await getBlogPostById(id);
+  } catch (error) {
+    return generateSEOMetadata({
+      title: 'Post Not Found | Fumi Nozawa',
+      description: 'The requested blog post could not be found.',
+      noindex: true,
+    });
+  }
+
+  if (!post) {
+    return generateSEOMetadata({
+      title: 'Post Not Found | Fumi Nozawa',
+      description: 'The requested blog post could not be found.',
+      noindex: true,
+    });
+  }
+
+  const description = post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`;
+  const url = `https://fuminozawa-info.site/blog/${post.id}`;
+
+  return generateSEOMetadata({
+    title: `${post.title} | Fumi Nozawa`,
+    description,
+    canonical: url,
+    ogType: 'article',
+    publishedTime: post.publishedDate,
+    modifiedTime: post.publishedDate,
+  });
 }
 
 function renderRichText(richText: RichTextItemResponse[]) {
@@ -165,68 +202,87 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     notFound();
   }
 
+  // Generate JSON-LD structured data for the article
+  const jsonLd = generateArticleJSONLD({
+    title: post.title,
+    description: post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`,
+    url: `https://fuminozawa-info.site/blog/${post.id}`,
+    datePublished: post.publishedDate,
+    dateModified: post.publishedDate,
+  });
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-full sm:max-w-3xl mx-auto px-3 sm:px-6 py-10 sm:py-16">
-        {/* Top Navigation */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-              ← Back to fuminozawa Page
-            </Link>
-            <Link href="/blog" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-              ← Back to All Posts
-            </Link>
-          </div>
-        </div>
+    <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-        {/* Article */}
-        <article className="bg-white shadow-sm rounded-lg p-6 sm:p-8">
-          {/* Article Header */}
-          <header className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
-              {post.title}
-            </h1>
-
-            <div className="flex items-center text-gray-500 text-sm space-x-4 mb-4">
-              {post.publishedDate && (
-                <time className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
-                  {new Date(post.publishedDate).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
-              )}
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-full sm:max-w-3xl mx-auto px-3 sm:px-6 py-10 sm:py-16">
+          {/* Top Navigation */}
+          <div className="mb-12">
+            <div className="flex items-center justify-between">
+              <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
+                ← Back to fuminozawa Page
+              </Link>
+              <Link href="/blog" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
+                ← Back to All Posts
+              </Link>
             </div>
-
-            {post.description && (
-              <p className="text-gray-600 text-lg leading-relaxed">
-                {post.description}
-              </p>
-            )}
-          </header>
-
-          {/* Article Content */}
-          <div className="prose prose-lg max-w-none">
-            {post.content?.map((block) => (
-              <div key={block.id}>{renderBlock(block)}</div>
-            ))}
           </div>
-        </article>
 
-        {/* Footer Navigation */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-              ← Back to fuminozawa Page
-            </Link>
-            <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-              ← Back to All Posts
-            </Link>
+          {/* Article */}
+          <article className="bg-white shadow-sm rounded-lg p-6 sm:p-8">
+            {/* Article Header */}
+            <header className="mb-6">
+              <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
+                {post.title}
+              </h1>
+
+              <div className="flex items-center text-gray-500 text-sm space-x-4 mb-4">
+                {post.publishedDate && (
+                  <time dateTime={post.publishedDate} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                    {new Date(post.publishedDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                )}
+                <span className="text-gray-400">•</span>
+                <span className="text-gray-600">By Fumi Nozawa</span>
+              </div>
+
+              {post.description && (
+                <p className="text-gray-600 text-lg leading-relaxed">
+                  {post.description}
+                </p>
+              )}
+            </header>
+
+            {/* Article Content */}
+            <div className="prose prose-lg max-w-none">
+              {post.content?.map((block) => (
+                <div key={block.id}>{renderBlock(block)}</div>
+              ))}
+            </div>
+          </article>
+
+          {/* Footer Navigation */}
+          <div className="mt-16 pt-8 border-t border-gray-200">
+            <div className="flex items-center justify-between">
+              <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
+                ← Back to fuminozawa Page
+              </Link>
+              <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
+                ← Back to All Posts
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
