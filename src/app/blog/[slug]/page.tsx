@@ -1,25 +1,28 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { getBlogPostById, getBlogPosts } from '@/lib/notion';
+import { getBlogPostBySlug, getBlogPosts } from '@/lib/notion';
 import { generateSEOMetadata, generateArticleJSONLD } from '@/lib/seo';
 import { BlockObjectResponse, RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
 import { notFound } from 'next/navigation';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import RelatedPosts from '@/components/RelatedPosts';
+import { slugify } from '@/lib/utils';
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
   return posts.map((post) => ({
-    id: post.id,
+    slug: post.slug,
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
 
   let post;
   try {
-    post = await getBlogPostById(id);
+    post = await getBlogPostBySlug(slug);
   } catch (error) {
     return generateSEOMetadata({
       title: 'Post Not Found | Fumi Nozawa',
@@ -37,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 
   const description = post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`;
-  const url = `https://fuminozawa-info.site/blog/${post.id}`;
+  const url = `https://fuminozawa-info.site/blog/${post.slug}`;
 
   return generateSEOMetadata({
     title: `${post.title} | Fumi Nozawa`,
@@ -188,12 +191,12 @@ function renderBlock(block: BlockObjectResponse) {
   }
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
   let post;
   try {
-    post = await getBlogPostById(id);
+    post = await getBlogPostBySlug(slug);
   } catch (error) {
     notFound();
   }
@@ -206,10 +209,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   const jsonLd = generateArticleJSONLD({
     title: post.title,
     description: post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`,
-    url: `https://fuminozawa-info.site/blog/${post.id}`,
+    url: `https://fuminozawa-info.site/blog/${post.slug}`,
     datePublished: post.publishedDate,
     dateModified: post.publishedDate,
   });
+
+  const allPosts = await getBlogPosts();
+
+  // Generate Table of Contents from headings
+  const headings = post.content
+    ?.filter(block => ['heading_1', 'heading_2', 'heading_3'].includes(block.type))
+    .map(block => {
+      const type = block.type as 'heading_1' | 'heading_2' | 'heading_3';
+      const text = (block as any)[type].rich_text.map((t: any) => t.plain_text).join('');
+      return { text, level: parseInt(type.split('_')[1]) };
+    });
 
   return (
     <>
@@ -221,29 +235,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-full sm:max-w-3xl mx-auto px-3 sm:px-6 py-10 sm:py-16">
-          {/* Top Navigation */}
-          <div className="mb-12">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-                ← Back to fuminozawa Page
-              </Link>
-              <Link href="/blog" className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-                ← Back to All Posts
-              </Link>
-            </div>
-          </div>
+          {/* Breadcrumbs */}
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: post.title, href: post.slug, active: true },
+            ]}
+          />
 
           {/* Article */}
-          <article className="bg-white shadow-sm rounded-lg p-6 sm:p-8">
+          <article className="bg-white shadow-sm rounded-2xl p-6 sm:p-10 border border-gray-100">
             {/* Article Header */}
-            <header className="mb-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">
+            <header className="mb-8">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
                 {post.title}
               </h1>
 
-              <div className="flex items-center text-gray-500 text-sm space-x-4 mb-4">
+              <div className="flex items-center text-gray-500 text-sm space-x-4 mb-8">
                 {post.publishedDate && (
-                  <time dateTime={post.publishedDate} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                  <time dateTime={post.publishedDate} className="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-xs font-semibold">
                     {new Date(post.publishedDate).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -251,34 +262,70 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                     })}
                   </time>
                 )}
-                <span className="text-gray-400">•</span>
-                <span className="text-gray-600">By Fumi Nozawa</span>
+                <span className="text-gray-300">|</span>
+                <span className="text-gray-700 font-medium">Fumi Nozawa</span>
               </div>
 
               {post.description && (
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-gray-600 text-xl leading-relaxed font-light italic border-l-4 border-blue-200 pl-6 my-8">
                   {post.description}
                 </p>
               )}
             </header>
 
+            {/* Table of Contents */}
+            {headings && headings.length > 0 && (
+              <div className="bg-gray-50 rounded-xl p-6 mb-10 border border-gray-100">
+                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Table of Contents</h2>
+                <ul className="space-y-2">
+                  {headings.map((heading, i) => (
+                    <li key={i} style={{ paddingLeft: `${(heading.level - 1) * 1.5}rem` }}>
+                      <a href={`#${slugify(heading.text)}`} className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
+                        {heading.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Article Content */}
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg prose-blue max-w-none">
               {post.content?.map((block) => (
-                <div key={block.id}>{renderBlock(block)}</div>
+                <div key={block.id} id={['heading_1', 'heading_2', 'heading_3'].includes(block.type) ? slugify((block as any)[block.type].rich_text.map((t: any) => t.plain_text).join('')) : undefined}>
+                  {renderBlock(block)}
+                </div>
               ))}
             </div>
+
+            {/* Related Posts */}
+            <RelatedPosts currentPostId={post.id} posts={allPosts} />
           </article>
 
           {/* Footer Navigation */}
-          <div className="mt-16 pt-8 border-t border-gray-200">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-                ← Back to fuminozawa Page
-              </Link>
-              <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium">
-                ← Back to All Posts
-              </Link>
+          <div className="mt-12 flex items-center justify-between px-2">
+            <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-bold flex items-center">
+              <span className="mr-2">←</span> Back to All Articles
+            </Link>
+            <div className="flex space-x-4">
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://fuminozawa-info.site/blog/${post.slug}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-400 transition-colors"
+                title="Share on X"
+              >
+                <i className="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://fuminozawa-info.site/blog/${post.slug}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-700 transition-colors"
+                title="Share on LinkedIn"
+              >
+                <i className="fab fa-linkedin text-xl"></i>
+              </a>
             </div>
           </div>
         </div>

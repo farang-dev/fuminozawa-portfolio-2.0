@@ -7,7 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // ブログ記事のサイトマップエントリを作成
   const blogEntries = posts.map((post) => ({
-    url: `https://fuminozawa-info.site/blog/${post.id}`,
+    url: `https://fuminozawa-info.site/blog/${post.slug}`,
     lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
