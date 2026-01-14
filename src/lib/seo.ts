@@ -87,7 +87,7 @@ export function generateSEOMetadata({
             },
         },
         verification: {
-            google: 'your-google-verification-code', // Add your actual verification code
+            // Property already verified in Search Console
         },
     };
 }
