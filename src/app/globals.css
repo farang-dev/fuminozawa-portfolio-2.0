@@ -1490,4 +1490,60 @@ body.light .blog-card-date {
   color: #718096;
 }
 
+.blog-view-all-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 2rem;
+  background: linear-gradient(135deg, rgba(52, 90, 204, 0.15), rgba(66, 155, 216, 0.15));
+  border: 1px solid rgba(52, 90, 204, 0.3);
+  border-radius: 100px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.blog-view-all-cta:hover {
+  background: linear-gradient(135deg, rgba(52, 90, 204, 0.25), rgba(66, 155, 216, 0.25));
+  border-color: rgba(52, 90, 204, 0.6);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(52, 90, 204, 0.3);
+  color: #429bd8;
+}
+
+.blog-view-all-cta i {
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.blog-view-all-cta:hover i {
+  background: #429bd8;
+  color: white;
+}
+
+/* Light mode for View All CTA */
+body.light .blog-view-all-cta {
+  background: rgba(52, 90, 204, 0.05);
+  border-color: rgba(52, 90, 204, 0.2);
+  color: #1a202c;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.light .blog-view-all-cta:hover {
+  background: rgba(52, 90, 204, 0.1);
+  border-color: rgba(52, 90, 204, 0.4);
+  color: #345acc;
+}
+
 /* End of Blog Mini Styles */

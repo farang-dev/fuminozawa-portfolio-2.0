@@ -899,10 +899,10 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
               </div>
 
               {writings.length > 0 && (
-                <div className="mt-8 text-center pb-4">
-                  <a href={language === 'ja' ? '/ja/blog' : '/blog'} className="achievement-link inline-flex items-center gap-2">
+                <div className="mt-10 mb-6 flex justify-center">
+                  <a href={language === 'ja' ? '/ja/blog' : '/blog'} className="blog-view-all-cta group">
                     <span>{language === 'ja' ? 'すべての記事を見る' : 'View All Articles'}</span>
-                    <i className="fas fa-external-link-alt text-xs opacity-70" />
+                    <i className="fas fa-chevron-right transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
               )}
