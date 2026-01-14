@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import { getBlogPosts } from '@/lib/prismic-blog';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    // Default to en-us for the homepage API
-    const posts = await getBlogPosts('en-us');
+    const { searchParams } = new URL(request.url);
+    const lang = searchParams.get('lang') || 'en-us';
+
+    // Validate lang or map if needed
+    const locale = lang === 'ja' ? 'ja-jp' : (lang === 'ja-jp' ? 'ja-jp' : 'en-us');
+
+    const posts = await getBlogPosts(locale as any);
     return NextResponse.json(posts);
   } catch (error) {
     console.error('Error fetching blog posts:', error);

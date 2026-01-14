@@ -549,7 +549,8 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
   useEffect(() => {
     const fetchWritings = async () => {
       try {
-        const response = await fetch('/api/blog');
+        const fetchLang = language === 'ja' ? 'ja-jp' : 'en-us';
+        const response = await fetch(`/api/blog?lang=${fetchLang}`);
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setWritings(data);
@@ -558,7 +559,7 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
       }
     };
     fetchWritings();
-  }, []);
+  }, [language]);
 
   const toggleLanguage = () => setLanguage(language === 'en' ? 'ja' : 'en');
 
@@ -883,7 +884,7 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
                         </div>
                         <h3>{writing.title}</h3>
                         <p>{writing.description}</p>
-                        <a href={`/blog/${writing.slug}`} className="blog-card-link">
+                        <a href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-link">
                           {language === 'ja' ? '記事を読む' : 'Read Article'}
                           <i className="fas fa-arrow-right ml-2" />
                         </a>
