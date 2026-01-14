@@ -1,39 +1,41 @@
-import { getBlogPosts } from '@/lib/notion';
+import { getBlogPosts } from '@/lib/prismic-blog';
 import { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // ブログ記事を取得
-  const posts = await getBlogPosts();
+  const baseUrl = 'https://fuminozawa-info.site';
 
-  // ブログ記事のサイトマップエントリを作成
-  const blogEntries = posts.map((post) => ({
-    url: `https://fuminozawa-info.site/blog/${post.slug}`,
+  // Fetch all posts from both locales
+  const [enPosts, jaPosts] = await Promise.all([
+    getBlogPosts('en-us'),
+    getBlogPosts('ja-jp'),
+  ]);
+
+  // English blog entries
+  const enBlogEntries = enPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
-    changeFrequency: 'monthly' as const,
+    changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
 
-  // 静的ページのエントリ
+  // Japanese blog entries
+  const jaBlogEntries = jaPosts.map((post) => ({
+    url: `${baseUrl}/ja/blog/${post.slug}`,
+    lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
+  // Static pages (Main and Japanese versions)
   const staticPages = [
-    {
-      url: 'https://fuminozawa-info.site',
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 1.0,
-    },
-    {
-      url: 'https://fuminozawa-info.site/blog',
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: 'https://fuminozawa-info.site/gallery',
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    },
+    // Main (English)
+    { url: baseUrl, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 1.0 },
+    { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.8 },
+    { url: `${baseUrl}/gallery`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
+
+    // Japanese
+    { url: `${baseUrl}/ja/blog`, lastModified: new Date(), changeFrequency: 'daily' as const, priority: 0.8 },
   ];
 
-  return [...staticPages, ...blogEntries];
+  return [...staticPages, ...enBlogEntries, ...jaBlogEntries];
 }

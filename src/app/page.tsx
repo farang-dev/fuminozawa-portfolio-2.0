@@ -1,23 +1,20 @@
 import { getBlogPosts } from '@/lib/prismic-blog';
 import HomeClient from './HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
+import { getAlternateUrls } from '@/lib/locales';
 
-export const metadata: Metadata = {
-  title: "Fumi Nozawa - Portfolio",
-  description: "Software Engineer and Marketer specializing in Next.js, SEO, and Growth Strategies. Helping brands win in Japan and global markets.",
-  openGraph: {
-    title: "Fumi Nozawa - Portfolio",
-    description: "Software Engineer and Marketer specializing in Next.js, SEO, and Growth Strategies. Helping brands win in Japan and global markets.",
-    url: 'https://fuminozawa-info.site',
-    siteName: 'Fumi Nozawa',
-    locale: 'en_US',
-    type: 'website',
-  },
-  alternates: {
+export async function generateMetadata(): Promise<Metadata> {
+  const alternateUrls = getAlternateUrls('/');
+
+  return generateSEOMetadata({
+    title: "Fumi Nozawa - Software Engineer & Marketer",
+    description: "Portfolio of Fumi Nozawa, a Software Engineer and Marketer specializing in Next.js, SEO, and Growth Strategies. Helping brands win in Japan and global markets.",
     canonical: 'https://fuminozawa-info.site',
-  },
-};
+    locale: 'en-us',
+    alternateUrls,
+  });
+}
 
 export default async function Home() {
   const posts = await getBlogPosts('en-us');

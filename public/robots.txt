@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://fuminozawa-info.site
-
-# Sitemaps
-Sitemap: https://fuminozawa-info.site/sitemap.xml
