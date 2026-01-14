@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { BlogPost } from '@/lib/notion';
+import Image from 'next/image';
+import { BlogPost } from '@/lib/prismic-blog';
 
 export default function Home({ initialWritings = [] }: { initialWritings?: BlogPost[] }) {
   const [activeTab, setActiveTab] = useState('links');
@@ -850,17 +851,60 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
             <div
               className={`tab-content ${activeTab === 'writing' ? 'active' : ''}`}
             >
-              {writings.map((writing) => (
-                <div key={writing.id} className="achievement-item">
-                  <div className="achievement-details">
-                    <h3>{writing.title}</h3>
-                    <p>{writing.description}</p>
-                    <a href={`/blog/${writing.slug}`} className="achievement-link">
-                      Read Article
-                    </a>
+              <div className="blog-grid-mini">
+                {writings.length > 0 ? (
+                  writings.map((writing) => (
+                    <div key={writing.id} className="blog-card-mini group">
+                      {writing.featuredImage && (
+                        <div className="blog-card-image">
+                          <Image
+                            src={writing.featuredImage.url}
+                            alt={writing.featuredImage.alt || writing.title}
+                            fill
+                            sizes="100px"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="blog-card-content">
+                        <div className="blog-card-meta">
+                          {writing.publishedDate && (
+                            <span className="blog-card-date">
+                              {new Date(writing.publishedDate).toLocaleDateString(language === 'ja' ? 'ja-JP' : 'en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                              })}
+                            </span>
+                          )}
+                          {writing.tags && writing.tags.length > 0 && (
+                            <span className="blog-card-tag">{writing.tags[0]}</span>
+                          )}
+                        </div>
+                        <h3>{writing.title}</h3>
+                        <p>{writing.description}</p>
+                        <a href={`/blog/${writing.slug}`} className="blog-card-link">
+                          {language === 'ja' ? '記事を読む' : 'Read Article'}
+                          <i className="fas fa-arrow-right ml-2" />
+                        </a>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-10 opacity-50">
+                    {language === 'ja' ? '記事が見つかりませんでした' : 'No articles found'}
                   </div>
+                )}
+              </div>
+
+              {writings.length > 0 && (
+                <div className="mt-8 text-center pb-4">
+                  <a href={language === 'ja' ? '/ja/blog' : '/blog'} className="achievement-link inline-flex items-center gap-2">
+                    <span>{language === 'ja' ? 'すべての記事を見る' : 'View All Articles'}</span>
+                    <i className="fas fa-external-link-alt text-xs opacity-70" />
+                  </a>
                 </div>
-              ))}
+              )}
             </div>
           </div>
 

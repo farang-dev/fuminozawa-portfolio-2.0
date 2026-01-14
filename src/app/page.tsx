@@ -1,4 +1,4 @@
-import { getBlogPosts } from '@/lib/notion';
+import { getBlogPosts } from '@/lib/prismic-blog';
 import HomeClient from './HomeClient';
 import type { Metadata } from 'next';
 import { generateWebsiteJSONLD } from '@/lib/seo';
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const posts = await getBlogPosts();
+  const posts = await getBlogPosts('en-us');
   const websiteJsonLd = generateWebsiteJSONLD();
 
   // Person Schema for E-E-A-T

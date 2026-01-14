@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { getBlogPosts } from '@/lib/notion';
+import { getBlogPosts } from '@/lib/prismic-blog';
 
 export async function GET() {
   try {
-    const posts = await getBlogPosts();
+    // Default to en-us for the homepage API
+    const posts = await getBlogPosts('en-us');
     return NextResponse.json(posts);
   } catch (error) {
     console.error('Error fetching blog posts:', error);
