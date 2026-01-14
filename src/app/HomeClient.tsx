@@ -862,7 +862,7 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
                             src={writing.featuredImage.url}
                             alt={writing.featuredImage.alt || writing.title}
                             fill
-                            sizes="100px"
+                            sizes="(max-width: 768px) 100vw, 400px"
                             className="object-cover"
                           />
                         </div>
