@@ -11,6 +11,8 @@ const nextConfig = {
       "notion.so",
       "s3-us-west-2.amazonaws.com",
       "prod-files-secure.s3.us-west-2.amazonaws.com",
+      "images.prismic.io",
+      "fuminozawa-portfolio.cdn.prismic.io",
     ],
     remotePatterns: [
       {
@@ -51,6 +53,16 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "prod-files-secure.s3.us-west-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.prismic.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "fuminozawa-portfolio.cdn.prismic.io",
         pathname: "/**",
       },
     ],

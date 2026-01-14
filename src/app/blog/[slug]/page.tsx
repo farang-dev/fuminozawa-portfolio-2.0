@@ -1,46 +1,41 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { getBlogPostBySlug, getBlogPosts } from '@/lib/notion';
+import { getBlogPostByUid, getAllBlogPostUids, getAlternateLocalePosts } from '@/lib/prismic-blog';
 import { generateSEOMetadata, generateArticleJSONLD } from '@/lib/seo';
-import { BlockObjectResponse, RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints';
+import { getAlternateUrls } from '@/lib/locales';
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import RelatedPosts from '@/components/RelatedPosts';
-import { slugify } from '@/lib/utils';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import PrismicContent from '@/components/PrismicContent';
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  const posts = await getBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  const allPosts = await getAllBlogPostUids();
+  return allPosts
+    .filter(p => p.locale === 'en-us')
+    .map((post) => ({
+      slug: post.uid,
+    }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-
-  let post;
-  try {
-    post = await getBlogPostBySlug(slug);
-  } catch (error) {
-    return generateSEOMetadata({
-      title: 'Post Not Found | Fumi Nozawa',
-      description: 'The requested blog post could not be found.',
-      noindex: true,
-    });
-  }
+  const post = await getBlogPostByUid(slug, 'en-us');
 
   if (!post) {
     return generateSEOMetadata({
       title: 'Post Not Found | Fumi Nozawa',
       description: 'The requested blog post could not be found.',
       noindex: true,
+      locale: 'en-us',
     });
   }
 
   const description = post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`;
   const url = `https://fuminozawa-info.site/blog/${post.slug}`;
+  const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
 
   return generateSEOMetadata({
     title: `${post.title} | Fumi Nozawa`,
@@ -48,182 +43,36 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     canonical: url,
     ogType: 'article',
     publishedTime: post.publishedDate,
-    modifiedTime: post.publishedDate,
+    modifiedTime: post.updatedDate,
+    locale: 'en-us',
+    alternateUrls,
+    ogImage: post.featuredImage?.url,
   });
-}
-
-function renderRichText(richText: RichTextItemResponse[]) {
-  return richText.map((text, index) => {
-    let element: React.ReactNode = text.plain_text;
-
-    if (text.annotations.bold) {
-      element = <strong key={index} className="font-semibold">{element}</strong>;
-    }
-    if (text.annotations.italic) {
-      element = <em key={index}>{element}</em>;
-    }
-    if (text.annotations.code) {
-      element = <code key={index} className="bg-gray-100 text-red-600 px-1 py-0.5 rounded text-sm font-mono">{element}</code>;
-    }
-    if (text.annotations.strikethrough) {
-      element = <del key={index}>{element}</del>;
-    }
-    if (text.annotations.underline) {
-      element = <u key={index}>{element}</u>;
-    }
-    if (text.href) {
-      element = <a key={index} href={text.href} className="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">{element}</a>;
-    }
-
-    return element;
-  });
-}
-
-function renderBlock(block: BlockObjectResponse) {
-  switch (block.type) {
-    case 'paragraph':
-      const paragraphText = renderRichText(block.paragraph.rich_text);
-      return paragraphText.length > 0 ? (
-        <p className="text-gray-900 leading-relaxed mb-3">{paragraphText}</p>
-      ) : (
-        <div className="mb-3"></div>
-      );
-    case 'heading_1':
-      return (
-        <h1 className="text-2xl font-bold text-gray-900 mt-8 mb-4">
-          {renderRichText(block.heading_1.rich_text)}
-        </h1>
-      );
-    case 'heading_2':
-      return (
-        <h2 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
-          {renderRichText(block.heading_2.rich_text)}
-        </h2>
-      );
-    case 'heading_3':
-      return (
-        <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-2">
-          {renderRichText(block.heading_3.rich_text)}
-        </h3>
-      );
-    case 'bulleted_list_item':
-      return (
-        <li className="text-gray-900 leading-relaxed mb-1 ml-6 list-disc">
-          {renderRichText(block.bulleted_list_item.rich_text)}
-        </li>
-      );
-    case 'numbered_list_item':
-      return (
-        <li className="text-gray-900 leading-relaxed mb-1 ml-6 list-decimal">
-          {renderRichText(block.numbered_list_item.rich_text)}
-        </li>
-      );
-    case 'image':
-      const src = block.image.type === 'external' ? block.image.external.url : block.image.file.url;
-      const alt = block.image.caption?.map(text => text.plain_text).join('') || '';
-      return (
-        <div className="my-6 flex flex-col items-center">
-          <Image
-            src={src}
-            alt={alt}
-            width={800}
-            height={600}
-            className="rounded border max-w-full h-auto"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-          {alt && (
-            <p className="text-gray-500 text-sm text-center mt-2">{alt}</p>
-          )}
-        </div>
-      );
-    case 'code':
-      const language = block.code.language || 'text';
-      return (
-        <div className="my-4">
-          <pre className="bg-gray-50 border rounded p-4 overflow-x-auto text-sm">
-            <code className="text-gray-800 font-mono">
-              {block.code.rich_text.map((text) => text.plain_text).join('')}
-            </code>
-          </pre>
-          {language && String(language) !== 'text' && (
-            <p className="text-gray-400 text-xs mt-1">{String(language)}</p>
-          )}
-        </div>
-      );
-    case 'quote':
-      return (
-        <blockquote className="border-l-3 border-gray-300 pl-4 py-2 my-4 bg-gray-50">
-          <p className="text-gray-700 leading-relaxed">
-            {renderRichText(block.quote.rich_text)}
-          </p>
-        </blockquote>
-      );
-    case 'divider':
-      return <hr className="border-gray-200 my-6" />;
-    case 'callout':
-      return (
-        <div className="bg-blue-50 border border-blue-200 rounded p-4 my-4">
-          <div className="flex items-start">
-            {block.callout.icon && (
-              <span className="text-lg mr-3 mt-0.5">
-                {block.callout.icon.type === 'emoji' ? block.callout.icon.emoji : '💡'}
-              </span>
-            )}
-            <div className="text-gray-800">
-              {renderRichText(block.callout.rich_text)}
-            </div>
-          </div>
-        </div>
-      );
-    case 'toggle':
-      return (
-        <details className="border border-gray-200 rounded p-3 my-3">
-          <summary className="text-gray-900 font-medium cursor-pointer hover:text-blue-600">
-            {renderRichText(block.toggle.rich_text)}
-          </summary>
-          <div className="mt-2 text-gray-800">
-            {/* Toggle content would need to be fetched separately */}
-          </div>
-        </details>
-      );
-    default:
-      return null;
-  }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-
-  let post;
-  try {
-    post = await getBlogPostBySlug(slug);
-  } catch (error) {
-    notFound();
-  }
+  const post = await getBlogPostByUid(slug, 'en-us');
 
   if (!post) {
     notFound();
   }
 
-  // Generate JSON-LD structured data for the article
+  // Get alternate locale posts to show available languages
+  const alternatePosts = await getAlternateLocalePosts(slug, 'en-us');
+  const availableLocales = Object.entries(alternatePosts)
+    .filter(([_, p]) => p !== null)
+    .map(([locale]) => locale as any);
+
+  // Generate JSON-LD structured data
   const jsonLd = generateArticleJSONLD({
     title: post.title,
     description: post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`,
     url: `https://fuminozawa-info.site/blog/${post.slug}`,
     datePublished: post.publishedDate,
-    dateModified: post.publishedDate,
+    dateModified: post.updatedDate,
+    locale: 'en-us',
   });
-
-  const allPosts = await getBlogPosts();
-
-  // Generate Table of Contents from headings
-  const headings = post.content
-    ?.filter(block => ['heading_1', 'heading_2', 'heading_3'].includes(block.type))
-    .map(block => {
-      const type = block.type as 'heading_1' | 'heading_2' | 'heading_3';
-      const text = (block as any)[type].rich_text.map((t: any) => t.plain_text).join('');
-      return { text, level: parseInt(type.split('_')[1]) };
-    });
 
   return (
     <>
@@ -233,98 +82,124 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-full sm:max-w-3xl mx-auto px-3 sm:px-6 py-10 sm:py-16">
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/' },
-              { label: 'Blog', href: '/blog' },
-              { label: post.title, href: post.slug, active: true },
-            ]}
-          />
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+          {/* Breadcrumbs & Language Switcher */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+            <Breadcrumbs
+              items={[
+                { label: 'Home', href: '/' },
+                { label: 'Blog', href: '/blog' },
+                { label: post.title, href: post.slug, active: true },
+              ]}
+            />
+            <LanguageSwitcher availableLocales={availableLocales} />
+          </div>
 
           {/* Article */}
-          <article className="bg-white shadow-sm rounded-2xl p-6 sm:p-10 border border-gray-100">
-            {/* Article Header */}
-            <header className="mb-8">
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
-                {post.title}
-              </h1>
-
-              <div className="flex items-center text-gray-500 text-sm space-x-4 mb-8">
-                {post.publishedDate && (
-                  <time dateTime={post.publishedDate} className="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-xs font-semibold">
-                    {new Date(post.publishedDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </time>
-                )}
-                <span className="text-gray-300">|</span>
-                <span className="text-gray-700 font-medium">Fumi Nozawa</span>
-              </div>
-
-              {post.description && (
-                <p className="text-gray-600 text-xl leading-relaxed font-light italic border-l-4 border-blue-200 pl-6 my-8">
-                  {post.description}
-                </p>
-              )}
-            </header>
-
-            {/* Table of Contents */}
-            {headings && headings.length > 0 && (
-              <div className="bg-gray-50 rounded-xl p-6 mb-10 border border-gray-100">
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Table of Contents</h2>
-                <ul className="space-y-2">
-                  {headings.map((heading, i) => (
-                    <li key={i} style={{ paddingLeft: `${(heading.level - 1) * 1.5}rem` }}>
-                      <a href={`#${slugify(heading.text)}`} className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
-                        {heading.text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+          <article className="bg-white shadow-lg rounded-3xl overflow-hidden border border-gray-100">
+            {/* Featured Image */}
+            {post.featuredImage && (
+              <div className="relative w-full h-64 sm:h-96">
+                <Image
+                  src={post.featuredImage.url}
+                  alt={post.featuredImage.alt}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             )}
 
-            {/* Article Content */}
-            <div className="prose prose-lg prose-blue max-w-none">
-              {post.content?.map((block) => (
-                <div key={block.id} id={['heading_1', 'heading_2', 'heading_3'].includes(block.type) ? slugify((block as any)[block.type].rich_text.map((t: any) => t.plain_text).join('')) : undefined}>
-                  {renderBlock(block)}
-                </div>
-              ))}
-            </div>
+            <div className="p-6 sm:p-12">
+              {/* Article Header */}
+              <header className="mb-10">
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
+                  {post.title}
+                </h1>
 
-            {/* Related Posts */}
-            <RelatedPosts currentPostId={post.id} posts={allPosts} />
+                <div className="flex flex-wrap items-center gap-4 mb-8">
+                  {post.publishedDate && (
+                    <time
+                      dateTime={post.publishedDate}
+                      className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold"
+                    >
+                      {new Date(post.publishedDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </time>
+                  )}
+
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="flex gap-2 flex-wrap">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full text-sm font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <span className="text-gray-300">|</span>
+                  <span className="text-gray-700 font-medium">Fumi Nozawa</span>
+                </div>
+
+                {post.description && (
+                  <p className="text-gray-600 text-xl leading-relaxed font-light italic border-l-4 border-blue-200 pl-6 my-8">
+                    {post.description}
+                  </p>
+                )}
+              </header>
+
+              {/* Article Content */}
+              <PrismicContent field={post.content} />
+
+              {/* Related Posts */}
+              <div className="mt-16 pt-12 border-t border-gray-200">
+                <RelatedPosts currentPostId={post.id} posts={[]} />
+              </div>
+            </div>
           </article>
 
           {/* Footer Navigation */}
           <div className="mt-12 flex items-center justify-between px-2">
-            <Link href="/blog" className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-bold flex items-center">
-              <span className="mr-2">←</span> Back to All Articles
+            <Link
+              href="/blog"
+              className="text-blue-600 hover:text-blue-800 transition-colors text-sm font-bold flex items-center group"
+            >
+              <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span>
+              Back to All Articles
             </Link>
+
             <div className="flex space-x-4">
               <a
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://fuminozawa-info.site/blog/${post.slug}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
+                className="text-gray-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-100"
                 title="Share on X"
+                aria-label="Share on X"
               >
-                <i className="fab fa-twitter text-xl"></i>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
               </a>
               <a
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://fuminozawa-info.site/blog/${post.slug}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-700 transition-colors"
+                className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-gray-100"
                 title="Share on LinkedIn"
+                aria-label="Share on LinkedIn"
               >
-                <i className="fab fa-linkedin text-xl"></i>
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
               </a>
             </div>
           </div>

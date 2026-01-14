@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { LocaleCode, locales, getAlternateUrls } from './locales';
 
 interface SEOProps {
     title: string;
@@ -10,6 +11,8 @@ interface SEOProps {
     modifiedTime?: string;
     author?: string;
     noindex?: boolean;
+    locale?: LocaleCode;
+    alternateUrls?: Record<string, string>;
 }
 
 export function generateSEOMetadata({
@@ -22,10 +25,16 @@ export function generateSEOMetadata({
     modifiedTime,
     author = 'Fumi Nozawa',
     noindex = false,
+    locale = 'en-us',
+    alternateUrls,
 }: SEOProps): Metadata {
     const baseUrl = 'https://fuminozawa-info.site';
     const fullCanonical = canonical || baseUrl;
     const defaultImage = `${baseUrl}/og-image.png`;
+
+    const localeData = locales[locale];
+    const ogLocale = locale === 'en-us' ? 'en_US' : 'ja_JP';
+    const alternateOgLocale = locale === 'en-us' ? 'ja_JP' : 'en_US';
 
     return {
         title,
@@ -36,13 +45,15 @@ export function generateSEOMetadata({
         metadataBase: new URL(baseUrl),
         alternates: {
             canonical: fullCanonical,
+            languages: alternateUrls || {},
         },
         openGraph: {
             title,
             description,
             url: fullCanonical,
             siteName: 'Fumi Nozawa - Portfolio',
-            locale: 'en_US',
+            locale: ogLocale,
+            alternateLocale: [alternateOgLocale],
             type: ogType,
             images: [
                 {
@@ -89,6 +100,7 @@ export function generateArticleJSONLD({
     dateModified,
     author = 'Fumi Nozawa',
     authorUrl = 'https://fuminozawa-info.site',
+    locale = 'en-us',
 }: {
     title: string;
     description: string;
@@ -97,7 +109,10 @@ export function generateArticleJSONLD({
     dateModified?: string;
     author?: string;
     authorUrl?: string;
+    locale?: LocaleCode;
 }) {
+    const inLanguage = locale === 'en-us' ? 'en-US' : 'ja-JP';
+
     return {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
@@ -120,7 +135,7 @@ export function generateArticleJSONLD({
             '@id': url,
         },
         url,
-        inLanguage: 'en-US',
+        inLanguage,
     };
 }
 
