@@ -45,12 +45,18 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
     document.body.className = 'light';
 
     // Detect browser language and set initial language (client-side only)
-    const browserLang = navigator.language || navigator.languages?.[0];
-    const detectedLang = browserLang?.startsWith('ja') ? 'ja' : 'en';
-    setLanguage(detectedLang);
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+
+    if (langParam === 'ja' || langParam === 'en') {
+      setLanguage(langParam);
+    } else {
+      const browserLang = navigator.language || navigator.languages?.[0];
+      const detectedLang = browserLang?.startsWith('ja') ? 'ja' : 'en';
+      setLanguage(detectedLang);
+    }
 
     // Check URL parameter for tab
-    const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
     if (tabParam && ['links', 'services', 'works', 'writing'].includes(tabParam)) {
       setActiveTab(tabParam);
