@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { getBlogPostByUid, getAllBlogPostUids, getAlternateLocalePosts } from '@/lib/prismic-blog';
+import { getBlogPostByUid, getAllBlogPostUids, getAlternateLocalePosts, getBlogPosts } from '@/lib/prismic-blog';
 import { generateSEOMetadata, generateArticleJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 import { notFound } from 'next/navigation';
@@ -58,6 +58,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) {
     notFound();
   }
+
+  // Get all posts for related posts section
+  const allPosts = await getBlogPosts('en-us');
 
   // Get alternate locale posts to show available languages
   const alternatePosts = await getAlternateLocalePosts(slug, 'en-us');
@@ -164,9 +167,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <ProfileSnippet locale="en" />
 
               {/* Related Posts */}
-              <div className="mt-16 pt-12 border-t border-gray-200">
-                <RelatedPosts currentPostId={post.id} posts={[]} />
-              </div>
+              <RelatedPosts currentPostId={post.id} posts={allPosts} locale="en" />
             </div>
           </article>
 
