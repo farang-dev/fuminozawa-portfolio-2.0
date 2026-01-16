@@ -36,8 +36,8 @@ export async function getBlogPosts(locale: LocaleCode = 'en-us'): Promise<BlogPo
         const posts = await client.getAllByType('blog_post', {
             lang: prismicLocale,
             orderings: [
-                { field: 'my.blog_post.published_date', direction: 'desc' },
                 { field: 'document.first_publication_date', direction: 'desc' },
+                { field: 'my.blog_post.published_date', direction: 'desc' },
             ],
         });
 

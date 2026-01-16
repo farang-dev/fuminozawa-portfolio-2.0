@@ -13,7 +13,7 @@ export const richTextComponents: any = {
         </h1>
     ),
     heading2: ({ children }: any) => (
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-20 mb-6 tracking-tight border-t pt-10 border-gray-100">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-12 mb-6 tracking-tight border-t pt-6 border-gray-100">
             {children}
         </h2>
     ),
