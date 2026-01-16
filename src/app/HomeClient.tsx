@@ -88,17 +88,45 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
     setShowContactForm(!showContactForm);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Create mailto link with form data
-    const subject = encodeURIComponent(formData.subject || 'お問い合わせ');
-    const body = encodeURIComponent(
-      `お名前: ${formData.name}\nメールアドレス: ${formData.email}\n\nメッセージ:\n${formData.message}`
-    );
-    window.open(`mailto:mf.nozawa@gmail.com?subject=${subject}&body=${body}`);
-    setIsEmailModalOpen(false);
-    setShowContactForm(false);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) throw new Error('Failed to send message');
+
+      setSubmitStatus({
+        type: 'success',
+        message: language === 'en' ? 'Message sent successfully!' : 'メッセージが送信されました！'
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+
+      // Close modal after success
+      setTimeout(() => {
+        setIsEmailModalOpen(false);
+        setShowContactForm(false);
+        setSubmitStatus({ type: null, message: '' });
+      }, 2000);
+
+    } catch (error) {
+      console.error('Contact form error:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: language === 'en' ? 'Failed to send message. Please try again later.' : '送信に失敗しました。後でもう一度お試しください。'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -908,6 +936,89 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
               )}
             </div>
           </div>
+
+
+          {/* Contact Section */}
+          <section id="contact" className="contact-section">
+            <div className="contact-container">
+              <div className="section-header mb-8">
+                <h2 className="text-2xl font-bold mb-3 tracking-tight">{language === 'en' ? 'CONTACT' : 'お問い合わせ'}</h2>
+                <p className="opacity-50 text-sm">{language === 'en' ? "Let's open up our conversation." : 'お気軽にご連絡ください。'}</p>
+              </div>
+
+              <div className="contact-form-card">
+                <form className="contact-form" onSubmit={handleFormSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="name-contact-section">{language === 'en' ? 'Name' : 'お名前'}</label>
+                    <input
+                      type="text"
+                      id="name-contact-section"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      placeholder={language === 'en' ? 'Your Name' : 'お名前'}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email-contact-section">{language === 'en' ? 'Email' : 'メールアドレス'}</label>
+                    <input
+                      type="email"
+                      id="email-contact-section"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="example@example.com"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="subject-contact-section">{language === 'en' ? 'Subject' : '件名'}</label>
+                    <input
+                      type="text"
+                      id="subject-contact-section"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder={language === 'en' ? 'What is this about?' : '件名'}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="message-contact-section">{language === 'en' ? 'Message' : 'メッセージ'}</label>
+                    <textarea
+                      id="message-contact-section"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      required
+                      rows={4}
+                      placeholder={language === 'en' ? 'How can I help you?' : 'メッセージをご記入ください'}
+                    />
+                  </div>
+
+                  {submitStatus.type && (
+                    <div className={`form-status ${submitStatus.type}`}>
+                      {submitStatus.message}
+                    </div>
+                  )}
+
+                  <button type="submit" className="submit-btn" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <i className="fas fa-circle-notch fa-spin" />
+                        {language === 'en' ? 'Sending...' : '送信中...'}
+                      </span>
+                    ) : (
+                      <>
+                        {language === 'en' ? 'Send Message' : 'メッセージを送信'}
+                        <i className="fas fa-paper-plane ml-2" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
 
           {/* Footer */}
           <footer>
