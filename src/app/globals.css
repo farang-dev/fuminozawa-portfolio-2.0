@@ -1548,16 +1548,14 @@ body.light .blog-view-all-cta:hover {
 
 /* Contact Section Styles - Compact & Premium */
 .contact-section {
-  padding: 60px 0 80px;
-  margin-top: 20px;
+  padding: 40px 0 80px;
+  margin-top: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .contact-container {
-  max-width: 500px;
-  /* More compact width */
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 .contact-form-card {

@@ -150,7 +150,12 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                                     )}
 
                                     <span className="text-gray-300">|</span>
-                                    <span className="text-gray-700 font-medium">Fumi Nozawa</span>
+                                    <Link
+                                        href="/?tab=services&lang=ja"
+                                        className="text-gray-700 font-medium hover:text-blue-600 transition-colors"
+                                    >
+                                        Fumi Nozawa
+                                    </Link>
                                 </div>
 
                                 {post.description && (
