@@ -9,6 +9,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import RelatedPosts from '@/components/RelatedPosts';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import PrismicContent from '@/components/PrismicContent';
+import ProfileSnippet from '@/components/ProfileSnippet';
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -158,6 +159,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
               {/* Article Content */}
               <PrismicContent field={post.content} />
+
+              {/* Profile Snippet */}
+              <ProfileSnippet locale="en" />
 
               {/* Related Posts */}
               <div className="mt-16 pt-12 border-t border-gray-200">
