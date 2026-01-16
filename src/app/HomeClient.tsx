@@ -943,7 +943,7 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
             <div className="contact-container">
               <div className="section-header mb-8">
                 <h2 className="text-2xl font-bold mb-3 tracking-tight">{language === 'en' ? 'CONTACT' : 'お問い合わせ'}</h2>
-                <p className="opacity-50 text-sm">{language === 'en' ? "Let's open up our conversation." : 'お気軽にご連絡ください。'}</p>
+                <p className="opacity-50 text-sm">{language === 'en' ? "Let's open up our conversation." : 'プロジェクトの相談、ご質問など、こちらのフォームからお気軽にご連絡ください。'}</p>
               </div>
 
               <div className="contact-form-card">
