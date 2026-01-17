@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { BlogPost } from '@/lib/prismic-blog';
 
 export default function Home({ initialWritings = [] }: { initialWritings?: BlogPost[] }) {
-  const [activeTab, setActiveTab] = useState('links');
+  const [activeTab, setActiveTab] = useState('services');
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [copyNotification, setCopyNotification] = useState(false);
@@ -58,7 +58,7 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
 
     // Check URL parameter for tab
     const tabParam = urlParams.get('tab');
-    if (tabParam && ['links', 'services', 'works', 'writing'].includes(tabParam)) {
+    if (tabParam && ['services', 'works', 'writing', 'gallery', 'links'].includes(tabParam)) {
       setActiveTab(tabParam);
     }
   }, []);
@@ -699,12 +699,6 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
           <div className="achievements-section">
             <div className="tabs-container">
               <div
-                className={`tab ${activeTab === 'links' ? 'active' : ''}`}
-                onClick={() => handleTabClick('links')}
-              >
-                Links
-              </div>
-              <div
                 className={`tab ${activeTab === 'services' ? 'active' : ''}`}
                 onClick={() => handleTabClick('services')}
               >
@@ -728,51 +722,16 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
               >
                 Gallery
               </div>
-            </div>
-
-            {/* Links Tab Content */}
-            <div
-              className={`tab-content ${activeTab === 'links' ? 'active' : ''}`}
-            >
-              <div className="links-container">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    className="link-item"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      '--accent-color': link.color,
-                      opacity: 1,
-                      transform: 'translateY(0px)',
-                      transition: '0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    } as React.CSSProperties}
-                  >
-                    <div className="link-icon">
-                      <i className={link.icon} />
-                    </div>
-                    <div className="link-text">{link.name}</div>
-                  </a>
-                ))}
-                <div
-                  className="link-item"
-                  onClick={() => setIsEmailModalOpen(true)}
-                  style={{
-                    '--accent-color': '#EA4335',
-                    opacity: 1,
-                    transform: 'translateY(0px)',
-                    transition: '0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    cursor: 'pointer',
-                  } as React.CSSProperties}
-                >
-                  <div className="link-icon">
-                    <i className="fas fa-envelope" />
-                  </div>
-                  <div className="link-text">Contact via Email</div>
-                </div>
+              <div
+                className={`tab ${activeTab === 'links' ? 'active' : ''}`}
+                onClick={() => handleTabClick('links')}
+              >
+                Links
               </div>
             </div>
+
+
+
 
             {/* Services Tab Content */}
             <div className={`tab-content ${activeTab === 'services' ? 'active' : ''}`}>
@@ -941,6 +900,54 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
                 </div>
               )}
             </div>
+
+            {/* Links Tab Content */}
+            <div
+              className={`tab-content ${activeTab === 'links' ? 'active' : ''}`}
+            >
+              <div className="links-container">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    className="link-item"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      '--accent-color': link.color,
+                      opacity: 1,
+                      transform: 'translateY(0px)',
+                      transition: '0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    } as React.CSSProperties}
+                  >
+                    <div className="link-icon">
+                      <i className="fas fa-envelope" />
+                    </div>
+                    <div className="link-text">{link.name}</div>
+                  </a>
+                ))}
+                <div
+                  className="link-item"
+                  onClick={() => setIsEmailModalOpen(true)}
+                  style={{
+                    '--accent-color': '#EA4335',
+                    opacity: 1,
+                    transform: 'translateY(0px)',
+                    transition: '0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    cursor: 'pointer',
+                  } as React.CSSProperties}
+                >
+                  <div className="link-icon">
+                    <i className="fas fa-envelope" />
+                  </div>
+                  <div className="link-text">Contact via Email</div>
+                </div>
+              </div>
+            </div>
+
+
+
+
           </div>
 
 
@@ -1031,10 +1038,11 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
             <p className="copyright">© 2025 fuminozawa - All Rights Reserved</p>
           </footer>
         </div>
-      </div>
+      </div >
 
       {/* Profile Modal */}
-      <div className={`modal ${isProfileModalOpen ? 'show' : ''}`}>
+      < div className={`modal ${isProfileModalOpen ? 'show' : ''}`
+      }>
         <div className="modal-content">
           <span
             className="close-modal"
@@ -1082,10 +1090,10 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
             </>
           )}
         </div>
-      </div>
+      </div >
 
       {/* Email Modal */}
-      <div className={`modal ${isEmailModalOpen ? 'show' : ''}`}>
+      < div className={`modal ${isEmailModalOpen ? 'show' : ''}`}>
         <div className="modal-content">
           <span
             className="close-modal"
@@ -1180,7 +1188,7 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
             </form>
           )}
         </div>
-      </div>
+      </div >
     </>
   );
 }
