@@ -8,8 +8,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const alternateUrls = getAlternateUrls('/');
 
   return generateSEOMetadata({
-    title: "Fumi Nozawa - Software Engineer & Marketer",
-    description: "Portfolio of Fumi Nozawa, a Software Engineer and Marketer specializing in Next.js, SEO, and Growth Strategies. Helping brands win in Japan and global markets.",
+    title: "Fumi Nozawa | Freelance Digital Marketer & Web Engineer (Japan/Global)",
+    description: "Freelance Digital Marketer & Web Engineer bridging Japan and the global market. I provide end-to-end support from Japan Market Entry and Global Expansion strategy to hands-on Web Development and AI Operations.",
     canonical: 'https://fuminozawa-info.site',
     locale: 'en-us',
     alternateUrls,
