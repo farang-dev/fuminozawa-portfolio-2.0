@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const alternateUrls = getAlternateUrls('/');
 
     return generateSEOMetadata({
-        title: "Fumi Nozawa | フリーランス デジタルマーケター & Webエンジニア (日本/グローバル)",
+        title: "野澤眞史 (Fumi Nozawa) | フリーランス デジタルマーケター & Webエンジニア",
         description: "日本とグローバル市場の架け橋となるフリーランスのデジタルマーケター兼Webエンジニア。日本市場参入・海外展開戦略から、Web開発・AI活用まで一気通貫で支援します。",
         canonical: 'https://fuminozawa-info.site/ja',
         locale: 'ja-jp',
