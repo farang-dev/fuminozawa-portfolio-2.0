@@ -10,8 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const alternateUrls = getAlternateUrls('blog');
 
   return generateSEOMetadata({
-    title: 'Blog | Fumi Nozawa',
-    description: 'Read articles and insights from Fumi Nozawa on software engineering, web development, and technology.',
+    title: 'Blog - Digital Marketing & Web Engineering Insights | Fumi Nozawa',
+    description: 'Explore insights on Digital Marketing, Global Business Strategy, and Web Engineering. Practical tips and thoughts from Fumi Nozawa for navigating the global market.',
     canonical: 'https://fuminozawa-info.site/blog',
     locale: 'en-us',
     alternateUrls,
