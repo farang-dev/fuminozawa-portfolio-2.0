@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { BlogPost } from '@/lib/prismic-blog';
 
-export default function Home({ initialWritings = [] }: { initialWritings?: BlogPost[] }) {
+export default function Home({ initialWritings = [], initialLocale = 'en' }: { initialWritings?: BlogPost[], initialLocale?: 'en' | 'ja' }) {
   const [activeTab, setActiveTab] = useState('services');
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [copyNotification, setCopyNotification] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'ja'>('en');
+  const [language, setLanguage] = useState<'en' | 'ja'>(initialLocale);
   const [particles, setParticles] = useState<Array<{ id: number, left: number, delay: number }>>([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -44,19 +44,8 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
     // Apply initial theme
     document.body.className = 'light';
 
-    // Detect browser language and set initial language (client-side only)
-    const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get('lang');
-
-    if (langParam === 'ja' || langParam === 'en') {
-      setLanguage(langParam);
-    } else {
-      const browserLang = navigator.language || navigator.languages?.[0];
-      const detectedLang = browserLang?.startsWith('ja') ? 'ja' : 'en';
-      setLanguage(detectedLang);
-    }
-
     // Check URL parameter for tab
+    const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
     if (tabParam && ['services', 'works', 'writing', 'gallery', 'links'].includes(tabParam)) {
       setActiveTab(tabParam);
@@ -595,7 +584,11 @@ export default function Home({ initialWritings = [] }: { initialWritings?: BlogP
     fetchWritings();
   }, [language]);
 
-  const toggleLanguage = () => setLanguage(language === 'en' ? 'ja' : 'en');
+  const toggleLanguage = () => {
+    const newLang = language === 'en' ? 'ja' : 'en';
+    const targetPath = newLang === 'ja' ? '/ja' : '/';
+    window.location.href = targetPath;
+  };
 
   return (
     <>

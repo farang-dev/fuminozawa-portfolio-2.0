@@ -46,7 +46,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <HomeClient initialWritings={posts} />
+      <HomeClient initialWritings={posts} initialLocale="en" />
     </>
   );
 }
