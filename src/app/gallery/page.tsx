@@ -15,5 +15,5 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function GalleryPage() {
   // We can optionally pre-fetch media here to dehydrate to the client
   // but for now let's just keep the CSR logic in GalleryClient
-  return <GalleryClient />;
+  return <GalleryClient locale="en" />;
 }

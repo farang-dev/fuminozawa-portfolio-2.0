@@ -49,7 +49,7 @@ const LazyImage = ({ item, index }: { item: InstagramMedia; index: number }) => 
     );
 };
 
-export default function GalleryClient() {
+export default function GalleryClient({ locale = 'en' }: { locale?: 'en' | 'ja' }) {
     const [media, setMedia] = useState<InstagramMedia[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -86,6 +86,8 @@ export default function GalleryClient() {
         fetchInstagramMedia();
     }, []);
 
+    const homeLink = locale === 'ja' ? '/ja' : '/';
+
     if (loading) {
         return (
             <div className="min-h-screen bg-white flex items-center justify-center">
@@ -102,7 +104,7 @@ export default function GalleryClient() {
                 <div className="text-center">
                     <h1 className="text-2xl font-semibold text-gray-900 mb-4">Error</h1>
                     <p className="text-gray-600 mb-6">{error}</p>
-                    <Link href="/" className="inline-block px-4 py-2 text-blue-600 hover:text-blue-800 transition-colors">
+                    <Link href={homeLink} className="inline-block px-4 py-2 text-blue-600 hover:text-blue-800 transition-colors">
                         ← Back to Home
                     </Link>
                 </div>
@@ -115,7 +117,7 @@ export default function GalleryClient() {
             <div className="max-w-full mx-auto">
                 {media.length === 0 ? (
                     <div className="flex items-center justify-center h-screen">
-                        <Link href="/" className="fixed top-8 left-8 z-10 p-3 bg-black bg-opacity-70 rounded-full hover:bg-opacity-90 transition-all duration-300">
+                        <Link href={homeLink} className="fixed top-8 left-8 z-10 p-3 bg-black bg-opacity-70 rounded-full hover:bg-opacity-90 transition-all duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
@@ -148,7 +150,7 @@ export default function GalleryClient() {
 
                 {media.length > 0 && (
                     <>
-                        <Link href="/" className="fixed top-8 left-8 z-10 p-3 bg-black bg-opacity-70 rounded-full hover:bg-opacity-90 transition-all duration-300">
+                        <Link href={homeLink} className="fixed top-8 left-8 z-10 p-3 bg-black bg-opacity-70 rounded-full hover:bg-opacity-90 transition-all duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>

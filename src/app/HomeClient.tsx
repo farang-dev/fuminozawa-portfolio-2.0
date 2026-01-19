@@ -201,7 +201,7 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
     {
       id: 'japan-market-entry',
       title: 'Japan Market Entry',
-      subtitle: 'Helping global brands win in Japan. 深い文化理解とローカルUX／マーケティングの実務で、日本における現地化と勝ち筋を作ります。',
+      subtitle: '深い文化理解とローカルUX／マーケティングの実務で、日本における現地化と勝ち筋を作ります。',
       description: '海外ブランドが直面する課題は、単なる言語翻訳ではありません。消費者の文化的文脈、購買動機、チャネル特性を踏まえた設計と運用が必要です。私はローカライズ戦略の立案からUX調整、デジタルマーケティングの実装まで、現地で結果を出すための実務を提供します。',
       deliverables: [
         '日本市場の需要調査とペルソナ設計',
@@ -711,7 +711,10 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
               </div>
               <div
                 className={`tab ${activeTab === 'gallery' ? 'active' : ''}`}
-                onClick={() => window.location.href = '/gallery'}
+                onClick={() => {
+                  const targetPath = language === 'ja' ? '/ja/gallery' : '/gallery';
+                  window.location.href = targetPath;
+                }}
               >
                 Gallery
               </div>
