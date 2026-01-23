@@ -1,7 +1,8 @@
 'use client';
 
+import { Suspense } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { locales, LocaleCode, getLocaleFromPath } from '@/lib/locales';
 
 interface LanguageSwitcherProps {
@@ -9,21 +10,29 @@ interface LanguageSwitcherProps {
     className?: string;
 }
 
-export default function LanguageSwitcher({
+function LanguageSwitcherInner({
     availableLocales,
     className = ''
 }: LanguageSwitcherProps) {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const currentLocale = getLocaleFromPath(pathname);
 
     // Get the path without locale prefix
     const pathWithoutLocale = pathname.replace(/^\/(ja\/)?/, '/');
 
     const getLocalePath = (locale: LocaleCode) => {
+        const queryString = searchParams.toString();
+        const suffix = queryString ? `?${queryString}` : '';
+
         if (locale === 'en-us') {
-            return pathWithoutLocale;
+            // Ensure we don't end up with // if pathWithoutLocale is /
+            const base = pathWithoutLocale === '/' ? '/' : pathWithoutLocale.replace(/\/$/, '');
+            return `${base}${suffix}`;
         }
-        return `/ja${pathWithoutLocale}`;
+        // For /ja, ensure we don't have trailing slash unless it's just /ja/ (which should be /ja)
+        const base = pathWithoutLocale === '/' ? '/ja' : `/ja${pathWithoutLocale.replace(/\/$/, '')}`;
+        return `${base}${suffix}`;
     };
 
     return (
@@ -63,5 +72,13 @@ export default function LanguageSwitcher({
                 );
             })}
         </div>
+    );
+}
+
+export default function LanguageSwitcher(props: LanguageSwitcherProps) {
+    return (
+        <Suspense fallback={<div className={`flex items-center gap-2 ${props.className || ''}`} />}>
+            <LanguageSwitcherInner {...props} />
+        </Suspense>
     );
 }

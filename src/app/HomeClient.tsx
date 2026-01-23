@@ -586,8 +586,9 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
 
   const toggleLanguage = () => {
     const newLang = language === 'en' ? 'ja' : 'en';
-    const targetPath = newLang === 'ja' ? '/ja' : '/';
-    window.location.href = targetPath;
+    const url = new URL(window.location.href);
+    url.pathname = newLang === 'ja' ? '/ja' : '/';
+    window.location.href = url.toString();
   };
 
   return (
