@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return generateSEOMetadata({
     title: 'Blog - Digital Marketing & Web Engineering Insights | Fumi Nozawa',
-    description: 'Explore insights on Digital Marketing, Global Business Strategy, and Web Engineering. Practical tips and thoughts from Fumi Nozawa for navigating the global market.',
+    description: 'Insights into the intersection of technology and digital experience—from development and strategy to AI, SEO, and marketing trends. Fumi Nozawa\'s official blog.',
     canonical: 'https://fuminozawa-info.site/blog',
     locale: 'en-us',
     alternateUrls,
@@ -39,7 +39,7 @@ export default async function BlogPage() {
               Journal <span className="text-blue-600">.</span>
             </h1>
             <p className="text-xl text-gray-600 font-light max-w-2xl">
-              Thoughts on software engineering, marketing, and the intersection of technology and human experience.
+              Insights into the intersection of technology and digital experience—from web development and strategy to AI, SEO, and marketing trends.
             </p>
           </div>
 

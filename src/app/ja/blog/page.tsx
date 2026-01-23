@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     return generateSEOMetadata({
         title: 'ブログ - デジタルマーケティングとWeb開発のナレッジ | Fumi Nozawa (野澤眞史)',
-        description: 'デジタルマーケティング、Webエンジニアリング、グローバルビジネスに関する最新の知見や実践的なノウハウを発信しています。野澤眞史の公式ブログ。',
+        description: 'Web開発・戦略の視点から、UX、エンジニアリング、生成AI、SEO、SNS、マーケティングの最新トレンドまで。テクノロジーとデジタル体験の交差点を考察する野澤眞史のブログ。',
         canonical: 'https://fuminozawa-info.site/ja/blog',
         locale: 'ja-jp',
         alternateUrls,
@@ -39,7 +39,7 @@ export default async function BlogPageJa() {
                             ブログ <span className="text-blue-600">.</span>
                         </h1>
                         <p className="text-xl text-gray-600 font-light max-w-2xl">
-                            ソフトウェアエンジニアリング、マーケティング、テクノロジーと人間体験の交差点についての考察。
+                            Web開発・戦略の視点から、Web体験、エンジニアリング、生成AI、SEO/GEO、SNS、マーケティングの最新トレンドまで、テクノロジーとデジタル体験の交差点を考察。
                         </p>
                     </div>
 
