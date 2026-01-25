@@ -4,13 +4,31 @@ import type { Metadata } from 'next';
 import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
-export async function generateMetadata(): Promise<Metadata> {
-    const alternateUrls = getAlternateUrls('/');
+type Props = {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+    const params = await searchParams;
+    const tab = params.tab as string | undefined;
+
+    const tabTitles: Record<string, string> = {
+        services: "提供サービス",
+        works: "制作実績・プロジェクト",
+        writing: "ブログ記事",
+        links: "リンク・お問合せ",
+    };
+
+    const baseTitle = "Fumi Nozawa (野澤眞史) | フリーランス デジタルマーケター & Webエンジニア";
+    const title = tab && tabTitles[tab] ? `${tabTitles[tab]} | ${baseTitle}` : baseTitle;
+    const canonical = tab ? `https://fuminozawa-info.site/ja?tab=${tab}` : 'https://fuminozawa-info.site/ja';
+    const alternateUrlPath = tab ? `?tab=${tab}` : '/';
+    const alternateUrls = getAlternateUrls(alternateUrlPath);
 
     return generateSEOMetadata({
-        title: "Fumi Nozawa (野澤眞史) | フリーランス デジタルマーケター & Webエンジニア",
+        title,
         description: "日本とグローバル市場の架け橋となるフリーランスのデジタルマーケター兼Webエンジニア。日本市場参入・海外展開戦略から、Web開発・AI活用まで一気通貫で支援します。",
-        canonical: 'https://fuminozawa-info.site/ja',
+        canonical,
         locale: 'ja-jp',
         alternateUrls,
     });
