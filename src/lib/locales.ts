@@ -70,13 +70,29 @@ export function getLocalePrefix(locale: LocaleCode): string {
 /**
  * Get alternate URLs for hreflang tags
  */
-export function getAlternateUrls(path: string, baseUrl: string = 'https://fuminozawa-info.site') {
-    const cleanPath = path.replace(/^\/(ja\/)?/, '');
+export function getAlternateUrls(fullPath: string, baseUrl: string = 'https://fuminozawa-info.site') {
+    // Split path and query
+    const [path, queryString] = fullPath.split('?');
+
+    // Clean the route path: remove /ja prefix and surrounding slashes
+    let cleanRoute = path.replace(/^\/+(ja\/?)?/, '').replace(/\/+$/, '');
+
+    const constructUrl = (prefix: string) => {
+        const segments = [baseUrl, prefix, cleanRoute].filter(Boolean);
+        let url = segments.join('/');
+
+        // Append query string if it exists
+        if (queryString) {
+            url += `?${queryString}`;
+        }
+
+        return url;
+    };
 
     return {
-        'en-us': `${baseUrl}/${cleanPath}`,
-        'ja-jp': `${baseUrl}/ja/${cleanPath}`,
-        'x-default': `${baseUrl}/${cleanPath}`,
+        'en-us': constructUrl(''),
+        'ja-jp': constructUrl('ja'),
+        'x-default': constructUrl(''),
     };
 }
 
