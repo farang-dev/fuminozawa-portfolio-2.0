@@ -36,7 +36,10 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
 export default async function HomeJa() {
     const posts = await getBlogPosts('ja-jp');
-    const websiteJsonLd = generateWebsiteJSONLD();
+    const websiteJsonLd = generateWebsiteJSONLD({
+        name: '野澤眞史 | デジタルマーケター & Webエンジニア',
+        locale: 'ja-jp'
+    });
 
     // Person Schema for E-E-A-T (Localized)
     const personJsonLd = {

@@ -36,7 +36,10 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
 export default async function Home() {
   const posts = await getBlogPosts('en-us');
-  const websiteJsonLd = generateWebsiteJSONLD();
+  const websiteJsonLd = generateWebsiteJSONLD({
+    name: 'Fumi Nozawa | Digital Marketer & Developer',
+    locale: 'en-us'
+  });
 
   // Person Schema for E-E-A-T
   const personJsonLd = {

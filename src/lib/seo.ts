@@ -139,18 +139,20 @@ export function generateArticleJSONLD({
     };
 }
 
-export function generateWebsiteJSONLD() {
+export function generateWebsiteJSONLD(params?: { name?: string; locale?: LocaleCode }) {
+    const { name = 'Fumi Nozawa', locale = 'en-us' } = params || {};
+    const inLanguage = locale === 'en-us' ? 'en-US' : 'ja-JP';
+
     return {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'Fumi Nozawa - Portfolio',
-        description: 'Software Engineer specializing in Next.js and TypeScript',
+        name,
         url: 'https://fuminozawa-info.site',
         author: {
             '@type': 'Person',
             name: 'Fumi Nozawa',
             url: 'https://fuminozawa-info.site',
         },
-        inLanguage: 'en-US',
+        inLanguage,
     };
 }
