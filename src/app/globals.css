@@ -1438,6 +1438,11 @@ body.light .stance-section p {
   margin: 0 0 0.4rem 0;
   color: white;
   line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+.blog-card-mini:hover h3 {
+  color: #2563eb;
 }
 
 .blog-card-mini p {
@@ -1480,6 +1485,11 @@ body.light .blog-card-mini:hover {
 
 body.light .blog-card-mini h3 {
   color: #1a202c;
+  transition: color 0.3s ease;
+}
+
+body.light .blog-card-mini:hover h3 {
+  color: #2563eb;
 }
 
 body.light .blog-card-mini p {
