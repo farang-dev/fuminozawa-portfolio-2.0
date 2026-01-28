@@ -1,11 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { BlogPost } from '@/lib/prismic-blog';
 
-export default function Home({ initialWritings = [], initialLocale = 'en' }: { initialWritings?: BlogPost[], initialLocale?: 'en' | 'ja' }) {
-  const [activeTab, setActiveTab] = useState('services');
+export default function Home({
+  initialWritings = [],
+  initialLocale = 'en',
+  initialTab = 'services'
+}: {
+  initialWritings?: BlogPost[],
+  initialLocale?: 'en' | 'ja',
+  initialTab?: string
+}) {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [copyNotification, setCopyNotification] = useState(false);
@@ -21,15 +30,6 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
   });
 
   useEffect(() => {
-    // Hide loading overlay after component mounts
-    const loadingOverlay = document.querySelector('.loading-overlay') as HTMLElement;
-    if (loadingOverlay) {
-      setTimeout(() => {
-        loadingOverlay.style.opacity = '0';
-        loadingOverlay.style.visibility = 'hidden';
-      }, 500);
-    }
-
     // Initialize particles
     const particleArray = [];
     for (let i = 0; i < 20; i++) {
@@ -43,13 +43,6 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
 
     // Apply initial theme
     document.body.className = 'light';
-
-    // Check URL parameter for tab
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
-    if (tabParam && ['services', 'works', 'writing', 'gallery', 'links'].includes(tabParam)) {
-      setActiveTab(tabParam);
-    }
   }, []);
 
   useEffect(() => {
@@ -57,12 +50,15 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
     document.body.className = isDarkMode ? 'dark' : 'light';
   }, [isDarkMode]);
 
+  useEffect(() => {
+    // Update active tab when the prop changes (e.g., via navigation)
+    setActiveTab(initialTab);
+  }, [initialTab]);
+
   const handleTabClick = (tabName: string) => {
-    setActiveTab(tabName);
-    // Update URL parameter
-    const url = new URL(window.location.href);
-    url.searchParams.set('tab', tabName);
-    window.history.pushState({}, '', url.toString());
+    // No-op here: Let the physical navigation (Link) update the prop
+    // which then updates the state once in the new page or via useEffect.
+    // This prevents the "double animation" flash.
   };
 
   const handleEmailCopy = async () => {
@@ -587,16 +583,22 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
   const toggleLanguage = () => {
     const newLang = language === 'en' ? 'ja' : 'en';
     const url = new URL(window.location.href);
-    url.pathname = newLang === 'ja' ? '/ja' : '/';
+
+    // Get the path without locale prefix
+    let cleanPath = url.pathname;
+    if (cleanPath.startsWith('/ja')) {
+      cleanPath = cleanPath.replace(/^\/ja/, '');
+    }
+    if (!cleanPath.startsWith('/')) {
+      cleanPath = '/' + cleanPath;
+    }
+
+    const targetPath = newLang === 'ja' ? `/ja${cleanPath === '/' ? '' : cleanPath}` : (cleanPath === '' ? '/' : cleanPath);
+    url.pathname = targetPath;
     window.location.href = url.toString();
   };
-
   return (
     <>
-      <div className="loading-overlay">
-        <div className="loading-spinner">F</div>
-      </div>
-
       {/* Particles */}
       <div className="particles">
         {particles.map((particle) => (
@@ -692,39 +694,45 @@ export default function Home({ initialWritings = [], initialLocale = 'en' }: { i
           {/* Tabs Navigation */}
           <div className="achievements-section">
             <div className="tabs-container">
-              <div
+              <Link
+                href={language === 'ja' ? '/ja/services' : '/services'}
                 className={`tab ${activeTab === 'services' ? 'active' : ''}`}
                 onClick={() => handleTabClick('services')}
+                scroll={false}
               >
                 Services
-              </div>
-              <div
+              </Link>
+              <Link
+                href={language === 'ja' ? '/ja/works' : '/works'}
                 className={`tab ${activeTab === 'works' ? 'active' : ''}`}
                 onClick={() => handleTabClick('works')}
+                scroll={false}
               >
                 Works
-              </div>
-              <div
+              </Link>
+              <Link
+                href={language === 'ja' ? '/ja/writing' : '/writing'}
                 className={`tab ${activeTab === 'writing' ? 'active' : ''}`}
                 onClick={() => handleTabClick('writing')}
+                scroll={false}
               >
                 Blog
-              </div>
-              <div
+              </Link>
+              <Link
+                href={language === 'ja' ? '/ja/gallery' : '/gallery'}
                 className={`tab ${activeTab === 'gallery' ? 'active' : ''}`}
-                onClick={() => {
-                  const targetPath = language === 'ja' ? '/ja/gallery' : '/gallery';
-                  window.location.href = targetPath;
-                }}
+                scroll={false}
               >
                 Gallery
-              </div>
-              <div
+              </Link>
+              <Link
+                href={language === 'ja' ? '/ja/links' : '/links'}
                 className={`tab ${activeTab === 'links' ? 'active' : ''}`}
                 onClick={() => handleTabClick('links')}
+                scroll={false}
               >
                 Links
-              </div>
+              </Link>
             </div>
 
 

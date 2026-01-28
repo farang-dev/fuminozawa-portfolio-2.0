@@ -4,31 +4,14 @@ import type { Metadata } from 'next';
 import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
-type Props = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const params = await searchParams;
-  const tab = params.tab as string | undefined;
-
-  const tabTitles: Record<string, string> = {
-    services: "Services",
-    works: "Works & Portfolio",
-    writing: "Blog & Thoughts",
-    links: "Connect & Links",
-  };
-
-  const baseTitle = "Fumi Nozawa | Freelance Digital Marketer & Web Engineer (Japan/Global)";
-  const title = tab && tabTitles[tab] ? `${tabTitles[tab]} | ${baseTitle}` : baseTitle;
-  const canonical = tab ? `https://fuminozawa-info.site/?tab=${tab}` : 'https://fuminozawa-info.site';
-  const alternateUrlPath = tab ? `?tab=${tab}` : '/';
-  const alternateUrls = getAlternateUrls(alternateUrlPath);
+export async function generateMetadata(): Promise<Metadata> {
+  const alternateUrls = getAlternateUrls('/');
 
   return generateSEOMetadata({
-    title,
+    title: "Fumi Nozawa | Freelance Digital Marketer & Web Engineer (Japan/Global)",
     description: "Freelance Digital Marketer & Web Engineer bridging Japan and the global market. I provide end-to-end support from Japan Market Entry and Global Expansion strategy to hands-on Web Development and AI Operations.",
-    canonical,
+    canonical: 'https://fuminozawa-info.site',
     locale: 'en-us',
     alternateUrls,
   });
@@ -67,7 +50,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <HomeClient initialWritings={posts} initialLocale="en" />
+      <HomeClient initialWritings={posts} initialLocale="en" initialTab="services" />
     </>
   );
 }
