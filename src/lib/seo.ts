@@ -66,7 +66,7 @@ export function generateSEOMetadata({
                 {
                     url: ogImage || defaultImage,
                     width: 1200,
-                    height: 630,
+                    height: 627,
                     alt: title,
                     type: (ogImage || defaultImage).endsWith('.png') ? 'image/png' : 'image/jpeg',
                 },
