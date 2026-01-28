@@ -21,13 +21,26 @@ export async function generateStaticParams() {
         }));
 }
 
+import { redirect } from 'next/navigation';
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const post = await getBlogPostByUid(slug, 'ja-jp');
 
     if (!post) {
+        // Check if it exists in English
+        const enPost = await getBlogPostByUid(slug, 'en-us');
+        if (enPost) {
+            return generateSEOMetadata({
+                title: enPost.title,
+                description: enPost.description || '',
+                noindex: true,
+                locale: 'en-us',
+            });
+        }
+
         return generateSEOMetadata({
-            title: '記事が見つかりません | Fumi Nozawa',
+            title: '記事が見つかりません | 野澤眞史',
             description: 'リクエストされたブログ記事が見つかりませんでした。',
             noindex: true,
             locale: 'ja-jp',
@@ -57,6 +70,11 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
     const post = await getBlogPostByUid(slug, 'ja-jp');
 
     if (!post) {
+        // Check if the post exists in English
+        const enPost = await getBlogPostByUid(slug, 'en-us');
+        if (enPost) {
+            redirect(`/blog/${slug}`);
+        }
         notFound();
     }
 

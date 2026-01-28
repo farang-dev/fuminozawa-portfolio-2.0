@@ -21,11 +21,24 @@ export async function generateStaticParams() {
     }));
 }
 
+import { redirect } from 'next/navigation';
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostByUid(slug, 'en-us');
 
   if (!post) {
+    // Check if it exists in Japanese to avoid returning bad metadata if we're about to redirect
+    const jaPost = await getBlogPostByUid(slug, 'ja-jp');
+    if (jaPost) {
+      return generateSEOMetadata({
+        title: jaPost.title,
+        description: jaPost.description || '',
+        noindex: true, // Don't index the "wrong" language URL
+        locale: 'ja-jp',
+      });
+    }
+
     return generateSEOMetadata({
       title: 'Post Not Found | Fumi Nozawa',
       description: 'The requested blog post could not be found.',
@@ -34,6 +47,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     });
   }
 
+  // ... rest of generateMetadata
   const description = post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`;
   const url = `https://fuminozawa-info.site/blog/${post.slug}`;
   const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
@@ -57,6 +71,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = await getBlogPostByUid(slug, 'en-us');
 
   if (!post) {
+    // Check if the post exists in Japanese
+    const jaPost = await getBlogPostByUid(slug, 'ja-jp');
+    if (jaPost) {
+      redirect(`/ja/blog/${slug}`);
+    }
     notFound();
   }
 
