@@ -852,7 +852,7 @@ export default function Home({
             >
               <div className="blog-grid-mini">
                 {writings.length > 0 ? (
-                  writings.map((writing) => (
+                  writings.slice(0, 10).map((writing) => (
                     <div key={writing.id} className="blog-card-mini group">
                       {writing.featuredImage && (
                         <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-image">
