@@ -855,7 +855,7 @@ export default function Home({
                   writings.map((writing) => (
                     <div key={writing.id} className="blog-card-mini group">
                       {writing.featuredImage && (
-                        <div className="blog-card-image">
+                        <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-image">
                           <Image
                             src={writing.featuredImage.url}
                             alt={writing.featuredImage.alt || writing.title}
@@ -863,7 +863,7 @@ export default function Home({
                             sizes="(max-width: 768px) 100vw, 400px"
                             className="object-cover"
                           />
-                        </div>
+                        </Link>
                       )}
                       <div className="blog-card-content">
                         <div className="blog-card-meta">
@@ -880,12 +880,14 @@ export default function Home({
                             <span className="blog-card-tag">{writing.tags[0]}</span>
                           )}
                         </div>
-                        <h3>{writing.title}</h3>
+                        <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`}>
+                          <h3>{writing.title}</h3>
+                        </Link>
                         <p>{writing.description}</p>
-                        <a href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-link">
+                        <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-link">
                           {language === 'ja' ? '記事を読む' : 'Read Article'}
                           <i className="fas fa-arrow-right ml-2" />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))
