@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" prefix="og: http://ogp.me/ns#" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         {/* Google Analytics */}
         <Script

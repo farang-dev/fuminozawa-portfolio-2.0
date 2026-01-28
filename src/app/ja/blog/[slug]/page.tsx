@@ -48,6 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         locale: 'ja-jp',
         alternateUrls,
         ogImage: post.featuredImage?.url,
+        tags: post.tags,
     });
 }
 

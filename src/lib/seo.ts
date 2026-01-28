@@ -13,6 +13,7 @@ interface SEOProps {
     noindex?: boolean;
     locale?: LocaleCode;
     alternateUrls?: Record<string, string>;
+    tags?: string[];
 }
 
 export function generateSEOMetadata({
@@ -27,6 +28,7 @@ export function generateSEOMetadata({
     noindex = false,
     locale = 'en-us',
     alternateUrls,
+    tags,
 }: SEOProps): Metadata {
     const baseUrl = 'https://fuminozawa-info.site';
     const fullCanonical = canonical || baseUrl;
@@ -66,11 +68,13 @@ export function generateSEOMetadata({
                     width: 1200,
                     height: 630,
                     alt: title,
+                    type: (ogImage || defaultImage).endsWith('.png') ? 'image/png' : 'image/jpeg',
                 },
             ],
             ...(publishedTime && { publishedTime }),
             ...(modifiedTime && { modifiedTime }),
             ...(author && ogType === 'article' && { authors: [author] }),
+            ...(tags && ogType === 'article' && { tags }),
         },
         twitter: {
             card: 'summary_large_image',
