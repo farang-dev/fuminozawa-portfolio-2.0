@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
     const alternateUrls = getAlternateUrls('/works');
 
     return generateSEOMetadata({
-        title: "Works & Portfolio | Fumi Nozawa",
+        title: "Works | Fumi Nozawa",
         description: "Explore the portfolio of Fumi Nozawa, featuring web development projects, digital marketing campaigns, and creative direction.",
         canonical: 'https://fuminozawa-info.site/works',
         locale: 'en-us',
