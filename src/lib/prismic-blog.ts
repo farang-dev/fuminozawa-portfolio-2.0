@@ -85,10 +85,16 @@ export async function getBlogPostByUid(
             lang: prismicLocale,
         });
 
+        if (!post) {
+            console.log(`[Prismic] No post found for UID: "${uid}" in locale: "${prismicLocale}"`);
+            return null;
+        }
+
         console.log(`[Prismic] Successfully found post: ${post.uid}`);
 
         if (!post.uid) {
-            throw new Error(`Post ${uid} has no UID`);
+            console.error(`[Prismic] Post found but has no UID: ${post.id}`);
+            return null;
         }
 
         return {
@@ -108,8 +114,14 @@ export async function getBlogPostByUid(
                 dimensions: post.data.featured_image.dimensions,
             } : undefined,
         };
-    } catch (error) {
-        console.error(`Error fetching blog post ${uid}:`, error);
+    } catch (error: any) {
+        // Handle "NotFoundError" or generic document not found error
+        if (error.name === 'NotFoundError' || error.message?.includes('No documents were returned')) {
+            console.log(`[Prismic] Post not found: "${uid}" in "${locale}"`);
+            return null;
+        }
+
+        console.error(`Error fetching blog post ${uid} in ${locale}:`, error);
         return null;
     }
 }
