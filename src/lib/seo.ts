@@ -30,11 +30,16 @@ export function generateSEOMetadata({
 }: SEOProps): Metadata {
     const baseUrl = 'https://fuminozawa-info.site';
     const fullCanonical = canonical || baseUrl;
-    const defaultImage = `${baseUrl}/og-image.png`;
+    // Use profile.jpg as fallback if og-image.png doesn't exist
+    const defaultImage = `${baseUrl}/profile.jpg`;
 
-    const localeData = locales[locale];
     const ogLocale = locale === 'en-us' ? 'en_US' : 'ja_JP';
     const alternateOgLocale = locale === 'en-us' ? 'ja_JP' : 'en_US';
+
+    // Dynamic site name based on locale
+    const siteName = locale === 'en-us'
+        ? 'Fumi Nozawa | Digital Marketer & Developer'
+        : '野澤眞史 | デジタルマーケター & Webエンジニア';
 
     return {
         title,
@@ -51,7 +56,7 @@ export function generateSEOMetadata({
             title,
             description,
             url: fullCanonical,
-            siteName: 'Fumi Nozawa - Portfolio',
+            siteName,
             locale: ogLocale,
             alternateLocale: [alternateOgLocale],
             type: ogType,
@@ -73,7 +78,10 @@ export function generateSEOMetadata({
             description,
             creator: '@fuminozawa',
             site: '@fuminozawa',
-            images: [ogImage || defaultImage],
+            images: [{
+                url: ogImage || defaultImage,
+                alt: title,
+            }],
         },
         robots: {
             index: !noindex,
