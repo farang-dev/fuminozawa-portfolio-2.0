@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Prismic webhook requirement: allow POST requests
+  skipTrailingSlashRedirect: true,
   images: {
-    unoptimized: true,
+    // unoptimized: true, // Commented out to potentially fix 405 issues on revalidate if related to image processing middleware interference
     domains: [
       "source.unsplash.com",
       "images.unsplash.com",
