@@ -48,7 +48,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   // ... rest of generateMetadata
-  const description = post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`;
+  // Ensure description is at least 100 characters for LinkedIn/SEO
+  let description = post.description || `Read "${post.title}" on Fumi Nozawa's portfolio. Deep dive into web engineering, digital marketing, and the future of technology curated by Fumi Nozawa.`;
+
+  if (description.length < 100) {
+    description = `${description} Explore more insights on web development and digital marketing strategy by Fumi Nozawa.`;
+  }
+
   const url = `https://fuminozawa-info.site/blog/${post.slug}`;
   const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
 

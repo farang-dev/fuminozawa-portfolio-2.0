@@ -47,7 +47,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         });
     }
 
-    const description = post.description || `${post.title}を読む - Fumi Nozawaのポートフォリオ`;
+    // Ensure description is at least 100 characters for LinkedIn/SEO
+    let description = post.description || `${post.title}を読む - Fumi Nozawaのポートフォリオ。Web開発、デジタルマーケティング、そしてテクノロジーの未来について野澤眞史（Fumi Nozawa）が考察します。`;
+
+    if (description.length < 100) {
+        description = `${description} 野澤眞史のポートフォリオブログでは、Webエンジニアリングとデジタル戦略の交差点から価値あるインサイトを発信しています。`;
+    }
+
     const url = `https://fuminozawa-info.site/ja/blog/${post.slug}`;
     const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
 
