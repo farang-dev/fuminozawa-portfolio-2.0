@@ -47,7 +47,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     });
   }
 
-  // ... rest of generateMetadata
   // Ensure description is at least 100 characters for LinkedIn/SEO
   let description = post.description || `Read "${post.title}" on Fumi Nozawa's portfolio. Deep dive into web engineering, digital marketing, and the future of technology curated by Fumi Nozawa.`;
 
@@ -85,6 +84,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  // Ensure description is at least 100 characters for JSON-LD
+  let description = post.description || `Read "${post.title}" on Fumi Nozawa's portfolio. Deep dive into web engineering, digital marketing, and the future of technology curated by Fumi Nozawa.`;
+  if (description.length < 100) {
+    description = `${description} Explore more insights on web development and digital marketing strategy by Fumi Nozawa.`;
+  }
+
   // Get all posts for related posts section
   const allPosts = await getBlogPosts('en-us');
 
@@ -97,7 +102,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Generate JSON-LD structured data
   const jsonLd = generateArticleJSONLD({
     title: post.title,
-    description: post.description || `Read ${post.title} on Fumi Nozawa's portfolio.`,
+    description: description,
     url: `https://fuminozawa-info.site/blog/${post.slug}`,
     datePublished: post.publishedDate,
     dateModified: post.updatedDate,

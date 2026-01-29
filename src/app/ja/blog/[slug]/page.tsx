@@ -47,7 +47,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         });
     }
 
-    // Ensure description is at least 100 characters for LinkedIn/SEO
     let description = post.description || `${post.title}を読む - Fumi Nozawaのポートフォリオ。Web開発、デジタルマーケティング、そしてテクノロジーの未来について野澤眞史（Fumi Nozawa）が考察します。`;
 
     if (description.length < 100) {
@@ -84,6 +83,12 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
         notFound();
     }
 
+    // Ensure description is at least 100 characters for JSON-LD
+    let description = post.description || `${post.title}を読む - Fumi Nozawaのポートフォリオ。Web開発、デジタルマーケティング、そしてテクノロジーの未来について野澤眞史（Fumi Nozawa）が考察します。`;
+    if (description.length < 100) {
+        description = `${description} 野澤眞史のポートフォリオブログでは、Webエンジニアリングとデジタル戦略の交差点から価値あるインサイトを発信しています。`;
+    }
+
     // Get all posts for related posts section
     const allPosts = await getBlogPosts('ja-jp');
 
@@ -96,7 +101,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
     // Generate JSON-LD structured data
     const jsonLd = generateArticleJSONLD({
         title: post.title,
-        description: post.description || `${post.title}を読む - Fumi Nozawaのポートフォリオ`,
+        description: description,
         url: `https://fuminozawa-info.site/ja/blog/${post.slug}`,
         datePublished: post.publishedDate,
         dateModified: post.updatedDate,
