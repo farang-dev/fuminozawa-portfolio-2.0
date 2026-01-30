@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { locales, LocaleCode, getLocaleFromPath } from '@/lib/locales';
+import { locales, type LocaleCode, getLocaleFromPath } from '@/lib/locales';
 
 interface LanguageSwitcherProps {
     availableLocales?: LocaleCode[];

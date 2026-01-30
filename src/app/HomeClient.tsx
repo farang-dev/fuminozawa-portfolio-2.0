@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BlogPost } from '@/lib/prismic-blog';
+import type { BlogPost } from '@/lib/prismic-blog';
 
 export default function Home({
   initialWritings = [],

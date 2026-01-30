@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { BlogPost } from '@/lib/prismic-blog';
+import type { BlogPost } from '@/lib/prismic-blog';
 
 interface RelatedPostsProps {
     currentPostId: string;

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { InstagramMedia, getInstagramMedia } from '@/lib/instagram';
+import { type InstagramMedia, getInstagramMedia } from '@/lib/instagram';
 import { useInView } from 'react-intersection-observer';
 
 // Optimized lazy loaded image component with intersection observer

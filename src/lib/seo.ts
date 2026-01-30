@@ -1,5 +1,5 @@
-import { Metadata } from 'next';
-import { LocaleCode, locales, getAlternateUrls } from './locales';
+import type { Metadata } from 'next';
+import { type LocaleCode, locales, getAlternateUrls } from './locales';
 
 interface SEOProps {
     title: string;

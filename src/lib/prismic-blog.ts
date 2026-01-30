@@ -1,6 +1,6 @@
 import { createClient } from '../../prismicio';
 import * as prismic from '@prismicio/client';
-import { LocaleCode, localeCodeToPrismicLocale } from './locales';
+import { type LocaleCode, localeCodeToPrismicLocale } from './locales';
 
 export interface BlogPost {
     id: string;

@@ -44,7 +44,7 @@ export function detectUserLocale(acceptLanguage?: string | null): LocaleCode {
         .split(',')
         .map(lang => {
             const [code, q = '1'] = lang.trim().split(';q=');
-            return { code: code.toLowerCase(), quality: parseFloat(q) };
+            return { code: code.toLowerCase(), quality: Number.parseFloat(q) };
         })
         .sort((a, b) => b.quality - a.quality);
 
@@ -70,12 +70,12 @@ export function getLocalePrefix(locale: LocaleCode): string {
 /**
  * Get alternate URLs for hreflang tags
  */
-export function getAlternateUrls(fullPath: string, baseUrl: string = 'https://fuminozawa-info.site') {
+export function getAlternateUrls(fullPath: string, baseUrl = 'https://fuminozawa-info.site') {
     // Split path and query
     const [path, queryString] = fullPath.split('?');
 
     // Clean the route path: remove /ja prefix and surrounding slashes
-    let cleanRoute = path.replace(/^\/+(ja\/?)?/, '').replace(/\/+$/, '');
+    const cleanRoute = path.replace(/^\/+(ja\/?)?/, '').replace(/\/+$/, '');
 
     const constructUrl = (prefix: string) => {
         const segments = [baseUrl, prefix, cleanRoute].filter(Boolean);
