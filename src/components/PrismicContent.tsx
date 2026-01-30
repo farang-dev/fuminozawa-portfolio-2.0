@@ -1,5 +1,4 @@
 import { PrismicRichText } from '@prismicio/react';
-import { JSXMapSerializer } from '@prismicio/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,12 +7,12 @@ import Link from 'next/link';
  */
 export const richTextComponents: any = {
     heading1: ({ children }: any) => (
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-10 mb-6 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-10 mb-4 tracking-tight">
             {children}
         </h1>
     ),
     heading2: ({ children }: any) => (
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-12 mb-6 tracking-tight border-t pt-6 border-gray-100">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-10 mb-4 tracking-tight border-t pt-6 border-gray-100">
             {children}
         </h2>
     ),
@@ -23,7 +22,7 @@ export const richTextComponents: any = {
         </h3>
     ),
     paragraph: ({ children }: any) => (
-        <p className="text-gray-800 leading-relaxed mb-6 text-base sm:text-lg">
+        <p className="text-gray-800 leading-relaxed mb-4 text-base sm:text-lg last:mb-0">
             {children}
         </p>
     ),
@@ -34,20 +33,20 @@ export const richTextComponents: any = {
         <em className="italic text-gray-800">{children}</em>
     ),
     listItem: ({ children }: any) => (
-        <li className="text-gray-800 leading-relaxed mb-3 ml-6 list-disc marker:text-blue-500">
+        <li className="text-gray-800 leading-relaxed ml-6 list-disc marker:text-blue-500 pl-2 [&_p]:inline [&_p]:m-0">
             {children}
         </li>
     ),
     oListItem: ({ children }: any) => (
-        <li className="text-gray-800 leading-relaxed mb-3 ml-6 list-decimal marker:text-blue-500 marker:font-bold">
+        <li className="text-gray-800 leading-relaxed ml-6 list-decimal marker:text-blue-500 marker:font-bold pl-2 [&_p]:inline [&_p]:m-0">
             {children}
         </li>
     ),
     list: ({ children }: any) => (
-        <ul className="my-6 space-y-1">{children}</ul>
+        <ul className="mb-4 mt-1 space-y-3">{children}</ul>
     ),
     oList: ({ children }: any) => (
-        <ol className="my-6 space-y-1">{children}</ol>
+        <ol className="mb-4 mt-1 space-y-3">{children}</ol>
     ),
     image: ({ node }: any) => {
         if (!node.url) return null;
@@ -84,12 +83,6 @@ export const richTextComponents: any = {
             </Link>
         );
     },
-    label: ({ node, children }: any) => {
-        if (node.data.label === 'section-line' || node.data.label === 'divider') {
-            return <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />;
-        }
-        return <span className={node.data.label}>{children}</span>;
-    },
     embed: ({ node }: any) => (
         <div
             className="my-10 rounded-2xl overflow-hidden shadow-lg border border-gray-100"
@@ -101,6 +94,27 @@ export const richTextComponents: any = {
             {children}
         </blockquote>
     ),
+    preformatted: ({ node }: any) => (
+        <pre className="bg-gray-900 text-blue-100 p-6 my-8 rounded-2xl overflow-x-auto font-mono text-sm leading-relaxed shadow-xl border border-gray-800 group relative">
+            <div className="absolute top-4 right-4 text-gray-500 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                CODE
+            </div>
+            <code className="block w-full text-blue-100">{node.text}</code>
+        </pre>
+    ),
+    label: ({ node, children }: any) => {
+        if (node.data.label === 'section-line' || node.data.label === 'divider') {
+            return <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />;
+        }
+        if (node.data.label === 'code' || node.data.label === 'inlinecode') {
+            return (
+                <code className="bg-blue-50/50 text-blue-600 px-1.5 py-0.5 rounded-md font-mono text-[0.9em] border border-blue-100/50 break-words">
+                    {children}
+                </code>
+            );
+        }
+        return <span className={node.data.label}>{children}</span>;
+    },
     hr: () => <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />,
 };
 
@@ -116,7 +130,7 @@ export default function PrismicContent({ field, className = '' }: PrismicContent
     if (!field) return null;
 
     return (
-        <div className={`prose prose-lg prose-blue max-w-none ${className}`}>
+        <div className={`max-w-none ${className}`}>
             <PrismicRichText field={field} components={richTextComponents} />
         </div>
     );
