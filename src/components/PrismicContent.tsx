@@ -1,6 +1,7 @@
 import { PrismicRichText } from '@prismicio/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import PrismicCodeBlock from './PrismicCodeBlock';
 
 /**
  * Custom components for rendering Prismic rich text
@@ -95,12 +96,7 @@ export const richTextComponents: any = {
         </blockquote>
     ),
     preformatted: ({ node }: any) => (
-        <pre className="bg-gray-900 text-blue-100 p-6 my-8 rounded-2xl overflow-x-auto font-mono text-sm leading-relaxed shadow-xl border border-gray-800 group relative">
-            <div className="absolute top-4 right-4 text-gray-500 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity">
-                CODE
-            </div>
-            <code className="block w-full text-blue-100">{node.text}</code>
-        </pre>
+        <PrismicCodeBlock text={node.text} />
     ),
     label: ({ node, children }: any) => {
         if (node.data.label === 'section-line' || node.data.label === 'divider') {
