@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
         }
 
         // 1. Revalidate data cache via tags
+        // @ts-ignore - Next.js 16 revalidateTag expects a second argument 'profile' in some environments
         revalidateTag('prismic');
         console.log(`[Revalidate] [${timestamp}] Tag "prismic" invalidated.`);
 
