@@ -39,7 +39,7 @@ export default async function BlogPage() {
               Journal <span className="text-blue-600">.</span>
             </h1>
             <p className="text-xl text-gray-600 font-light max-w-2xl">
-              Insights into the intersection of technology and digital experience—from web development and strategy to AI, SEO, and marketing trends.
+              Insights into the intersection of technology and digital experience <br /> - from web development and strategy to AI, SEO, and marketing trends.
             </p>
           </div>
 

@@ -55,7 +55,7 @@ export async function getBlogPosts(locale: LocaleCode = 'en-us'): Promise<BlogPo
                 description: post.data.description || undefined,
                 content: post.data.content,
                 locale,
-                tags: post.tags || [],
+                tags: (post.tags || []).map((t: string) => t.trim()),
                 featuredImage: post.data.featured_image?.url ? {
                     url: post.data.featured_image.url,
                     alt: post.data.featured_image.alt || '',
@@ -107,7 +107,7 @@ export async function getBlogPostByUid(
             description: post.data.description || undefined,
             content: post.data.content,
             locale,
-            tags: post.tags || [],
+            tags: (post.tags || []).map((t: string) => t.trim()),
             featuredImage: post.data.featured_image?.url ? {
                 url: post.data.featured_image.url,
                 alt: post.data.featured_image.alt || '',
