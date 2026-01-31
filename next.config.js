@@ -15,6 +15,10 @@ const nextConfig = {
       "prod-files-secure.s3.us-west-2.amazonaws.com",
       "images.prismic.io",
       "fuminozawa-portfolio.cdn.prismic.io",
+      "scontent.cdninstagram.com",
+      "scontent-sea1-1.cdninstagram.com",
+      "scontent-lax3-1.cdninstagram.com",
+      "scontent-lax3-2.cdninstagram.com",
     ],
     remotePatterns: [
       {
@@ -65,6 +69,16 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "fuminozawa-portfolio.cdn.prismic.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.cdninstagram.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.fbcdn.net",
         pathname: "/**",
       },
     ],

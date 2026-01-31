@@ -24,7 +24,7 @@ interface InstagramResponse {
 export async function GET() {
   try {
     // Instagram Graph API access token
-    const accessToken = 'IGAAPjGZANahIxBZAFQwZA19nOXMxdGRMVFFIX1piOENaNS1sdF92cVZAfaGlRSWFvMGQ4cU9lamtLQmlYR0NTRS1zVk03TWFqRG0wRzZAtMi1VRzJ0bl9EaDdIeS0tNk1PTUo1c25fdHhrSExmVmpFY1ZAVdTZAIdWVJZAGcyc2o4T1VXTQZDZD';
+    const accessToken = 'IGAAPjGZANahIxBZAGFfNnA5UndXRDdXZAU41MXdaeDRjT1Vac3pzNk1hMXA0NFlxNmNTS1FjMGZAMV1lsYzNYN2x1LTQ1bFRFdkRfWlRob0ZAMOFhBSzBPTThUS2tfbXEwRmpxRndOdkFOYk1jZAk5WQ0E5elFkUDVJSVhITW41dy1VYwZDZD';
 
     // Fields to request from the Instagram Graph API
     const fields = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
