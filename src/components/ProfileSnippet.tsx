@@ -87,7 +87,7 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
                     <div className="flex justify-center w-full md:w-auto">
                         <Link
                             href={contactLink}
-                            className="inline-flex items-center gap-3 bg-gray-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 whitespace-nowrap group/btn shadow-lg w-full sm:w-auto justify-center"
+                            className="inline-flex items-center gap-3 bg-white/40 backdrop-blur-md border border-gray-200 text-gray-900 px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 whitespace-nowrap group/btn w-full sm:w-auto justify-center"
                         >
                             {ctaLabel}
                             <span className="text-xl group-hover/btn:translate-x-1.5 transition-transform duration-300">→</span>
