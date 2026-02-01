@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
 
     return generateSEOMetadata({
-        title: `${post.title} | 野澤眞史`,
+        title: `${post.title} | AI・マーケティング・Web戦略 Fumi Nozawa`,
         description,
         canonical: url,
         ogType: 'article',
