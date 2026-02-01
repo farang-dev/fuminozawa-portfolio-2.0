@@ -667,7 +667,7 @@ export default function Home({
                     <li className="chip">Japan Market Entry</li>
                     <li className="chip">SaaS Localization</li>
                     <li className="chip">Global Brand Marketing</li>
-                    <li className="chip">Vibe Marketing</li>
+                    <li className="chip">SEO・GEO</li>
                     <li className="chip">Paid Media (Google & Meta)</li>
                     <li className="chip">AI-powered Solutions</li>
                     <li className="chip">Solo Product Dev</li>
@@ -680,7 +680,7 @@ export default function Home({
                     <li className="chip">日本市場向けマーケット戦略</li>
                     <li className="chip">SaaSローカライゼーション</li>
                     <li className="chip">グローバルブランドマーケティング</li>
-                    <li className="chip">バイブマーケ</li>
+                    <li className="chip">SEO・GEO</li>
                     <li className="chip">広告運用（Google & Meta）</li>
                     <li className="chip">AI活用ソリューション</li>
                     <li className="chip">ソロプロダクト開発</li>
