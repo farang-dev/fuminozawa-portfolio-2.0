@@ -12,6 +12,9 @@ const content = {
         bio: 'Following a career with global brands like Paul Smith and Boucheron, Fumi now supports international companies with digital strategy and market expansion. By combining marketing expertise with a deep understanding of technology, he builds solutions that drive tangible brand growth.',
         tags: ['Japan Market Entry', 'Global Expansion', 'Web Development', 'Digital Experience', 'Brand Strategy', 'Paid Media'],
         link: '/?tab=services&lang=en',
+        cta: "Project consultation or other inquiries?\nFeel free to reach out.",
+        ctaLabel: "Contact Me",
+        contactLink: '/#contact',
     },
     ja: {
         author: 'Fumi Nozawa',
@@ -19,11 +22,14 @@ const content = {
         bio: 'Paul Smith、Boucheronといったグローバルブランドでデジタルマーケティングを担当。現在は海外を拠点に、戦略設計からWeb実装までを牽引。マーケターとしての視点とテクノロジーへの理解を活かし、欧米企業の日本進出やブランド成長を支援しています。',
         tags: ['日本進出支援', '日本企業の海外進出支援', 'Web開発', 'デジタル体験', 'ブランド戦略', 'デジタル広告'],
         link: '/?tab=services&lang=ja',
+        cta: "プロジェクトの相談、その他ご相談など、\nお気軽にお問い合わせください。",
+        ctaLabel: "お問い合わせはこちら",
+        contactLink: '/ja#contact',
     },
 };
 
 export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
-    const { author, role, bio, tags, link } = content[locale];
+    const { author, role, bio, tags, link, cta, ctaLabel, contactLink } = content[locale];
 
     return (
         <section className="mt-16 pt-12 border-t border-gray-100">
@@ -68,6 +74,24 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
                                 </span>
                             ))}
                         </div>
+                    </div>
+                </div>
+
+                {/* CTA Section */}
+                <div className="mt-10 pt-8 border-t border-blue-100/50 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="max-w-md text-center md:text-left">
+                        <p className="text-gray-700 text-base font-medium leading-relaxed whitespace-pre-line">
+                            {cta}
+                        </p>
+                    </div>
+                    <div className="flex justify-center w-full md:w-auto">
+                        <Link
+                            href={contactLink}
+                            className="inline-flex items-center gap-3 bg-gray-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-300 whitespace-nowrap group/btn shadow-lg w-full sm:w-auto justify-center"
+                        >
+                            {ctaLabel}
+                            <span className="text-xl group-hover/btn:translate-x-1.5 transition-transform duration-300">→</span>
+                        </Link>
                     </div>
                 </div>
             </div>
