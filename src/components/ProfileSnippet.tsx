@@ -63,13 +63,13 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
                                 {role}
                             </p>
                         </div>
-                        <p className="text-gray-600 text-base sm:text-lg leading-relaxed font-light">
+                        <p className="text-gray-600 text-base sm:text-lg leading-relaxed font-light px-2 sm:px-0">
                             {bio}
                         </p>
 
                         <div className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
                             {tags.map((tag) => (
-                                <span key={tag} className="inline-flex items-center justify-center px-1 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white border border-gray-100 text-gray-600 shadow-sm hover:border-blue-200 hover:text-blue-600 transition-colors break-keep">
+                                <span key={tag} className="inline-flex items-center justify-center px-2 py-1.5 rounded-full text-[10px] xs:text-xs font-semibold bg-white border border-gray-100 text-gray-600 shadow-sm hover:border-blue-200 hover:text-blue-600 transition-colors break-keep whitespace-nowrap">
                                     {tag}
                                 </span>
                             ))}
@@ -79,12 +79,12 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
 
                 {/* CTA Section */}
                 <div className="mt-10 pt-8 border-t border-blue-100/50 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div className="w-full text-center md:text-left">
-                        <p className="text-gray-700 text-base font-medium leading-relaxed [text-wrap:balance]">
+                    <div className="w-full md:max-w-md text-center md:text-left">
+                        <p className="text-gray-700 text-base font-medium leading-relaxed whitespace-pre-line sm:whitespace-pre-line [text-wrap:balance] px-4 sm:px-0">
                             {cta}
                         </p>
                     </div>
-                    <div className="flex justify-center w-full md:w-auto">
+                    <div className="flex justify-center w-full md:w-auto px-4 sm:px-0">
                         <Link
                             href={contactLink}
                             className="inline-flex items-center gap-3 bg-white/40 backdrop-blur-md border border-gray-200 text-gray-900 px-10 py-4 rounded-2xl font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:shadow-xl hover:shadow-blue-200 transition-all duration-300 whitespace-nowrap group/btn w-full sm:w-auto justify-center"
