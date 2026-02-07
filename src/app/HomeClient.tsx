@@ -668,7 +668,7 @@ export default function Home({
                     <li className="chip">SaaS Localization</li>
                     <li className="chip">Global Brand Marketing</li>
                     <li className="chip">SEO・GEO</li>
-                    <li className="chip">Paid Media (Google & Meta)</li>
+                    <li className="chip">PPC (Google & Meta)</li>
                     <li className="chip">AI-powered Solutions</li>
                     <li className="chip">Solo Product Dev</li>
                     <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
