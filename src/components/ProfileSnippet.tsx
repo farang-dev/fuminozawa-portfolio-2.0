@@ -51,7 +51,7 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
                         />
                     </Link>
 
-                    <div className="flex-1 text-center sm:text-left">
+                    <div className="flex-1 text-center sm:text-left w-full">
                         <div className="mb-4">
                             <Link href={link} className="inline-block group/name">
                                 <h3 className="text-2xl font-bold text-gray-900 tracking-tight group-hover/name:text-blue-600 transition-colors">
@@ -69,7 +69,7 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
 
                         <div className="mt-8 flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
                             {tags.map((tag) => (
-                                <span key={tag} className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white border border-gray-100 text-gray-600 shadow-sm hover:border-blue-200 hover:text-blue-600 transition-colors whitespace-nowrap">
+                                <span key={tag} className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-white border border-gray-100 text-gray-600 shadow-sm hover:border-blue-200 hover:text-blue-600 transition-colors break-keep whitespace-nowrap">
                                     {tag}
                                 </span>
                             ))}
@@ -79,8 +79,8 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
 
                 {/* CTA Section */}
                 <div className="mt-10 pt-8 border-t border-blue-100/50 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div className="max-w-md text-center md:text-left">
-                        <p className="text-gray-700 text-base font-medium leading-relaxed sm:whitespace-pre-line">
+                    <div className="w-full md:max-w-md text-center md:text-left">
+                        <p className="text-gray-700 text-base font-medium leading-relaxed whitespace-pre-line sm:whitespace-pre-line [text-wrap:balance]">
                             {cta}
                         </p>
                     </div>
