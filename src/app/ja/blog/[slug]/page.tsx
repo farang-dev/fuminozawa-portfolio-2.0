@@ -10,6 +10,7 @@ import RelatedPosts from '@/components/RelatedPosts';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import PrismicContent from '@/components/PrismicContent';
 import ProfileSnippet from '@/components/ProfileSnippet';
+import SocialShare from '@/components/SocialShare';
 
 // Generate static params for all Japanese blog posts
 export async function generateStaticParams() {
@@ -197,6 +198,9 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
 
                             {/* Article Content */}
                             <PrismicContent field={post.content} />
+
+                            {/* Social Share */}
+                            <SocialShare url={`https://fuminozawa-info.site/ja/blog/${post.slug}`} title={post.title} locale="ja" />
 
                             {/* Profile Snippet */}
                             <ProfileSnippet locale="ja" />

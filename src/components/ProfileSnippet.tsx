@@ -32,7 +32,7 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
     const { author, role, bio, tags, link, cta, ctaLabel, contactLink } = content[locale];
 
     return (
-        <section className="mt-16 pt-12 border-t border-gray-100">
+        <section className="mt-6">
             <div className="bg-gradient-to-br from-white to-blue-50/30 rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-sm relative overflow-hidden group">
                 {/* Decorative element */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100/20 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-blue-200/20 transition-colors duration-500" />
