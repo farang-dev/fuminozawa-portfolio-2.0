@@ -67,9 +67,9 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
                             {bio}
                         </p>
 
-                        <div className="mt-8 flex flex-wrap justify-center sm:justify-start gap-3">
+                        <div className="mt-8 flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3">
                             {tags.map((tag) => (
-                                <span key={tag} className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold bg-white border border-gray-100 text-gray-600 shadow-sm hover:border-blue-200 hover:text-blue-600 transition-colors">
+                                <span key={tag} className="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white border border-gray-100 text-gray-600 shadow-sm hover:border-blue-200 hover:text-blue-600 transition-colors whitespace-nowrap">
                                     {tag}
                                 </span>
                             ))}
@@ -80,7 +80,7 @@ export default function ProfileSnippet({ locale }: ProfileSnippetProps) {
                 {/* CTA Section */}
                 <div className="mt-10 pt-8 border-t border-blue-100/50 flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div className="max-w-md text-center md:text-left">
-                        <p className="text-gray-700 text-base font-medium leading-relaxed whitespace-pre-line">
+                        <p className="text-gray-700 text-base font-medium leading-relaxed sm:whitespace-pre-line">
                             {cta}
                         </p>
                     </div>
