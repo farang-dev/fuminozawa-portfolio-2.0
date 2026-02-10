@@ -196,7 +196,7 @@ export default function Home({
     },
     {
       id: 'japan-market-entry',
-      title: 'Japan Market Entry',
+      title: 'Japan Market Entry (GTM)',
       subtitle: '深い文化理解とローカルUX／マーケティングの実務で、日本における現地化と勝ち筋を作ります。',
       description: '海外ブランドが直面する課題は、単なる言語翻訳ではありません。消費者の文化的文脈、購買動機、チャネル特性を踏まえた設計と運用が必要です。私はローカライズ戦略の立案からUX調整、デジタルマーケティングの実装まで、現地で結果を出すための実務を提供します。',
       deliverables: [
@@ -256,7 +256,7 @@ export default function Home({
     },
     {
       id: 'japan-market-entry',
-      title: 'Japan Market Entry',
+      title: 'Japan Market Entry (GTM)',
       subtitle: 'Helping global brands win in Japan. Deep cultural understanding and local UX/marketing execution to create localization strategies and winning approaches.',
       description: 'The challenges global brands face aren\'t just language translation. Design and operations must account for consumer cultural context, purchase motivations, and channel characteristics. I provide hands-on execution from localization strategy development to UX adjustments and digital marketing implementation—delivering results in the local market.',
       deliverables: [
@@ -662,10 +662,10 @@ export default function Home({
               <ul className="bio-list">
                 {language === 'en' ? (
                   <>
-                    <li className="chip">All-round Marketer</li>
+                    <li className="chip">Full-Stack Marketer</li>
                     <li className="chip">Web Developer</li>
-                    <li className="chip">Japan Market Entry</li>
-                    <li className="chip">SaaS Localization</li>
+                    <li className="chip">Japan Market Entry (GTM)</li>
+                    <li className="chip">UI/UX Design</li>
                     <li className="chip">Global Brand Marketing</li>
                     <li className="chip">SEO・GEO</li>
                     <li className="chip">PPC (Google & Meta)</li>
@@ -677,8 +677,8 @@ export default function Home({
                   <>
                     <li className="chip">オールラウンドマーケター</li>
                     <li className="chip">ウェブ開発</li>
-                    <li className="chip">日本市場向けマーケット戦略</li>
-                    <li className="chip">SaaSローカライゼーション</li>
+                    <li className="chip">日本市場向けGTM戦略</li>
+                    <li className="chip">UI/UXデザイン</li>
                     <li className="chip">グローバルブランドマーケティング</li>
                     <li className="chip">SEO・GEO</li>
                     <li className="chip">広告運用（Google & Meta）</li>

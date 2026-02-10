@@ -10,7 +10,7 @@ const content = {
         author: 'Fumi Nozawa',
         role: 'Digital Marketer & Strategist',
         bio: 'Following a career with global brands like Paul Smith and Boucheron, Fumi now supports international companies with digital strategy and market expansion. By combining marketing expertise with a deep understanding of technology, he builds solutions that drive tangible brand growth.',
-        tags: ['Japan Market Entry', 'Global Expansion', 'Web Development', 'Digital Experience', 'Brand Strategy', 'Paid Media'],
+        tags: ['Japan Market Entry (GTM)', 'Global Expansion', 'Web Development', 'Digital Experience', 'Brand Strategy', 'Paid Media'],
         link: '/?tab=services&lang=en',
         cta: "Project consultation or other inquiries?\nFeel free to reach out.",
         ctaLabel: "Contact Me",
