@@ -662,7 +662,7 @@ export default function Home({
               <ul className="bio-list">
                 {language === 'en' ? (
                   <>
-                    <li className="chip">Full-Stack Marketer</li>
+                    <li className="chip">All-round Marketer</li>
                     <li className="chip">Web Dev & UI/UX</li>
                     <li className="chip">Japan Market Entry (GTM)</li>
                     <li className="chip">Brand Strategy & Identity</li>
