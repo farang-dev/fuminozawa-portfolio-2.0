@@ -663,28 +663,27 @@ export default function Home({
                 {language === 'en' ? (
                   <>
                     <li className="chip">Full-Stack Marketer</li>
-                    <li className="chip">Web Developer</li>
+                    <li className="chip">Web Dev & UI/UX</li>
                     <li className="chip">Japan Market Entry (GTM)</li>
-                    <li className="chip">UI/UX Design</li>
-                    <li className="chip">Global Brand Marketing</li>
+                    <li className="chip">Brand Strategy & Identity</li>
                     <li className="chip">SEO・GEO</li>
-                    <li className="chip">PPC (Google & Meta)</li>
-                    <li className="chip">AI-powered Solutions</li>
+                    <li className="chip">Paid Media (PPC)</li>
+                    <li className="chip">AI Operational Design</li>
                     <li className="chip">Solo Product Dev</li>
-                    <li className="chip">Lived in 🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲</li>
+                    <li className="chip">Eng/Ja Bilingual</li>
                   </>
                 ) : (
                   <>
                     <li className="chip">オールラウンドマーケター</li>
-                    <li className="chip">ウェブ開発</li>
+                    <li className="chip">ウェブ開発 & UI/UX</li>
                     <li className="chip">日本市場向けGTM戦略</li>
-                    <li className="chip">UI/UXデザイン</li>
+                    <li className="chip">ブランド戦略 & アイデンティティ設計</li>
                     <li className="chip">グローバルブランドマーケティング</li>
                     <li className="chip">SEO・GEO</li>
-                    <li className="chip">広告運用（Google & Meta）</li>
-                    <li className="chip">AI活用ソリューション</li>
+                    <li className="chip">広告運用 (PPC)</li>
+                    <li className="chip">AIオペレーション設計</li>
                     <li className="chip">ソロプロダクト開発</li>
-                    <li className="chip">🇯🇵 🇺🇸 🇬🇧 🇨🇦 🇬🇪 🇦🇲 での居住経験</li>
+                    <li className="chip">日英バイリンガル</li>
                   </>
                 )}
               </ul>
