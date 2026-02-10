@@ -678,7 +678,6 @@ export default function Home({
                     <li className="chip">ウェブ開発 & UI/UX</li>
                     <li className="chip">日本市場向けGTM戦略</li>
                     <li className="chip">ブランド戦略 & アイデンティティ設計</li>
-                    <li className="chip">グローバルブランドマーケティング</li>
                     <li className="chip">SEO・GEO</li>
                     <li className="chip">広告運用 (PPC)</li>
                     <li className="chip">AIオペレーション設計</li>
