@@ -1,4 +1,5 @@
 import { getBlogPosts } from '@/lib/prismic-blog';
+import { getWorks } from '@/lib/prismic-works';
 import HomeClient from './HomeClient';
 import type { Metadata } from 'next';
 import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
@@ -19,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const posts = await getBlogPosts('en-us');
+  const works = await getWorks('en-us');
   const websiteJsonLd = generateWebsiteJSONLD({
     name: 'Fumi Nozawa | Digital Marketer & Developer',
     locale: 'en-us'
@@ -50,7 +52,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <HomeClient initialWritings={posts} initialLocale="en" initialTab="services" />
+      <HomeClient initialWritings={posts} initialWorks={works} initialLocale="en" initialTab="services" />
     </>
   );
 }

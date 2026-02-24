@@ -4,13 +4,16 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { BlogPost } from '@/lib/prismic-blog';
+import type { WorkItem } from '@/lib/prismic-works';
 
 export default function Home({
   initialWritings = [],
+  initialWorks = [],
   initialLocale = 'en',
   initialTab = 'services'
 }: {
   initialWritings?: BlogPost[],
+  initialWorks?: WorkItem[],
   initialLocale?: 'en' | 'ja',
   initialTab?: string
 }) {
@@ -285,7 +288,7 @@ export default function Home({
     }
   ];
 
-  const works = [
+  const works_legacy = [
     {
       title: 'Strategic Web & Digital Marketing',
       items: [
@@ -424,7 +427,7 @@ export default function Home({
     }
   ];
 
-  const worksJa = [
+  const worksJa_legacy = [
     {
       title: 'デジタルマーケティング・戦略的Web構築・運用',
       items: [
@@ -564,12 +567,13 @@ export default function Home({
   ];
 
   const [writings, setWritings] = useState<BlogPost[]>(initialWritings);
+  const [works, setWorks] = useState<WorkItem[]>(initialWorks);
 
   useEffect(() => {
     const fetchWritings = async () => {
       try {
         const fetchLang = language === 'ja' ? 'ja-jp' : 'en-us';
-        const response = await fetch(`/api/blog?lang=${fetchLang}`);
+        const response = await fetch(`/api/blog?lang=${fetchLang}&excludeAiNews=true`);
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setWritings(data);
@@ -577,7 +581,19 @@ export default function Home({
         console.error('Error fetching writings:', error);
       }
     };
+    const fetchWorks = async () => {
+      try {
+        const fetchLang = language === 'ja' ? 'ja-jp' : 'en-us';
+        const response = await fetch(`/api/works?lang=${fetchLang}`);
+        if (!response.ok) throw new Error('Failed to fetch works');
+        const data = await response.json();
+        setWorks(data);
+      } catch (error) {
+        console.error('Error fetching works:', error);
+      }
+    };
     fetchWritings();
+    fetchWorks();
   }, [language]);
 
   const toggleLanguage = () => {
@@ -597,6 +613,14 @@ export default function Home({
     url.pathname = targetPath;
     window.location.href = url.toString();
   };
+  const WORK_CATEGORIES = [
+    { id: 'strategic_marketing', title: language === 'ja' ? 'デジタルマーケティング・戦略的Web構築・運用' : 'Strategic Web & Digital Marketing' },
+    { id: 'social_media', title: language === 'ja' ? 'ソーシャルメディア・コミュニティグロース' : 'Social Media & Community Growth' },
+    { id: 'creative_direction', title: language === 'ja' ? 'クリエイティブディレクション・制作' : 'Creative Direction and Production' },
+    { id: 'data_visualization', title: language === 'ja' ? 'データ可視化・分析統合' : 'Data Visualization & Analytics Integration' },
+    { id: 'web_projects', title: language === 'ja' ? 'Webプロジェクト' : 'Web Projects' },
+  ];
+
   return (
     <>
       {/* Particles */}
@@ -714,7 +738,14 @@ export default function Home({
                 onClick={() => handleTabClick('writing')}
                 scroll={false}
               >
-                Blog
+                Journal
+              </Link>
+              <Link
+                href={language === 'ja' ? '/ja/blog/ai-news' : '/blog/ai-news'}
+                className={`tab ${activeTab === 'ai-news' ? 'active' : ''}`}
+                scroll={false}
+              >
+                AI News
               </Link>
               <Link
                 href={language === 'ja' ? '/ja/gallery' : '/gallery'}
@@ -806,42 +837,54 @@ export default function Home({
 
             {/* Works Tab Content */}
             <div className={`tab-content ${activeTab === 'works' ? 'active' : ''}`}>
-              {(language === 'ja' ? worksJa : works).map((category) => (
-                <div key={category.title} className="achievement-category">
-                  <h3 className="text-lg font-semibold mb-2">{category.title}</h3>
-                  <div className="achievement-items">
-                    {category.items.map((item) => (
-                      <div key={item.title} className="achievement-item">
-                        <div className="achievement-details">
-                          <h4>{item.title}</h4>
-                          <p>{item.description}</p>
-                          {/* @ts-ignore - handling mixed types for links */}
-                          {item.links ? (
-                            <div className="flex flex-col gap-2 mt-2">
-                              {/* @ts-ignore - handling mixed types for links */}
-                              {item.links.map((link, i) => (
-                                <a key={i} href={link.url} className="achievement-link" target="_blank" rel="noopener noreferrer">
-                                  {link.title}
-                                </a>
-                              ))}
-                            </div>
-                          ) : item.link && (
-                            <a
-                              href={item.link}
-                              className="achievement-link"
-                              target={item.link.startsWith('/') ? undefined : "_blank"}
-                              rel={item.link.startsWith('/') ? undefined : "noopener noreferrer"}
-                            >
-                              {item.cta || 'See the Sample'}
-                            </a>
-                          )}
+              <div className="works-grid-container">
+                {WORK_CATEGORIES.map((category) => {
+                  const categoryWorks = works.filter(w => w.category === category.id);
+                  if (categoryWorks.length === 0) return null;
 
-                        </div>
+                  return (
+                    <div key={category.id} className="work-category-section">
+                      <h3 className="work-category-title">{category.title}</h3>
+                      <div className="works-grid">
+                        {categoryWorks.map((work) => (
+                          <div key={work.id} className="work-card">
+                            {/* Image Part */}
+                            <div className="work-card-image">
+                              {work.featuredImage ? (
+                                <Image
+                                  src={work.featuredImage.url}
+                                  alt={work.featuredImage.alt || work.title}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  style={{ objectFit: 'cover' }}
+                                />
+                              ) : (
+                                <div className="work-card-placeholder">
+                                  <span>{work.title.charAt(0)}</span>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Content Part */}
+                            <div className="work-card-content">
+                              <h4 className="work-card-title">{work.title}</h4>
+                              <p className="work-card-description">{work.description}</p>
+
+                              <div className="work-card-actions">
+                                {work.link && (
+                                  <a href={work.link} target="_blank" rel="noopener noreferrer" className="work-card-cta">
+                                    {work.cta_text} <i className="fas fa-external-link-alt ml-1"></i>
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Writing Tab Content */}

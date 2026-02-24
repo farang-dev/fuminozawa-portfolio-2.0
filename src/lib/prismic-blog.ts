@@ -2,6 +2,17 @@ import { createClient } from '../../prismicio';
 import * as prismic from '@prismicio/client';
 import { type LocaleCode, localeCodeToPrismicLocale } from './locales';
 
+/** Tags used to identify AI News posts (traffic-driver content, separated from branding articles) */
+export const AI_NEWS_TAGS = ['AI News', 'AIニュース'];
+
+/**
+ * Helper to check if a post is an AI News post
+ */
+export const isAiNewsPost = (tags: string[] = []) => {
+    const normalizedTags = tags.map(t => t.trim().toLowerCase());
+    return AI_NEWS_TAGS.some(targetTag => normalizedTags.includes(targetTag.toLowerCase()));
+};
+
 export interface BlogPost {
     id: string;
     uid: string;
@@ -26,8 +37,12 @@ export interface BlogPost {
 /**
  * Get all blog posts for a specific locale
  */
-export async function getBlogPosts(locale: LocaleCode = 'en-us'): Promise<BlogPost[]> {
+export async function getBlogPosts(
+    locale: LocaleCode = 'en-us',
+    options?: { excludeAiNews?: boolean }
+): Promise<BlogPost[]> {
     const client = createClient();
+    const excludeAiNews = options?.excludeAiNews ?? false;
 
     try {
         const prismicLocale = localeCodeToPrismicLocale(locale);
@@ -43,8 +58,13 @@ export async function getBlogPosts(locale: LocaleCode = 'en-us'): Promise<BlogPo
 
         console.log(`[Prismic] Found ${posts.length} posts for ${prismicLocale}`);
 
-        return posts
-            .filter(post => post.uid !== null)
+        let filtered = posts.filter(post => post.uid !== null);
+
+        if (excludeAiNews) {
+            filtered = filtered.filter(post => !isAiNewsPost(post.tags));
+        }
+
+        return filtered
             .map(post => ({
                 id: post.id,
                 uid: post.uid!,
@@ -64,6 +84,51 @@ export async function getBlogPosts(locale: LocaleCode = 'en-us'): Promise<BlogPo
             }));
     } catch (error) {
         console.error('Error fetching blog posts:', error);
+        return [];
+    }
+}
+
+/**
+ * Get AI News posts only for a specific locale
+ */
+export async function getAiNewsPosts(locale: LocaleCode = 'en-us'): Promise<BlogPost[]> {
+    const client = createClient();
+
+    try {
+        const prismicLocale = localeCodeToPrismicLocale(locale);
+        console.log(`[Prismic] Fetching AI News posts for locale: ${prismicLocale}`);
+
+        const posts = await client.getAllByType('blog_post', {
+            lang: prismicLocale,
+            orderings: [
+                { field: 'document.first_publication_date', direction: 'desc' },
+                { field: 'my.blog_post.published_date', direction: 'desc' },
+            ],
+        });
+
+        return posts
+            .filter(post => {
+                return post.uid && isAiNewsPost(post.tags);
+            })
+            .map(post => ({
+                id: post.id,
+                uid: post.uid!,
+                slug: post.uid!,
+                title: prismic.asText(post.data.title) || 'Untitled',
+                publishedDate: post.data.published_date || post.first_publication_date,
+                updatedDate: post.last_publication_date,
+                description: post.data.description || undefined,
+                content: post.data.content,
+                locale,
+                tags: (post.tags || []).map((t: string) => t.trim()),
+                featuredImage: post.data.featured_image?.url ? {
+                    url: post.data.featured_image.url,
+                    alt: post.data.featured_image.alt || '',
+                    dimensions: post.data.featured_image.dimensions,
+                } : undefined,
+            }));
+    } catch (error) {
+        console.error('Error fetching AI News posts:', error);
         return [];
     }
 }

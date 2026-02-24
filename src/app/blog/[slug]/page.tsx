@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { getBlogPostByUid, getAllBlogPostUids, getAlternateLocalePosts, getBlogPosts } from '@/lib/prismic-blog';
+import { getBlogPostByUid, getAllBlogPostUids, getAlternateLocalePosts, getBlogPosts, isAiNewsPost } from '@/lib/prismic-blog';
 import { generateSEOMetadata, generateArticleJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 import { notFound } from 'next/navigation';
@@ -190,7 +190,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   </Link>
                 </div>
 
-                {post.description && (
+                {post.description && !isAiNewsPost(post.tags) && (
                   <p className="text-gray-600 text-xl leading-relaxed font-light italic border-l-4 border-blue-200 pl-6 my-8">
                     {post.description}
                   </p>

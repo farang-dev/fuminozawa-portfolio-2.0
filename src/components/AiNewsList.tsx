@@ -7,18 +7,17 @@ import type { BlogPost } from '@/lib/prismic-blog';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-interface BlogListProps {
+interface AiNewsListProps {
     posts: BlogPost[];
     locale: 'en' | 'ja';
 }
 
 type SortOption = 'newest' | 'oldest';
 
-export default function BlogList({ posts, locale }: BlogListProps) {
-    const [selectedCategory, setSelectedCategory] = useState(locale === 'ja' ? 'すべて' : 'All');
+export default function AiNewsList({ posts, locale }: AiNewsListProps) {
     const [sortBy, setSortBy] = useState<SortOption>('newest');
     const [isSortOpen, setIsSortOpen] = useState(false);
-    const [displayCount, setDisplayCount] = useState(6);
+    const [displayCount, setDisplayCount] = useState(12);
     const [isLoading, setIsLoading] = useState(false);
     const observerTarget = useRef<HTMLDivElement>(null);
     const sortMenuRef = useRef<HTMLDivElement>(null);
@@ -38,37 +37,22 @@ export default function BlogList({ posts, locale }: BlogListProps) {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Filter and Sort logic
-    const filteredAndSortedPosts = posts
-        .filter(post => {
-            if (selectedCategory === 'All' || selectedCategory === 'すべて') return true;
+    // Sort logic
+    const sortedPosts = [...posts].sort((a, b) => {
+        const dateA = new Date(a.publishedDate || 0).getTime();
+        const dateB = new Date(b.publishedDate || 0).getTime();
+        return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
+    });
 
-            const cat = selectedCategory.toLowerCase();
-            return post.tags?.some(tag => {
-                const t = tag.toLowerCase();
-                if (cat === 'web') return t.includes('web');
-                if (cat === 'product') return t.includes('product') || t.includes('software');
-                if (cat === 'marketing') return t.includes('marketing');
-                if (cat === 'seo・geo') return t.includes('seo') || t.includes('geo');
-                if (cat === 'ai') return t.includes('ai') || t.includes('llm') || t.includes('generative');
-                return t === cat;
-            });
-        })
-        .sort((a, b) => {
-            const dateA = new Date(a.publishedDate || 0).getTime();
-            const dateB = new Date(b.publishedDate || 0).getTime();
-            return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
-        });
-
-    const displayedPosts = filteredAndSortedPosts.slice(0, displayCount);
-    const hasMore = displayCount < filteredAndSortedPosts.length;
+    const displayedPosts = sortedPosts.slice(0, displayCount);
+    const hasMore = displayCount < sortedPosts.length;
 
     const loadMore = useCallback(() => {
         if (isLoading || !hasMore) return;
 
         setIsLoading(true);
         setTimeout(() => {
-            setDisplayCount(prev => prev + 6);
+            setDisplayCount(prev => prev + 12);
             setIsLoading(false);
         }, 400);
     }, [isLoading, hasMore]);
@@ -90,10 +74,10 @@ export default function BlogList({ posts, locale }: BlogListProps) {
         return () => observer.disconnect();
     }, [hasMore, loadMore]);
 
-    // Reset display count when filter changes
+    // Reset display count when sort changes
     useEffect(() => {
-        setDisplayCount(6);
-    }, [selectedCategory, sortBy]);
+        setDisplayCount(12);
+    }, [sortBy]);
 
     return (
         <div className="space-y-12">
@@ -105,27 +89,24 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                             const isAiNews = category === 'AI News' || category === 'AIニュース';
                             if (isAiNews) {
                                 return (
-                                    <Link
+                                    <button
                                         key={category}
-                                        href={locale === 'ja' ? '/ja/blog/ai-news' : '/blog/ai-news'}
-                                        className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap text-gray-500 hover:text-gray-900 hover:bg-gray-50 flex items-center gap-2"
+                                        className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap bg-gray-900 text-white shadow-lg flex items-center gap-2"
                                     >
                                         <span>{category}</span>
                                         <span className="flex h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-                                    </Link>
+                                    </button>
                                 );
                             }
+                            // Branding categories link back to the main blog
                             return (
-                                <button
+                                <Link
                                     key={category}
-                                    onClick={() => setSelectedCategory(category)}
-                                    className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap ${selectedCategory === category
-                                        ? 'bg-gray-900 text-white shadow-lg'
-                                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
-                                        }`}
+                                    href={`${locale === 'ja' ? '/ja/blog' : '/blog'}?category=${category}`}
+                                    className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                                 >
                                     {category}
-                                </button>
+                                </Link>
                             );
                         })}
                     </div>
@@ -167,82 +148,98 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                 </div>
             </div>
 
-            {/* Posts Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* News Bar (Total count) */}
+            <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500 font-medium px-2">
+                    {sortedPosts.length} {locale === 'ja' ? '件のニュース' : 'articles'}
+                </p>
+            </div>
+
+            {/* News List — compact, timeline-style layout */}
+            <div className="space-y-4">
                 <AnimatePresence mode="wait">
                     <motion.div
-                        key={selectedCategory + sortBy}
+                        key={sortBy}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="contents"
+                        className="space-y-4"
                     >
                         {displayedPosts.map((post, index) => (
                             <motion.article
                                 key={post.id}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 12 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{
-                                    duration: 0.4,
-                                    delay: index * 0.05,
+                                    duration: 0.3,
+                                    delay: index * 0.03,
                                     ease: "easeOut"
                                 }}
-                                className="group flex flex-col bg-white/80 backdrop-blur-sm border border-gray-100 rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 hover:-translate-y-2"
                             >
-                                {post.featuredImage && (
-                                    <div className="relative w-full h-48 overflow-hidden">
-                                        <Image
-                                            src={post.featuredImage.url}
-                                            alt={post.featuredImage.alt}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                    </div>
-                                )}
-
-                                <Link href={`${locale === 'ja' ? '/ja/blog/' : '/blog/'}${post.slug}`} className="flex flex-col flex-grow p-8">
-                                    <div className="flex items-center gap-3 mb-6 flex-wrap">
-                                        {post.publishedDate && (
-                                            <time
-                                                dateTime={post.publishedDate}
-                                                className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
-                                            >
-                                                {new Date(post.publishedDate).toLocaleDateString(locale === 'ja' ? 'ja-JP' : 'en-US', {
-                                                    month: 'short',
-                                                    day: 'numeric',
-                                                    year: 'numeric'
-                                                })}
-                                            </time>
-                                        )}
-
-                                        {post.tags && post.tags.length > 0 && (
-                                            <div className="flex gap-2">
-                                                {post.tags.slice(0, 2).map((tag) => (
-                                                    <span
-                                                        key={tag}
-                                                        className="text-xs font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded-full"
-                                                    >
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 leading-tight">
-                                        {post.title}
-                                    </h2>
-
-                                    {post.description && (
-                                        <p className="text-gray-600 mb-8 leading-relaxed flex-grow line-clamp-3 font-light">
-                                            {post.description}
-                                        </p>
+                                <Link
+                                    href={`${locale === 'ja' ? '/ja/blog/' : '/blog/'}${post.slug}`}
+                                    className="group flex gap-4 sm:gap-6 items-start bg-white/80 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 sm:p-5 hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-100 transition-all duration-300"
+                                >
+                                    {/* Thumbnail */}
+                                    {post.featuredImage && (
+                                        <div className="relative w-20 h-20 sm:w-28 sm:h-20 flex-shrink-0 rounded-xl overflow-hidden">
+                                            <Image
+                                                src={post.featuredImage.url}
+                                                alt={post.featuredImage.alt}
+                                                fill
+                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                                sizes="112px"
+                                            />
+                                        </div>
                                     )}
 
-                                    <div className="mt-auto flex items-center text-blue-600 font-bold group-hover:gap-2 transition-all">
-                                        {locale === 'ja' ? '記事を読む' : 'Read Article'}
-                                        <span className="ml-2 opacity-0 group-hover:opacity-100 transition-all">→</span>
+                                    {/* Content */}
+                                    <div className="flex-grow min-w-0">
+                                        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                                            {post.publishedDate && (
+                                                <time
+                                                    dateTime={post.publishedDate}
+                                                    className="text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                                >
+                                                    {new Date(post.publishedDate).toLocaleDateString(locale === 'ja' ? 'ja-JP' : 'en-US', {
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        year: 'numeric'
+                                                    })}
+                                                </time>
+                                            )}
+
+                                            {post.tags && post.tags.filter(t => t.toLowerCase() !== 'ai news').length > 0 && (
+                                                <div className="flex gap-1.5">
+                                                    {post.tags.filter(t => t.toLowerCase() !== 'ai news').slice(0, 2).map((tag) => (
+                                                        <span
+                                                            key={tag}
+                                                            className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full"
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <h2 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2">
+                                            {post.title}
+                                        </h2>
+
+                                        {post.description && (
+                                            <p className="text-sm text-gray-500 mt-1 leading-relaxed line-clamp-1 hidden sm:block">
+                                                {post.description}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Arrow */}
+                                    <div className="flex-shrink-0 self-center text-gray-300 group-hover:text-blue-500 transition-colors">
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
                                     </div>
                                 </Link>
                             </motion.article>
@@ -254,7 +251,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
             {displayedPosts.length === 0 && (
                 <div className="text-center py-24 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
                     <p className="text-gray-400 font-medium">
-                        {locale === 'ja' ? '選択されたカテゴリーに一致する記事はありません。' : 'No articles found in this category.'}
+                        {locale === 'ja' ? 'AIニュースが見つかりません。' : 'No AI news articles found.'}
                     </p>
                 </div>
             )}
@@ -271,9 +268,9 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                 </div>
             )}
 
-            {!hasMore && filteredAndSortedPosts.length > 6 && (
+            {!hasMore && sortedPosts.length > 12 && (
                 <div className="text-center py-10 opacity-30 text-sm font-medium uppercase tracking-widest">
-                    {locale === 'ja' ? 'すべての記事を表示しました' : 'End of articles'}
+                    {locale === 'ja' ? 'すべてのニュースを表示しました' : 'End of news'}
                 </div>
             )}
         </div>

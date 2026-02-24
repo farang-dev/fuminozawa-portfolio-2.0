@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WritingPage() {
-    const posts = await getBlogPosts('en-us');
+    const posts = await getBlogPosts('en-us', { excludeAiNews: true });
     const websiteJsonLd = generateWebsiteJSONLD({
         name: 'Fumi Nozawa | Journal',
         locale: 'en-us'

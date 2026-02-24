@@ -1691,3 +1691,145 @@ body.light .form-btn.primary {
 }
 
 /* End of Blog Mini Styles */
+/* Works Grid */
+.works-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.work-category-section {
+  width: 100%;
+}
+
+.work-category-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: white;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.light .work-category-title {
+  color: #1a202c;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.work-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+body.light .work-card {
+  background: white;
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.work-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(52, 90, 204, 0.3);
+}
+
+body.light .work-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.work-card-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #2a2a2a;
+  overflow: hidden;
+}
+
+body.light .work-card-image {
+  background: #f0f0f0;
+}
+
+.work-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(52, 90, 204, 0.2), rgba(66, 155, 216, 0.2));
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+body.light .work-card-placeholder {
+  background: linear-gradient(135deg, #f0f4ff, #e0e7ff);
+  color: #a5b4fc;
+}
+
+.work-card-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.work-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: white;
+  line-height: 1.4;
+}
+
+body.light .work-card-title {
+  color: #1a202c;
+}
+
+.work-card-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+  flex: 1;
+  line-height: 1.5;
+}
+
+body.light .work-card-description {
+  color: #4a5568;
+}
+
+.work-card-actions {
+  margin-top: auto;
+}
+
+.work-card-cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #429bd8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.work-card-cta:hover {
+  color: #345acc;
+  text-decoration: underline;
+}
+
+/* Make sure images scale on hover */
+.work-card:hover .work-card-image img {
+  transform: scale(1.05);
+  transition: transform 0.5s ease;
+}

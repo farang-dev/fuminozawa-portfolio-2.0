@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WritingPageJa() {
-    const posts = await getBlogPosts('ja-jp');
+    const posts = await getBlogPosts('ja-jp', { excludeAiNews: true });
     const websiteJsonLd = generateWebsiteJSONLD({
         name: '野澤眞史 | 考察ブログ',
         locale: 'ja-jp'
