@@ -738,14 +738,7 @@ export default function Home({
                 onClick={() => handleTabClick('writing')}
                 scroll={false}
               >
-                Journal
-              </Link>
-              <Link
-                href={language === 'ja' ? '/ja/blog/ai-news' : '/blog/ai-news'}
-                className={`tab ${activeTab === 'ai-news' ? 'active' : ''}`}
-                scroll={false}
-              >
-                AI News
+                Blog
               </Link>
               <Link
                 href={language === 'ja' ? '/ja/gallery' : '/gallery'}
