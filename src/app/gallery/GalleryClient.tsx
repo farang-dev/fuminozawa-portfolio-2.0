@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { type InstagramMedia, getInstagramMedia } from '@/lib/instagram';
@@ -85,6 +85,18 @@ const CarouselModal = ({ item, onClose }: { item: InstagramMedia; onClose: () =>
         return () => window.removeEventListener('keydown', onKey);
     }, [prev, next, onClose]);
 
+    // touch / swipe
+    const touchStartX = useRef<number | null>(null);
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStartX.current === null) return;
+        const delta = e.changedTouches[0].clientX - touchStartX.current;
+        if (Math.abs(delta) > 50) delta < 0 ? next() : prev();
+        touchStartX.current = null;
+    };
+
     return (
         <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
@@ -113,10 +125,12 @@ const CarouselModal = ({ item, onClose }: { item: InstagramMedia; onClose: () =>
                 </svg>
             </a>
 
-            {/* Main image area — fills the viewport */}
+            {/* Main image area — fills the viewport, swipeable */}
             <div
                 className="relative w-full h-full flex items-center justify-center px-0 sm:px-12"
                 onClick={e => e.stopPropagation()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
             >
                 <Image
                     key={images[current]}
