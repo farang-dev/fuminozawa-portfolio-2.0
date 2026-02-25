@@ -1833,3 +1833,95 @@ body.light .work-card-description {
   transform: scale(1.05);
   transition: transform 0.5s ease;
 }
+
+/* No-image Work Card refined design */
+.work-card.no-image {
+  grid-column: 1 / -1;
+  /* Make it full width like the old list items */
+  flex-direction: row;
+  min-height: auto;
+  align-items: center;
+  padding: 10px;
+}
+
+.work-card.no-image .work-card-content {
+  padding: 15px 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+}
+
+.work-card.no-image .work-card-title {
+  margin-bottom: 0;
+  font-size: 1.05rem;
+  flex: 0 0 30%;
+  max-width: 300px;
+}
+
+.work-card.no-image .work-card-description {
+  margin-bottom: 0;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.work-card.no-image .work-card-actions {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+/* Responsive for no-image cards */
+@media (max-width: 768px) {
+  .work-card.no-image .work-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .work-card.no-image .work-card-title {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .work-card.no-image .work-card-description {
+    opacity: 0.8;
+  }
+}
+
+/* Refined No-image items: Reverting to a more vertical, clean look like the original */
+.work-card.no-image {
+  grid-column: 1 / -1;
+  display: block;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.work-card.no-image .work-card-content {
+  padding: 24px;
+}
+
+.work-card.no-image .work-card-title {
+  margin-bottom: 12px;
+  font-size: 1.15rem;
+  color: #429bd8;
+  /* Highlighting title like the old links/headers */
+}
+
+body.light .work-card.no-image .work-card-title {
+  color: #345acc;
+}
+
+.work-card.no-image .work-card-description {
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  max-width: 800px;
+}
+
+.work-card.no-image .work-card-cta {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+}

@@ -835,45 +835,66 @@ export default function Home({
                   const categoryWorks = works.filter(w => w.category === category.id);
                   if (categoryWorks.length === 0) return null;
 
+                  const withImage = categoryWorks.filter(w => w.featuredImage);
+                  const withoutImage = categoryWorks.filter(w => !w.featuredImage);
+
                   return (
                     <div key={category.id} className="work-category-section">
                       <h3 className="work-category-title">{category.title}</h3>
-                      <div className="works-grid">
-                        {categoryWorks.map((work) => (
-                          <div key={work.id} className="work-card">
-                            {/* Image Part */}
-                            <div className="work-card-image">
-                              {work.featuredImage ? (
+
+                      {/* Card grid for items WITH images */}
+                      {withImage.length > 0 && (
+                        <div className="works-grid">
+                          {withImage.map((work) => (
+                            <div key={work.id} className="work-card">
+                              <div className="work-card-image">
                                 <Image
-                                  src={work.featuredImage.url}
-                                  alt={work.featuredImage.alt || work.title}
+                                  src={work.featuredImage!.url}
+                                  alt={work.featuredImage!.alt || work.title}
                                   fill
                                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                   style={{ objectFit: 'cover' }}
                                 />
-                              ) : (
-                                <div className="work-card-placeholder">
-                                  <span>{work.title.charAt(0)}</span>
+                              </div>
+                              <div className="work-card-content">
+                                <h4 className="work-card-title">{work.title}</h4>
+                                <p className="work-card-description">{work.description}</p>
+                                <div className="work-card-actions">
+                                  {work.link && (
+                                    <a href={work.link} target="_blank" rel="noopener noreferrer" className="work-card-cta">
+                                      {work.cta_text} <i className="fas fa-external-link-alt ml-1"></i>
+                                    </a>
+                                  )}
                                 </div>
-                              )}
+                              </div>
                             </div>
+                          ))}
+                        </div>
+                      )}
 
-                            {/* Content Part */}
-                            <div className="work-card-content">
-                              <h4 className="work-card-title">{work.title}</h4>
-                              <p className="work-card-description">{work.description}</p>
-
-                              <div className="work-card-actions">
+                      {/* Legacy list style for items WITHOUT images */}
+                      {withoutImage.length > 0 && (
+                        <div className={`achievement-items${withImage.length > 0 ? ' mt-4' : ''}`}>
+                          {withoutImage.map((work) => (
+                            <div key={work.id} className="achievement-item">
+                              <div className="achievement-details">
+                                <h4>{work.title}</h4>
+                                <p>{work.description}</p>
                                 {work.link && (
-                                  <a href={work.link} target="_blank" rel="noopener noreferrer" className="work-card-cta">
-                                    {work.cta_text} <i className="fas fa-external-link-alt ml-1"></i>
+                                  <a
+                                    href={work.link}
+                                    className="achievement-link"
+                                    target={work.link.startsWith('/') ? undefined : '_blank'}
+                                    rel={work.link.startsWith('/') ? undefined : 'noopener noreferrer'}
+                                  >
+                                    {work.cta_text || 'See the Sample'}
                                   </a>
                                 )}
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
