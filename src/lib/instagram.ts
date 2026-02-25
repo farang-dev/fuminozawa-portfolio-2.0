@@ -1,5 +1,11 @@
 // Instagram API client for fetching media from Instagram Graph API
 
+export interface InstagramChildMedia {
+  id: string;
+  media_url: string;
+  media_type: string;
+}
+
 export interface InstagramMedia {
   id: string;
   caption: string;
@@ -8,6 +14,7 @@ export interface InstagramMedia {
   thumbnail_url?: string;
   permalink: string;
   timestamp: string;
+  children?: InstagramChildMedia[];
 }
 
 /**
