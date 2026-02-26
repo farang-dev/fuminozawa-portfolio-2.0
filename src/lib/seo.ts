@@ -191,3 +191,89 @@ export function generateWebsiteJSONLD(params?: { name?: string; locale?: LocaleC
         inLanguage,
     };
 }
+
+export function generateServiceJSONLD({
+    locale = 'en-us'
+}: {
+    locale?: LocaleCode;
+}) {
+    const isEn = locale === 'en-us';
+    const siteUrl = 'https://fuminozawa-info.site';
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: isEn ? 'Fumi Nozawa | Digital Marketing & Web Development' : '野澤眞史 | デジタルマーケティング & Web受託開発',
+        image: `${siteUrl}/profile.jpg`,
+        url: isEn ? siteUrl : `${siteUrl}/ja`,
+        priceRange: '$$',
+        address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Tokyo',
+            addressCountry: 'JP'
+        },
+        description: isEn
+            ? 'Freelance Digital Marketer and Web Engineer specializing in SEO, GEO, Japan Market Entry, and AI-driven growth strategies.'
+            : 'SEO、GEO、日本市場参入、AI活用戦略を専門とするフリーランスのデジタルマーケター兼Webエンジニア。',
+        serviceType: [
+            'Digital Marketing',
+            'SEO & GEO',
+            'Web Development',
+            'Japan Market Entry Strategy',
+            'AI Operations'
+        ],
+        areaServed: ['Japan', 'Global'],
+        sameAs: [
+            'https://www.linkedin.com/in/masafumi-nozawa/',
+            'https://x.com/fuminozawa_',
+            'https://github.com/farang-dev'
+        ]
+    };
+}
+
+export function generateGalleryJSONLD({
+    locale = 'en-us'
+}: {
+    locale?: LocaleCode;
+}) {
+    const isEn = locale === 'en-us';
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'ImageGallery',
+        name: isEn ? 'Instagram Gallery | Fumi Nozawa' : 'インスタグラム ギャラリー | 野澤眞史',
+        description: isEn
+            ? 'A collection of visual stories and marketing insights from Instagram.'
+            : 'Instagramから発信するビジュアルストーリーとマーケティングのインサイト。',
+        url: isEn ? 'https://fuminozawa-info.site/gallery' : 'https://fuminozawa-info.site/ja/gallery',
+        author: {
+            '@type': 'Person',
+            name: 'Fumi Nozawa'
+        }
+    };
+}
+
+export function generateCollectionJSONLD({
+    name,
+    description,
+    url,
+    locale = 'en-us'
+}: {
+    name: string;
+    description: string;
+    url: string;
+    locale?: LocaleCode;
+}) {
+    const inLanguage = locale === 'en-us' ? 'en-US' : 'ja-JP';
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name,
+        description,
+        url,
+        inLanguage,
+        mainEntity: {
+            '@type': 'ItemList',
+            'itemListElement': []
+        }
+    };
+}

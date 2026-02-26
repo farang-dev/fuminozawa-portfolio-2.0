@@ -2,7 +2,7 @@ import { getBlogPosts } from '@/lib/prismic-blog';
 import { getWorks } from '@/lib/prismic-works';
 import HomeClient from './HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata, generateServiceJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
 
@@ -26,6 +26,10 @@ export default async function Home() {
     locale: 'en-us'
   });
 
+  const serviceJsonLd = generateServiceJSONLD({
+    locale: 'en-us'
+  });
+
   // Person Schema for E-E-A-T
   const personJsonLd = {
     '@context': 'https://schema.org',
@@ -34,9 +38,9 @@ export default async function Home() {
     url: 'https://fuminozawa-info.site',
     jobTitle: 'Software Engineer & Marketer',
     sameAs: [
-      'https://www.linkedin.com/in/masafumi-nozawa/',
+      'https://www.linkedin.com/in/fumi-nozawa/',
       'https://github.com/farang-dev',
-      'https://x.com/fuminozawa_',
+      'https://x.com/fuminozawa',
       'https://instagram.com/fumi_fumar/'
     ],
     description: 'Expert in Next.js, SEO, and Digital Marketing Strategy.'
@@ -51,6 +55,10 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
       <HomeClient initialWritings={posts} initialWorks={works} initialLocale="en" initialTab="services" />
     </>

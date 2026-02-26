@@ -2,7 +2,7 @@ import { getBlogPosts } from '@/lib/prismic-blog';
 import { getWorks } from '@/lib/prismic-works';
 import HomeClient from '../HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata, generateServiceJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,6 +25,10 @@ export default async function HomeJa() {
         locale: 'ja-jp'
     });
 
+    const serviceJsonLd = generateServiceJSONLD({
+        locale: 'ja-jp'
+    });
+
     // Person Schema for E-E-A-T (Localized)
     const personJsonLd = {
         '@context': 'https://schema.org',
@@ -33,9 +37,9 @@ export default async function HomeJa() {
         url: 'https://fuminozawa-info.site',
         jobTitle: 'Software Engineer & Marketer',
         sameAs: [
-            'https://www.linkedin.com/in/masafumi-nozawa/',
+            'https://www.linkedin.com/in/fumi-nozawa/',
             'https://github.com/farang-dev',
-            'https://x.com/fuminozawa_',
+            'https://x.com/fuminozawa',
             'https://instagram.com/fumi_fumar/'
         ],
         description: 'Next.js、SEO、デジタルマーケティング戦略の専門家'
@@ -50,6 +54,10 @@ export default async function HomeJa() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
             />
             <HomeClient initialWritings={posts} initialWorks={works} initialLocale="ja" initialTab="services" />
         </>

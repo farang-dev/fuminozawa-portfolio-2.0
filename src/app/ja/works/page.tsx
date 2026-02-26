@@ -1,7 +1,7 @@
 import { getBlogPosts } from '@/lib/prismic-blog';
 import HomeClient from '../../HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD, generateSEOMetadata } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata, generateCollectionJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -23,11 +23,22 @@ export default async function WorksPageJa() {
         locale: 'ja-jp'
     });
 
+    const collectionJsonLd = generateCollectionJSONLD({
+        name: '制作実績ポートフォリオ | 野澤眞史',
+        description: 'Webサイト構築、デジタルマーケティング、クリエイティブディレクションなど、野澤眞史のプロジェクト実績一覧。',
+        url: 'https://fuminozawa-info.site/ja/works',
+        locale: 'ja-jp'
+    });
+
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
             />
             <HomeClient initialWritings={posts} initialLocale="ja" initialTab="works" />
         </>
