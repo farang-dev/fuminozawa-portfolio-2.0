@@ -38,9 +38,9 @@ export default async function Home() {
     url: 'https://fuminozawa-info.site',
     jobTitle: 'Software Engineer & Marketer',
     sameAs: [
-      'https://www.linkedin.com/in/fumi-nozawa/',
+      'https://www.linkedin.com/in/masafumi-nozawa/',
       'https://github.com/farang-dev',
-      'https://x.com/fuminozawa',
+      'https://www.facebook.com/masafumi.nozawa.5/',
       'https://instagram.com/fumi_fumar/'
     ],
     description: 'Expert in Next.js, SEO, and Digital Marketing Strategy.'

@@ -152,8 +152,8 @@ export function generateArticleJSONLD({
             url: authorUrl,
             jobTitle: 'Digital Marketer & Web Developer',
             sameAs: [
-                'https://www.linkedin.com/in/fumi-nozawa/',
-                'https://twitter.com/fuminozawa'
+                'https://www.linkedin.com/in/masafumi-nozawa/',
+                'https://www.facebook.com/masafumi.nozawa.5/'
             ]
         },
         publisher: {
@@ -225,7 +225,7 @@ export function generateServiceJSONLD({
         areaServed: ['Japan', 'Global'],
         sameAs: [
             'https://www.linkedin.com/in/masafumi-nozawa/',
-            'https://x.com/fuminozawa_',
+            'https://www.facebook.com/masafumi.nozawa.5/',
             'https://github.com/farang-dev'
         ]
     };
