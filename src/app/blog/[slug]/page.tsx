@@ -107,6 +107,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     url: `https://fuminozawa-info.site/blog/${post.slug}`,
     datePublished: post.publishedDate,
     dateModified: post.updatedDate,
+    image: post.featuredImage?.url,
+    tags: post.tags,
     locale: 'en-us',
   });
 

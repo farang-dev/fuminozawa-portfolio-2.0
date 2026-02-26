@@ -110,44 +110,67 @@ export function generateArticleJSONLD({
     url,
     datePublished,
     dateModified,
+    image,
     author = 'Fumi Nozawa',
     authorUrl = 'https://fuminozawa-info.site',
     locale = 'en-us',
+    tags = [],
 }: {
     title: string;
     description: string;
     url: string;
     datePublished?: string;
     dateModified?: string;
+    image?: string;
     author?: string;
     authorUrl?: string;
     locale?: LocaleCode;
+    tags?: string[];
 }) {
     const inLanguage = locale === 'en-us' ? 'en-US' : 'ja-JP';
 
+    // Determine the most appropriate schema type
+    // Use NewsArticle if it looks like a news post (contains AI, News, or specific marketing tags)
+    const isNews = tags.some(tag =>
+        ['News', 'AI', 'AI News', 'Market Entry', 'Marketing News', 'GTM'].includes(tag) ||
+        ['ニュース', 'AIニュース', '最新情報'].includes(tag)
+    );
+
+    const schemaType = isNews ? 'NewsArticle' : 'BlogPosting';
+
     return {
         '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
+        '@type': schemaType,
         headline: title,
         description,
+        ...(image && { image: [image] }),
+        datePublished,
+        dateModified: dateModified || datePublished,
         author: {
             '@type': 'Person',
             name: author,
             url: authorUrl,
+            jobTitle: 'Digital Marketer & Web Developer',
+            sameAs: [
+                'https://www.linkedin.com/in/fumi-nozawa/',
+                'https://twitter.com/fuminozawa'
+            ]
         },
         publisher: {
             '@type': 'Person',
-            name: author,
-            url: authorUrl,
+            name: 'Fumi Nozawa',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://fuminozawa-info.site/profile.jpg'
+            }
         },
-        datePublished,
-        dateModified: dateModified || datePublished,
         mainEntityOfPage: {
             '@type': 'WebPage',
             '@id': url,
         },
         url,
         inLanguage,
+        keywords: tags.join(', '),
     };
 }
 
