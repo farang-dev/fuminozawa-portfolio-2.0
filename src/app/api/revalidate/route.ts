@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
         // 1. Revalidate data cache via tags
         // @ts-ignore
-        revalidateTag('prismic');
+        revalidateTag('prismic', 'max');
         console.log(`[Revalidate] [${timestamp}] Tag "prismic" invalidated.`);
 
         // 2. Revalidate key listing pages
@@ -49,8 +49,19 @@ export async function POST(request: NextRequest) {
                 // Fetch the documents by IDs to get their URLs
                 const docs = await client.getAllByIDs(body.documents);
                 for (const doc of docs) {
-                    if (doc.url) {
-                        urlsToIndix.push(`${SITE_URL}${doc.url}`);
+                    let docUrl = doc.url;
+
+                    // Fallback: If doc.url is null (resolver mismatch), construct it manually
+                    if (!docUrl && doc.type === 'blog_post' && doc.uid) {
+                        const isJa = doc.lang === 'ja-jp';
+                        docUrl = isJa ? `/ja/blog/${doc.uid}` : `/blog/${doc.uid}`;
+                    }
+
+                    if (docUrl) {
+                        urlsToIndix.push(`${SITE_URL}${docUrl}`);
+                        console.log(`[Revalidate] [${timestamp}] Resolved document URL: ${docUrl}`);
+                    } else {
+                        console.log(`[Revalidate] [${timestamp}] Could not resolve URL for document ID: ${doc.id}`);
                     }
                 }
             } catch (err) {
