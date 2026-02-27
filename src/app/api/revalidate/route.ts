@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         console.log(`[Revalidate] [${timestamp}] Paths revalidated (blog listing and full layout).`);
 
         // 3. Google Indexing API Notification
-        let urlsToIndix: string[] = [
+        let urlsToIndex: string[] = [
             `${SITE_URL}/blog`,
             `${SITE_URL}/ja/blog`,
             `${SITE_URL}/`,
@@ -47,7 +47,12 @@ export async function POST(request: NextRequest) {
             const client = createClient();
             try {
                 // Fetch the documents by IDs to get their URLs
-                const docs = await client.getAllByIDs(body.documents);
+                // Use the masterRef from the body to ensure we get the latest published version
+                const ref = body.masterRef;
+                const docs = await client.getAllByIDs(body.documents, { ref });
+
+                console.log(`[Revalidate] [${timestamp}] Processing ${docs.length} changed document(s)`);
+
                 for (const doc of docs) {
                     let docUrl = doc.url;
 
@@ -58,20 +63,22 @@ export async function POST(request: NextRequest) {
                     }
 
                     if (docUrl) {
-                        urlsToIndix.push(`${SITE_URL}${docUrl}`);
-                        console.log(`[Revalidate] [${timestamp}] Resolved document URL: ${docUrl}`);
+                        urlsToIndex.push(`${SITE_URL}${docUrl}`);
+                        // Also revalidate the specific page path in Next.js
+                        revalidatePath(docUrl, 'page');
+                        console.log(`[Revalidate] [${timestamp}] Added document URL for Indexing & Revalidated: ${docUrl}`);
                     } else {
-                        console.log(`[Revalidate] [${timestamp}] Could not resolve URL for document ID: ${doc.id}`);
+                        console.log(`[Revalidate] [${timestamp}] Could not resolve URL for document ID: ${doc.id} (Type: ${doc.type})`);
                     }
                 }
             } catch (err) {
-                console.warn(`[Revalidate] Failed to resolve URLs for documents: ${body.documents}`, err);
+                console.warn(`[Revalidate] [${timestamp}] Failed to resolve URLs for documents: ${body.documents}`, err);
             }
         }
 
         // Notify Google (Unique URLs only)
-        const uniqueUrls = [...new Set(urlsToIndix)];
-        console.log(`[Revalidate] [${timestamp}] Notifying Google Indexing for URLs:`, uniqueUrls);
+        const uniqueUrls = [...new Set(urlsToIndex)];
+        console.log(`[Revalidate] [${timestamp}] Final URL list for Google Indexing:`, uniqueUrls);
 
         // We use Promise.allSettled so that one bad URL doesn't break the whole revalidation
         const results = await Promise.allSettled(
