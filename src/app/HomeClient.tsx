@@ -686,7 +686,7 @@ export default function Home({
               <ul className="bio-list">
                 {language === 'en' ? (
                   <>
-                    <li className="chip">All-round Marketer</li>
+                    <li className="chip">Full-stack Marketer</li>
                     <li className="chip">Web Dev & UI/UX</li>
                     <li className="chip">Japan Market Entry (GTM)</li>
                     <li className="chip">Brand Strategy & Identity</li>
@@ -698,7 +698,7 @@ export default function Home({
                   </>
                 ) : (
                   <>
-                    <li className="chip">オールラウンドマーケター</li>
+                    <li className="chip">フルスタック・マーケター</li>
                     <li className="chip">ウェブ開発 & UI/UX</li>
                     <li className="chip">グローバル展開 GTM戦略</li>
                     <li className="chip">ブランド戦略 & アイデンティティ設計</li>

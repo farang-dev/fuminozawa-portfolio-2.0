@@ -365,9 +365,25 @@ body.light .dark-mode-toggle:hover {
 #taishiyade-title {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.tagline {
+  font-size: 0.9rem;
+  color: #429bd8;
+  margin-bottom: 30px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.dark .tagline {
+  color: #8ba3e3;
 }
 
 .glitch-effect:hover {

@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { BlogPost } from '@/lib/prismic-blog';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import ContributionHeatmap from './ContributionHeatmap';
 
 interface AiNewsListProps {
     posts: BlogPost[];
@@ -21,6 +22,24 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
     const [isLoading, setIsLoading] = useState(false);
     const observerTarget = useRef<HTMLDivElement>(null);
     const sortMenuRef = useRef<HTMLDivElement>(null);
+    const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+    // Filter posts by selected date
+    const filteredPosts = posts.filter(post => {
+        if (!selectedDate) return true;
+        const postDate = new Date(post.publishedDate || 0).toISOString().split('T')[0];
+        return postDate === selectedDate;
+    });
+
+    // Calculate contribution stats
+    const contributions = useMemo(() => {
+        const stats: Record<string, number> = {};
+        posts.forEach(post => {
+            const dateStr = new Date(post.publishedDate || 0).toISOString().split('T')[0];
+            stats[dateStr] = (stats[dateStr] || 0) + 1;
+        });
+        return stats;
+    }, [posts]);
 
     const categories = locale === 'ja'
         ? ['すべて', 'Web', 'Product', 'Marketing', 'SEO・GEO', 'AI', 'AIニュース']
@@ -38,7 +57,7 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
     }, []);
 
     // Sort logic
-    const sortedPosts = [...posts].sort((a, b) => {
+    const sortedPosts = [...filteredPosts].sort((a, b) => {
         const dateA = new Date(a.publishedDate || 0).getTime();
         const dateB = new Date(b.publishedDate || 0).getTime();
         return sortBy === 'newest' ? dateB - dateA : dateA - dateB;
@@ -81,6 +100,8 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
 
     return (
         <div className="space-y-12">
+            {/* Contribution Heatmap */}
+
             {/* Filter & Sort Bar (Sticky) */}
             <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-gray-100 -mx-4 px-4 sm:-mx-6 sm:px-6 mb-12">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between py-6 gap-6">
@@ -147,6 +168,17 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
                     </div>
                 </div>
             </div>
+
+            {/* Contribution Heatmap (Moved below tags) */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+                <ContributionHeatmap
+                    contributions={contributions}
+                    onDateClick={setSelectedDate}
+                    selectedDate={selectedDate}
+                    locale={locale}
+                />
+            </div>
+
 
             {/* News Bar (Total count) */}
             <div className="flex items-center justify-between">
