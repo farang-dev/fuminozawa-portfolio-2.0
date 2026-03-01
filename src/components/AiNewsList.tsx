@@ -103,8 +103,8 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
             {/* Contribution Heatmap */}
 
             {/* Filter & Sort Bar (Sticky) */}
-            <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-gray-100 -mx-4 px-4 sm:-mx-6 sm:px-6 mb-12">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between py-6 gap-6">
+            <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-gray-100 -mx-4 px-4 sm:-mx-6 sm:px-6 mb-8">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between py-4 gap-6">
                     <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
                         {categories.map((category) => {
                             const isAiNews = category === 'AI News' || category === 'AIニュース';
@@ -170,7 +170,7 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
             </div>
 
             {/* Contribution Heatmap (Moved below tags) */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
                 <ContributionHeatmap
                     contributions={contributions}
                     onDateClick={setSelectedDate}

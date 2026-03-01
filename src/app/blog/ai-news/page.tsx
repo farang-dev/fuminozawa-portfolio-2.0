@@ -23,9 +23,9 @@ export default async function AiNewsPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-8 sm:pt-16 sm:pb-12">
                 {/* Header */}
-                <div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                     <div>
                         <Link
                             href="/blog"
@@ -35,10 +35,10 @@ export default async function AiNewsPage() {
                             Back to Blog
                         </Link>
 
-                        <h1 className="text-4xl sm:text-6xl font-black text-gray-900 mb-4 tracking-tight">
+                        <h1 className="text-3xl sm:text-5xl font-black text-gray-900 mb-4 tracking-tight">
                             AI News <span className="text-blue-600">.</span>
                         </h1>
-                        <p className="text-xl text-gray-600 font-light max-w-2xl">
+                        <p className="text-lg text-gray-600 font-light max-w-2xl">
                             A dedicated feed tracking the pulse of Artificial Intelligence. I curate the most impactful breakthroughs, LLM evolutions, and generative AI strategies to help marketers and builders stay ahead.
                         </p>
                     </div>
