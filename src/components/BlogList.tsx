@@ -201,50 +201,63 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                                     </div>
                                 )}
 
-                                <Link href={`${locale === 'ja' ? '/ja/blog/' : '/blog/'}${post.slug}`} className="flex flex-col flex-grow p-8">
-                                    <div className="flex items-center gap-3 mb-6 flex-wrap">
-                                        {post.publishedDate && (
-                                            <time
-                                                dateTime={post.publishedDate}
-                                                className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
-                                            >
-                                                {new Date(post.publishedDate).toLocaleDateString(locale === 'ja' ? 'ja-JP' : 'en-US', {
-                                                    month: 'short',
-                                                    day: 'numeric',
-                                                    year: 'numeric'
-                                                })}
-                                            </time>
-                                        )}
+                                {(() => {
+                                    const isAiNews = post.tags?.some(tag => ['AI News', 'AIニュース'].includes(tag));
+                                    const baseUrl = isAiNews
+                                        ? (locale === 'ja' ? 'https://ai.fuminozawa-info.site/ja/blog/' : 'https://ai.fuminozawa-info.site/blog/')
+                                        : (locale === 'ja' ? '/ja/blog/' : '/blog/');
+                                    const props = isAiNews ? { href: `${baseUrl}${post.slug}` } : { href: `${baseUrl}${post.slug}` };
 
-                                        {post.tags && post.tags.length > 0 && (
-                                            <div className="flex gap-2">
-                                                {post.tags.slice(0, 2).map((tag) => (
-                                                    <span
-                                                        key={tag}
-                                                        className="text-xs font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded-full"
+                                    const LinkComponent = isAiNews ? 'a' : Link;
+
+                                    return (
+                                        <LinkComponent {...props} className="flex flex-col flex-grow p-8">
+                                            {/* ... content ... */}
+                                            <div className="flex items-center gap-3 mb-6 flex-wrap">
+                                                {post.publishedDate && (
+                                                    <time
+                                                        dateTime={post.publishedDate}
+                                                        className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full"
                                                     >
-                                                        {tag}
-                                                    </span>
-                                                ))}
+                                                        {new Date(post.publishedDate).toLocaleDateString(locale === 'ja' ? 'ja-JP' : 'en-US', {
+                                                            month: 'short',
+                                                            day: 'numeric',
+                                                            year: 'numeric'
+                                                        })}
+                                                    </time>
+                                                )}
+
+                                                {post.tags && post.tags.length > 0 && (
+                                                    <div className="flex gap-2">
+                                                        {post.tags.slice(0, 2).map((tag) => (
+                                                            <span
+                                                                key={tag}
+                                                                className="text-xs font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded-full"
+                                                            >
+                                                                {tag}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
 
-                                    <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 leading-tight">
-                                        {post.title}
-                                    </h2>
+                                            <h2 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 leading-tight">
+                                                {post.title}
+                                            </h2>
 
-                                    {post.description && (
-                                        <p className="text-gray-600 mb-8 leading-relaxed flex-grow line-clamp-3 font-light">
-                                            {post.description}
-                                        </p>
-                                    )}
+                                            {post.description && (
+                                                <p className="text-gray-600 mb-8 leading-relaxed flex-grow line-clamp-3 font-light">
+                                                    {post.description}
+                                                </p>
+                                            )}
 
-                                    <div className="mt-auto flex items-center text-blue-600 font-bold group-hover:gap-2 transition-all">
-                                        {locale === 'ja' ? '記事を読む' : 'Read Article'}
-                                        <span className="ml-2 opacity-0 group-hover:opacity-100 transition-all">→</span>
-                                    </div>
-                                </Link>
+                                            <div className="mt-auto flex items-center text-blue-600 font-bold group-hover:gap-2 transition-all">
+                                                {locale === 'ja' ? '記事を読む' : 'Read Article'}
+                                                <span className="ml-2 opacity-0 group-hover:opacity-100 transition-all">→</span>
+                                            </div>
+                                        </LinkComponent>
+                                    );
+                                })()}
                             </motion.article>
                         ))}
                     </motion.div>

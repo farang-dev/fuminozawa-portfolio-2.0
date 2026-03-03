@@ -74,9 +74,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
+import { headers } from 'next/headers';
+import { AI_NEWS_DOMAIN, isAiNewsDomain } from '@/lib/locales';
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getBlogPostByUid(slug, 'en-us');
+  const headersList = await headers();
+  const host = headersList.get('host');
 
   if (!post) {
     // Check if the post exists in Japanese
@@ -85,6 +90,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       redirect(`/ja/blog/${slug}`);
     }
     notFound();
+  }
+
+  // Domain Redirection Logic
+  const isAiNews = isAiNewsPost(post.tags);
+  const onAiDomain = isAiNewsDomain(host);
+
+  if (isAiNews && !onAiDomain) {
+    // Redirect AI News posts from main domain to subdomain
+    redirect(`https://${AI_NEWS_DOMAIN}/blog/${slug}`);
+  } else if (!isAiNews && onAiDomain) {
+    // Redirect regular posts from subdomain back to main domain
+    redirect(`https://fuminozawa-info.site/blog/${slug}`);
   }
 
   // Ensure description is at least 100 characters for JSON-LD
@@ -102,7 +119,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     .filter(([_, p]) => p !== null)
     .map(([locale]) => locale as any);
 
-  const isAiNews = isAiNewsPost(post.tags);
+  // baseUrl is used for JSON-LD and social sharing links
   const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
 
   // Generate JSON-LD structured data

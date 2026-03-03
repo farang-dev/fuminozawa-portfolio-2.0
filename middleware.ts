@@ -25,8 +25,9 @@ export function middleware(request: NextRequest) {
             return NextResponse.rewrite(new URL(`${localeSuffix}/blog/ai-news`, request.url));
         }
 
-        // Block non-AI-news paths on the subdomain
-        const allowedPaths = ['/blog/ai-news', '/ja/blog/ai-news'];
+        // Block non-AI-news (and non-blog) paths on the subdomain
+        // We allow /blog/ patterns so the BlogPost page can decide if it's AI news or not
+        const allowedPaths = ['/blog/ai-news', '/ja/blog/ai-news', '/blog/', '/ja/blog/'];
         const isAllowed = allowedPaths.some(p => pathname.startsWith(p));
 
         if (!isAllowed) {

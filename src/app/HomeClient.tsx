@@ -907,45 +907,54 @@ export default function Home({
             >
               <div className="blog-grid-mini">
                 {writings.length > 0 ? (
-                  writings.slice(0, 10).map((writing) => (
-                    <div key={writing.id} className="blog-card-mini group">
-                      {writing.featuredImage && (
-                        <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-image">
-                          <Image
-                            src={writing.featuredImage.url}
-                            alt={writing.featuredImage.alt || writing.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 400px"
-                            className="object-cover"
-                          />
-                        </Link>
-                      )}
-                      <div className="blog-card-content">
-                        <div className="blog-card-meta">
-                          {writing.publishedDate && (
-                            <span className="blog-card-date">
-                              {new Date(writing.publishedDate).toLocaleDateString(language === 'ja' ? 'ja-JP' : 'en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric',
-                              })}
-                            </span>
-                          )}
-                          {writing.tags && writing.tags.length > 0 && (
-                            <span className="blog-card-tag">{writing.tags[0]}</span>
-                          )}
+                  writings.slice(0, 10).map((writing) => {
+                    const isAiNews = writing.tags?.some(tag => ['AI News', 'AIニュース'].includes(tag));
+                    const baseUrl = isAiNews
+                      ? (language === 'ja' ? 'https://ai.fuminozawa-info.site/ja/blog/' : 'https://ai.fuminozawa-info.site/blog/')
+                      : (language === 'ja' ? '/ja/blog/' : '/blog/');
+                    const postUrl = `${baseUrl}${writing.slug}`;
+                    const LinkComponent = isAiNews ? 'a' : Link;
+
+                    return (
+                      <div key={writing.id} className="blog-card-mini group">
+                        {writing.featuredImage && (
+                          <LinkComponent href={postUrl} className="blog-card-image">
+                            <Image
+                              src={writing.featuredImage.url}
+                              alt={writing.featuredImage.alt || writing.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 400px"
+                              className="object-cover"
+                            />
+                          </LinkComponent>
+                        )}
+                        <div className="blog-card-content">
+                          <div className="blog-card-meta">
+                            {writing.publishedDate && (
+                              <span className="blog-card-date">
+                                {new Date(writing.publishedDate).toLocaleDateString(language === 'ja' ? 'ja-JP' : 'en-US', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric',
+                                })}
+                              </span>
+                            )}
+                            {writing.tags && writing.tags.length > 0 && (
+                              <span className="blog-card-tag">{writing.tags[0]}</span>
+                            )}
+                          </div>
+                          <LinkComponent href={postUrl}>
+                            <h3>{writing.title}</h3>
+                          </LinkComponent>
+                          <p>{writing.description}</p>
+                          <LinkComponent href={postUrl} className="blog-card-link">
+                            {language === 'ja' ? '記事を読む' : 'Read Article'}
+                            <i className="fas fa-arrow-right ml-2" />
+                          </LinkComponent>
                         </div>
-                        <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`}>
-                          <h3>{writing.title}</h3>
-                        </Link>
-                        <p>{writing.description}</p>
-                        <Link href={`${language === 'ja' ? '/ja/blog/' : '/blog/'}${writing.slug}`} className="blog-card-link">
-                          {language === 'ja' ? '記事を読む' : 'Read Article'}
-                          <i className="fas fa-arrow-right ml-2" />
-                        </Link>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 ) : (
                   <div className="text-center py-10 opacity-50">
                     {language === 'ja' ? '記事が見つかりませんでした' : 'No articles found'}
