@@ -54,8 +54,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         description = `${description} 野澤眞史のポートフォリオブログでは、Webエンジニアリングとデジタル戦略の交差点から価値あるインサイトを発信しています。`;
     }
 
-    const url = `https://fuminozawa-info.site/ja/blog/${post.slug}`;
-    const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
+    const isAiNews = isAiNewsPost(post.tags);
+    const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
+    const url = `${baseUrl}/ja/blog/${post.slug}`;
+    const alternateUrls = getAlternateUrls(`blog/${post.slug}`, isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site');
 
     return generateSEOMetadata({
         title: `${post.title} | AI・マーケティング・Web戦略 Fumi Nozawa`,
@@ -99,11 +101,14 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
         .filter(([_, p]) => p !== null)
         .map(([locale]) => locale as any);
 
+    const isAiNews = isAiNewsPost(post.tags);
+    const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
+
     // Generate JSON-LD structured data
     const jsonLd = generateArticleJSONLD({
         title: post.title,
         description: description,
-        url: `https://fuminozawa-info.site/ja/blog/${post.slug}`,
+        url: `${baseUrl}/ja/blog/${post.slug}`,
         datePublished: post.publishedDate,
         dateModified: post.updatedDate,
         image: post.featuredImage?.url,
@@ -202,7 +207,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                             <PrismicContent field={post.content} />
 
                             {/* Social Share */}
-                            <SocialShare url={`https://fuminozawa-info.site/ja/blog/${post.slug}`} title={post.title} locale="ja" />
+                            <SocialShare url={`${baseUrl}/ja/blog/${post.slug}`} title={post.title} locale="ja" />
 
                             {/* Profile Snippet */}
                             <ProfileSnippet locale="ja" />
@@ -224,7 +229,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
 
                         <div className="flex space-x-4">
                             <a
-                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://fuminozawa-info.site/ja/blog/${post.slug}`)}`}
+                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${baseUrl}/ja/blog/${post.slug}`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-100"
@@ -236,7 +241,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                                 </svg>
                             </a>
                             <a
-                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://fuminozawa-info.site/ja/blog/${post.slug}`)}`}
+                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${baseUrl}/ja/blog/${post.slug}`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-gray-100"

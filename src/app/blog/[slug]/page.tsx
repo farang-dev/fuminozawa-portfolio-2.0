@@ -55,8 +55,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description = `${description} Explore more insights on web development and digital marketing strategy by Fumi Nozawa.`;
   }
 
-  const url = `https://fuminozawa-info.site/blog/${post.slug}`;
-  const alternateUrls = getAlternateUrls(`blog/${post.slug}`);
+  const isAiNews = isAiNewsPost(post.tags);
+  const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
+  const url = `${baseUrl}/blog/${post.slug}`;
+  const alternateUrls = getAlternateUrls(`blog/${post.slug}`, isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site');
 
   return generateSEOMetadata({
     title: `${post.title} | Digital Marketer & Developer | Fumi Nozawa`,
@@ -100,11 +102,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     .filter(([_, p]) => p !== null)
     .map(([locale]) => locale as any);
 
+  const isAiNews = isAiNewsPost(post.tags);
+  const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
+
   // Generate JSON-LD structured data
   const jsonLd = generateArticleJSONLD({
     title: post.title,
     description: description,
-    url: `https://fuminozawa-info.site/blog/${post.slug}`,
+    url: `${baseUrl}/blog/${post.slug}`,
     datePublished: post.publishedDate,
     dateModified: post.updatedDate,
     image: post.featuredImage?.url,
@@ -203,7 +208,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <PrismicContent field={post.content} />
 
               {/* Social Share */}
-              <SocialShare url={`https://fuminozawa-info.site/blog/${post.slug}`} title={post.title} locale="en" />
+              <SocialShare url={`${baseUrl}/blog/${post.slug}`} title={post.title} locale="en" />
 
               {/* Profile Snippet */}
               <ProfileSnippet locale="en" />
@@ -225,7 +230,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             <div className="flex space-x-4">
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://fuminozawa-info.site/blog/${post.slug}`)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${baseUrl}/blog/${post.slug}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-100"
@@ -237,7 +242,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </svg>
               </a>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://fuminozawa-info.site/blog/${post.slug}`)}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${baseUrl}/blog/${post.slug}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-gray-100"
