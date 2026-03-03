@@ -31,7 +31,15 @@ export function generateSEOMetadata({
     tags,
 }: SEOProps): Metadata {
     const baseUrl = 'https://fuminozawa-info.site';
-    const fullCanonical = canonical || baseUrl;
+    const aiBaseUrl = 'https://ai.fuminozawa-info.site';
+
+    // Logic to determine if this is an AI News related content
+    const isAiNewsContent = tags?.some(t => ['AI News', 'AIニュース'].includes(t)) ||
+        (canonical && (canonical.includes('ai-news') || canonical.includes('ai.')));
+
+    const effectiveBaseUrl = isAiNewsContent ? aiBaseUrl : baseUrl;
+    const fullCanonical = canonical || effectiveBaseUrl;
+
     // Use profile.jpg as fallback if og-image.png doesn't exist
     const defaultImage = `${baseUrl}/profile.jpg`;
 
@@ -40,8 +48,8 @@ export function generateSEOMetadata({
 
     // Dynamic site name based on locale
     const siteName = locale === 'en-us'
-        ? 'Fumi Nozawa | Digital Marketer & Developer'
-        : '野澤眞史 | デジタルマーケター & Webエンジニア';
+        ? (isAiNewsContent ? 'AI News | Fumi Nozawa' : 'Fumi Nozawa | Digital Marketer & Developer')
+        : (isAiNewsContent ? 'AIニュース | 野澤眞史' : '野澤眞史 | デジタルマーケター & Webエンジニア');
 
     return {
         title,
@@ -49,7 +57,7 @@ export function generateSEOMetadata({
         authors: [{ name: author }],
         creator: author,
         publisher: author,
-        metadataBase: new URL(baseUrl),
+        metadataBase: new URL(effectiveBaseUrl),
         alternates: {
             canonical: fullCanonical,
             languages: alternateUrls || {},

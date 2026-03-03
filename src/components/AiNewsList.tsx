@@ -119,15 +119,17 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
                                     </button>
                                 );
                             }
-                            // Branding categories link back to the main blog
                             return (
-                                <Link
+                                <a
                                     key={category}
-                                    href={`${locale === 'ja' ? '/ja/blog' : '/blog'}?category=${category}`}
+                                    href={category === 'All' || category === 'すべて'
+                                        ? (locale === 'ja' ? 'https://fuminozawa-info.site/ja/blog' : 'https://fuminozawa-info.site/blog')
+                                        : (locale === 'ja' ? `https://fuminozawa-info.site/ja/blog?category=${category}` : `https://fuminozawa-info.site/blog?category=${category}`)
+                                    }
                                     className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                                 >
                                     {category}
-                                </Link>
+                                </a>
                             );
                         })}
                     </div>

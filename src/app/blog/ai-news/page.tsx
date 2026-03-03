@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: 'AI News - Latest AI & Generative AI Trends | Fumi Nozawa',
         description: 'A curated feed of the most impactful AI breakthroughs, LLM evolutions, and generative AI strategies. Stay ahead of the curve with insights for marketers and builders.',
-        canonical: 'https://fuminozawa-info.site/blog/ai-news',
+        canonical: 'https://ai.fuminozawa-info.site',
         locale: 'en-us',
         alternateUrls,
     });
@@ -27,13 +27,13 @@ export default async function AiNewsPage() {
                 {/* Header */}
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                     <div>
-                        <Link
-                            href="/blog"
+                        <a
+                            href="https://fuminozawa-info.site/blog"
                             className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all font-bold group mb-6"
                         >
                             <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span>
-                            Back to Blog
-                        </Link>
+                            Back to Fumi Nozawa Journal
+                        </a>
 
                         <h1 className="text-3xl sm:text-5xl font-black text-gray-900 mb-4 tracking-tight">
                             AI News <span className="text-blue-600">.</span>

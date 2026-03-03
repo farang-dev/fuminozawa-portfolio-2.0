@@ -105,14 +105,14 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                             const isAiNews = category === 'AI News' || category === 'AIニュース';
                             if (isAiNews) {
                                 return (
-                                    <Link
+                                    <a
                                         key={category}
-                                        href={locale === 'ja' ? '/ja/blog/ai-news' : '/blog/ai-news'}
+                                        href={locale === 'ja' ? 'https://ai.fuminozawa-info.site/ja' : 'https://ai.fuminozawa-info.site'}
                                         className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap text-gray-500 hover:text-gray-900 hover:bg-gray-50 flex items-center gap-2"
                                     >
                                         <span>{category}</span>
                                         <span className="flex h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-                                    </Link>
+                                    </a>
                                 );
                             }
                             return (

@@ -71,6 +71,10 @@ export function getLocalePrefix(locale: LocaleCode): string {
  * Get alternate URLs for hreflang tags
  */
 export function getAlternateUrls(fullPath: string, baseUrl = 'https://fuminozawa-info.site') {
+    // Determine which base URL to use based on the path
+    const isAiNews = fullPath.startsWith('blog/ai-news') || fullPath.startsWith('ja/blog/ai-news');
+    const effectiveBaseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : baseUrl;
+
     // Split path and query
     const [path, queryString] = fullPath.split('?');
 
@@ -78,7 +82,7 @@ export function getAlternateUrls(fullPath: string, baseUrl = 'https://fuminozawa
     const cleanRoute = path.replace(/^\/+(ja\/?)?/, '').replace(/\/+$/, '');
 
     const constructUrl = (prefix: string) => {
-        const segments = [baseUrl, prefix, cleanRoute].filter(Boolean);
+        const segments = [effectiveBaseUrl, prefix, cleanRoute].filter(Boolean);
         let url = segments.join('/');
 
         // Append query string if it exists
@@ -94,6 +98,17 @@ export function getAlternateUrls(fullPath: string, baseUrl = 'https://fuminozawa
         'ja-jp': constructUrl('ja'),
         'x-default': constructUrl(''),
     };
+}
+
+export const MAIN_DOMAIN = 'fuminozawa-info.site';
+export const AI_NEWS_DOMAIN = 'ai.fuminozawa-info.site';
+
+/**
+ * Helper to determine if the current request is for the AI News subdomain
+ */
+export function isAiNewsDomain(host: string | null): boolean {
+    if (!host) return false;
+    return host === AI_NEWS_DOMAIN || host.startsWith('ai.');
 }
 
 /**

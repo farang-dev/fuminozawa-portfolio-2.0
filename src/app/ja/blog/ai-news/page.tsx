@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: 'AIニュース - 最新AI・生成AIトレンド | Fumi Nozawa (野澤眞史)',
         description: 'AIの進化を、実務の視点で読み解く。最新のAIニュース、生成AIの動向、LLMの技術的アップデートから、マーケターや開発者がいま知るべき重要トピックを厳選して発信。',
-        canonical: 'https://fuminozawa-info.site/ja/blog/ai-news',
+        canonical: 'https://ai.fuminozawa-info.site/ja',
         locale: 'ja-jp',
         alternateUrls,
     });
@@ -27,13 +27,13 @@ export default async function AiNewsPageJa() {
                 {/* Header */}
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                     <div>
-                        <Link
-                            href="/ja/blog"
+                        <a
+                            href="https://fuminozawa-info.site/ja/blog"
                             className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all font-bold group mb-6"
                         >
                             <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span>
-                            ブログに戻る
-                        </Link>
+                            メインブログに戻る
+                        </a>
 
                         <h1 className="text-3xl sm:text-5xl font-black text-gray-900 mb-4 tracking-tight">
                             AIニュース <span className="text-blue-600">.</span>
