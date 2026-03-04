@@ -25,14 +25,30 @@ function LanguageSwitcherInner({
         const queryString = searchParams.toString();
         const suffix = queryString ? `?${queryString}` : '';
 
-        if (locale === 'en-us') {
-            // Ensure we don't end up with // if pathWithoutLocale is /
-            const base = pathWithoutLocale === '/' ? '/' : pathWithoutLocale.replace(/\/$/, '');
-            return `${base}${suffix}`;
+        // Determine the base URL. If we're on the AI subdomain, we usually stay there
+        // unless we're navigating to a non-AI path.
+        const isCurrentAiSubdomain = typeof window !== 'undefined' &&
+            (window.location.hostname === 'ai.fuminozawa-info.site' || window.location.hostname.startsWith('ai.'));
+
+        let targetHost = '';
+        if (isCurrentAiSubdomain) {
+            targetHost = 'https://ai.fuminozawa-info.site';
         }
-        // For /ja, ensure we don't have trailing slash unless it's just /ja/ (which should be /ja)
-        const base = pathWithoutLocale === '/' ? '/ja' : `/ja${pathWithoutLocale.replace(/\/$/, '')}`;
-        return `${base}${suffix}`;
+
+        // Normalize the path without locale
+        // If pathname is /ja/blog/ai-news, pathWithoutLocale should be /blog/ai-news
+        // If pathname is /ja, pathWithoutLocale should be /
+        let cleanPath = pathname.replace(/^\/ja(\/|$)/, '/');
+        if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
+
+        if (locale === 'en-us') {
+            const base = cleanPath === '/' ? '/' : cleanPath.replace(/\/$/, '');
+            return targetHost ? `${targetHost}${base}${suffix}` : `${base}${suffix}`;
+        }
+
+        // For /ja
+        const base = cleanPath === '/' ? '/ja' : `/ja${cleanPath.replace(/\/$/, '')}`;
+        return targetHost ? `${targetHost}${base}${suffix}` : `${base}${suffix}`;
     };
 
     return (
