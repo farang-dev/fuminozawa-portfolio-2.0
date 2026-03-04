@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ContributionHeatmapProps {
@@ -16,6 +16,7 @@ export default function ContributionHeatmap({
     selectedDate,
     locale
 }: ContributionHeatmapProps) {
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const today = new Date();
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(today.getFullYear() - 1);
@@ -54,6 +55,13 @@ export default function ContributionHeatmap({
             result.push(days.slice(i, i + 7));
         }
         return result;
+    }, [days]);
+
+    // Scroll to the right (latest contributions) on initial mount or when data changes
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+        }
     }, [days]);
 
     const getColor = (count: number) => {
@@ -98,7 +106,10 @@ export default function ContributionHeatmap({
                     <span>{weekDayNames[5]}</span>
                 </div>
 
-                <div className="flex-grow overflow-x-auto scrollbar-hide">
+                <div
+                    ref={scrollContainerRef}
+                    className="flex-grow overflow-x-auto scrollbar-hide"
+                >
                     <div className="inline-grid grid-rows-7 grid-flow-col gap-[3px]">
                         {days.map((day, i) => (
                             <div
@@ -111,6 +122,7 @@ export default function ContributionHeatmap({
                             />
                         ))}
                     </div>
+
 
                     {/* Month labels */}
                     <div className="flex mt-2 text-[9px] text-gray-400 relative h-3">
