@@ -683,7 +683,7 @@ export default function Home({
             </h1>
 
             <p className="tagline">
-              Freelance Digital Marketer & Web Developer
+              Strategic Growth Partner (& Executions)
             </p>
 
             <div className="bio-container">
