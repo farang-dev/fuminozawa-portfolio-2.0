@@ -95,9 +95,65 @@ export const richTextComponents: any = {
             {children}
         </blockquote>
     ),
-    preformatted: ({ node }: any) => (
-        <PrismicCodeBlock text={node.text} />
-    ),
+    preformatted: ({ node }: any) => {
+        const text = node.text;
+        // Simple markdown table detection: needs at least | and | --- |
+        const lines = text.trim().split('\n');
+        const hasTableStructure = lines.length >= 3 &&
+            lines.some(l => l.includes('|')) &&
+            lines.some(l => l.match(/^\s*\|?\s*:?-+:?\s*\|/));
+
+        if (hasTableStructure) {
+            try {
+                const separatorIndex = lines.findIndex(line => line.match(/^\s*\|?\s*:?-+:?\s*\|/));
+                if (separatorIndex > 0) {
+                    const headerLine = lines[separatorIndex - 1];
+                    const headers = headerLine.split('|')
+                        .map(s => s.trim())
+                        .filter((s, i, arr) => (i > 0 && i < arr.length - 1) || s !== ''); // Handle optional leading/trailing |
+
+                    const rows = lines.slice(separatorIndex + 1)
+                        .map(line => line.split('|')
+                            .map(s => s.trim())
+                            .filter((s, i, arr) => (i > 0 && i < arr.length - 1) || s !== '')
+                        )
+                        .filter(row => row.length > 0);
+
+                    return (
+                        <div className="my-10 overflow-x-auto rounded-xl border border-gray-200 shadow-sm font-sans">
+                            <table className="w-full text-left border-collapse min-w-[600px]">
+                                <thead className="bg-gray-50/80 border-b border-gray-200">
+                                    <tr>
+                                        {headers.map((h, i) => (
+                                            <th key={i} className="px-6 py-4 text-sm font-bold text-gray-900 uppercase tracking-wider whitespace-nowrap">
+                                                {h.replace(/\*\*/g, '')}
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100 bg-white">
+                                    {rows.map((row, i) => (
+                                        <tr key={i} className="hover:bg-gray-50/30 transition-colors">
+                                            {row.map((cell, j) => (
+                                                <td key={j} className="px-6 py-4 text-sm text-gray-700 leading-relaxed">
+                                                    {cell.startsWith('**') && cell.endsWith('**') ?
+                                                        <strong className="font-bold">{cell.slice(2, -2)}</strong> : cell}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    );
+                }
+            } catch (e) {
+                console.error("Failed to parse markdown table", e);
+            }
+        }
+
+        return <PrismicCodeBlock text={node.text} />;
+    },
     label: ({ node, children }: any) => {
         if (node.data.label === 'section-line' || node.data.label === 'divider') {
             return <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />;
@@ -112,6 +168,38 @@ export const richTextComponents: any = {
         return <span className={node.data.label}>{children}</span>;
     },
     hr: () => <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />,
+    table: ({ children }: any) => (
+        <div className="my-10 overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+            <table className="w-full text-left border-collapse min-w-[600px]">
+                {children}
+            </table>
+        </div>
+    ),
+    thead: ({ children }: any) => (
+        <thead className="bg-gray-50/80 border-b border-gray-200">
+            {children}
+        </thead>
+    ),
+    tbody: ({ children }: any) => (
+        <tbody className="divide-y divide-gray-100 bg-white">
+            {children}
+        </tbody>
+    ),
+    tr: ({ children }: any) => (
+        <tr className="hover:bg-gray-50/30 transition-colors">
+            {children}
+        </tr>
+    ),
+    th: ({ children }: any) => (
+        <th className="px-6 py-4 text-sm font-bold text-gray-900 uppercase tracking-wider whitespace-nowrap">
+            {children}
+        </th>
+    ),
+    td: ({ children }: any) => (
+        <td className="px-6 py-4 text-sm text-gray-700 leading-relaxed">
+            {children}
+        </td>
+    ),
 };
 
 interface PrismicContentProps {
