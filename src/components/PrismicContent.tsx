@@ -52,23 +52,23 @@ export const richTextComponents: any = {
     image: ({ node }: any) => {
         if (!node.url) return null;
         return (
-            <div className="my-10 flex flex-col items-center">
-                <div className="relative w-full rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+            <figure className="my-10 flex flex-col items-center">
+                <div className="relative w-full rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-gray-50">
                     <Image
                         src={node.url}
                         alt={node.alt || ''}
                         width={node.dimensions?.width || 800}
                         height={node.dimensions?.height || 600}
-                        className="w-full h-auto"
+                        className="w-full h-auto transition-transform duration-500 hover:scale-[1.02]"
                         style={{ maxWidth: '100%', height: 'auto' }}
                     />
                 </div>
                 {node.alt && (
-                    <p className="text-gray-500 text-sm text-center mt-4 italic">
+                    <figcaption className="text-gray-500 text-sm text-center mt-4 italic px-4 font-medium">
                         {node.alt}
-                    </p>
+                    </figcaption>
                 )}
-            </div>
+            </figure>
         );
     },
     hyperlink: ({ node, children }: any) => {
@@ -105,7 +105,7 @@ export const richTextComponents: any = {
 
         if (hasTableStructure) {
             try {
-                const separatorIndex = lines.findIndex(line => line.match(/^\s*\|?\s*:?-+:?\s*\|/));
+                const separatorIndex = lines.findIndex((line: string) => line.match(/^\s*\|?\s*:?-+:?\s*\|/));
                 if (separatorIndex > 0) {
                     const headerLine = lines[separatorIndex - 1];
                     const headers = headerLine.split('|')
@@ -120,31 +120,36 @@ export const richTextComponents: any = {
                         .filter((row: string[]) => row.length > 0);
 
                     return (
-                        <div className="my-10 overflow-x-auto rounded-xl border border-gray-200 shadow-sm font-sans">
-                            <table className="w-full text-left border-collapse min-w-[600px]">
-                                <thead className="bg-gray-50/80 border-b border-gray-200">
-                                    <tr>
-                                        {headers.map((h, i) => (
-                                            <th key={i} className="px-6 py-4 text-sm font-bold text-gray-900 uppercase tracking-wider whitespace-nowrap">
-                                                {h.replace(/\*\*/g, '')}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100 bg-white">
-                                    {rows.map((row, i) => (
-                                        <tr key={i} className="hover:bg-gray-50/30 transition-colors">
-                                            {row.map((cell, j) => (
-                                                <td key={j} className="px-6 py-4 text-sm text-gray-700 leading-relaxed">
-                                                    {cell.startsWith('**') && cell.endsWith('**') ?
-                                                        <strong className="font-bold">{cell.slice(2, -2)}</strong> : cell}
-                                                </td>
+                        <figure className="my-10 font-sans">
+                            <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm bg-white scrollbar-thin scrollbar-thumb-gray-200">
+                                <table className="w-full text-left border-collapse min-w-[600px]">
+                                    <thead className="bg-gray-50/80 border-b border-gray-200">
+                                        <tr>
+                                            {headers.map((h: string, i: number) => (
+                                                <th key={i} className="px-6 py-4 text-sm font-bold text-gray-900 uppercase tracking-wider whitespace-nowrap">
+                                                    {h.replace(/\*\*/g, '')}
+                                                </th>
                                             ))}
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-100">
+                                        {rows.map((row: string[], i: number) => (
+                                            <tr key={i} className="hover:bg-gray-50/30 transition-colors">
+                                                {row.map((cell: string, j: number) => (
+                                                    <td key={j} className="px-6 py-4 text-sm text-gray-700 leading-relaxed">
+                                                        {cell.startsWith('**') && cell.endsWith('**') ?
+                                                            <strong className="font-bold text-gray-900">{cell.slice(2, -2)}</strong> : cell}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <figcaption className="text-gray-400 text-[10px] mt-2 text-right uppercase tracking-[0.2em] px-2 sm:hidden font-semibold">
+                                ← Scroll horizontally →
+                            </figcaption>
+                        </figure>
                     );
                 }
             } catch (e) {
@@ -169,11 +174,16 @@ export const richTextComponents: any = {
     },
     hr: () => <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />,
     table: ({ children }: any) => (
-        <div className="my-10 overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-            <table className="w-full text-left border-collapse min-w-[600px]">
-                {children}
-            </table>
-        </div>
+        <figure className="my-10">
+            <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm bg-white scrollbar-thin scrollbar-thumb-gray-200">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                    {children}
+                </table>
+            </div>
+            <figcaption className="text-gray-400 text-[10px] mt-2 text-right uppercase tracking-[0.2em] px-2 sm:hidden font-semibold">
+                ← Scroll horizontally →
+            </figcaption>
+        </figure>
     ),
     thead: ({ children }: any) => (
         <thead className="bg-gray-50/80 border-b border-gray-200">
