@@ -682,6 +682,10 @@ export default function Home({
               fuminozawa
             </h1>
 
+            <p className="tagline">
+              Freelance Digital Marketer & Web Developer
+            </p>
+
             <div className="bio-container">
               <ul className="bio-list">
                 {language === 'en' ? (
