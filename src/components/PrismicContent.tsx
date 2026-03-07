@@ -196,11 +196,76 @@ export const richTextComponents: any = {
         </th>
     ),
     td: ({ children }: any) => (
-        <td className="px-6 py-4 text-sm text-gray-700 leading-relaxed">
+        <td className="px-6 py-4 text-sm text-gray-700 leading-relaxed border-t border-gray-100">
             {children}
         </td>
     ),
+    heading4: ({ children }: any) => (
+        <h4 className="text-lg sm:text-xl font-semibold text-gray-900 mt-6 mb-3">
+            {children}
+        </h4>
+    ),
+    heading5: ({ children }: any) => (
+        <h5 className="text-base sm:text-lg font-semibold text-gray-900 mt-4 mb-2">
+            {children}
+        </h5>
+    ),
+    heading6: ({ children }: any) => (
+        <h6 className="text-sm sm:text-base font-semibold text-gray-900 mt-4 mb-2 uppercase tracking-wide">
+            {children}
+        </h6>
+    ),
 };
+
+/**
+ * Pre-processes Prismic rich text field to detect and merge consecutive markdown table paragraphs.
+ */
+function preprocessRichText(field: any) {
+    if (!Array.isArray(field)) return field;
+
+    const processed: any[] = [];
+    let currentTableRows: any[] = [];
+
+    const isTableLine = (node: any) => {
+        if (node.type !== 'paragraph' || !node.text) return false;
+        const trimmed = node.text.trim();
+        // Check if it starts with | or contains multiple |
+        return trimmed.startsWith('|') || (trimmed.includes('|') && trimmed.split('|').length > 1);
+    }
+
+    const flushTable = () => {
+        if (currentTableRows.length > 0) {
+            // Check if current rows actually form a valid table (min 2 lines, has separator)
+            const combinedText = currentTableRows.map(n => n.text).join('\n');
+            const lines = combinedText.split('\n');
+            const hasSeparator = lines.some(l => l.match(/^\s*\|?\s*:?-+:?\s*\|/));
+
+            if (currentTableRows.length >= 2 && hasSeparator) {
+                processed.push({
+                    type: 'preformatted',
+                    text: combinedText,
+                    spans: []
+                });
+            } else {
+                // Not a valid table structure, keep as paragraphs
+                processed.push(...currentTableRows);
+            }
+            currentTableRows = [];
+        }
+    };
+
+    for (const node of field) {
+        if (isTableLine(node)) {
+            currentTableRows.push(node);
+        } else {
+            flushTable();
+            processed.push(node);
+        }
+    }
+    flushTable();
+
+    return processed;
+}
 
 interface PrismicContentProps {
     field: any;
@@ -213,9 +278,12 @@ interface PrismicContentProps {
 export default function PrismicContent({ field, className = '' }: PrismicContentProps) {
     if (!field) return null;
 
+    // Pre-process field to handle markdown tables pasted as paragraphs
+    const processedField = preprocessRichText(field);
+
     return (
         <div className={`max-w-none ${className}`}>
-            <PrismicRichText field={field} components={richTextComponents} />
+            <PrismicRichText field={processedField} components={richTextComponents} />
         </div>
     );
 }
