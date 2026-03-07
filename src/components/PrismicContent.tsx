@@ -100,8 +100,8 @@ export const richTextComponents: any = {
         // Simple markdown table detection: needs at least | and | --- |
         const lines = text.trim().split('\n');
         const hasTableStructure = lines.length >= 3 &&
-            lines.some(l => l.includes('|')) &&
-            lines.some(l => l.match(/^\s*\|?\s*:?-+:?\s*\|/));
+            lines.some((l: string) => l.includes('|')) &&
+            lines.some((l: string) => l.match(/^\s*\|?\s*:?-+:?\s*\|/));
 
         if (hasTableStructure) {
             try {
@@ -109,15 +109,15 @@ export const richTextComponents: any = {
                 if (separatorIndex > 0) {
                     const headerLine = lines[separatorIndex - 1];
                     const headers = headerLine.split('|')
-                        .map(s => s.trim())
-                        .filter((s, i, arr) => (i > 0 && i < arr.length - 1) || s !== ''); // Handle optional leading/trailing |
+                        .map((s: string) => s.trim())
+                        .filter((s: string, i: number, arr: string[]) => (i > 0 && i < arr.length - 1) || s !== ''); // Handle optional leading/trailing |
 
                     const rows = lines.slice(separatorIndex + 1)
-                        .map(line => line.split('|')
-                            .map(s => s.trim())
-                            .filter((s, i, arr) => (i > 0 && i < arr.length - 1) || s !== '')
+                        .map((line: string) => line.split('|')
+                            .map((s: string) => s.trim())
+                            .filter((s: string, i: number, arr: string[]) => (i > 0 && i < arr.length - 1) || s !== '')
                         )
-                        .filter(row => row.length > 0);
+                        .filter((row: string[]) => row.length > 0);
 
                     return (
                         <div className="my-10 overflow-x-auto rounded-xl border border-gray-200 shadow-sm font-sans">
@@ -236,9 +236,9 @@ function preprocessRichText(field: any) {
     const flushTable = () => {
         if (currentTableRows.length > 0) {
             // Check if current rows actually form a valid table (min 2 lines, has separator)
-            const combinedText = currentTableRows.map(n => n.text).join('\n');
+            const combinedText = currentTableRows.map((n: any) => n.text).join('\n');
             const lines = combinedText.split('\n');
-            const hasSeparator = lines.some(l => l.match(/^\s*\|?\s*:?-+:?\s*\|/));
+            const hasSeparator = lines.some((l: string) => l.match(/^\s*\|?\s*:?-+:?\s*\|/));
 
             if (currentTableRows.length >= 2 && hasSeparator) {
                 processed.push({
