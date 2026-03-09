@@ -4,22 +4,6 @@ const nextConfig = {
   skipTrailingSlashRedirect: true,
   images: {
     // unoptimized: true, // Commented out to potentially fix 405 issues on revalidate if related to image processing middleware interference
-    domains: [
-      "source.unsplash.com",
-      "images.unsplash.com",
-      "ext.same-assets.com",
-      "ugc.same-assets.com",
-      "www.notion.so",
-      "notion.so",
-      "s3-us-west-2.amazonaws.com",
-      "prod-files-secure.s3.us-west-2.amazonaws.com",
-      "images.prismic.io",
-      "fuminozawa-portfolio.cdn.prismic.io",
-      "scontent.cdninstagram.com",
-      "scontent-sea1-1.cdninstagram.com",
-      "scontent-lax3-1.cdninstagram.com",
-      "scontent-lax3-2.cdninstagram.com",
-    ],
     remotePatterns: [
       {
         protocol: "https",

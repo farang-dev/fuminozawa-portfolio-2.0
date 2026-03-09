@@ -24,8 +24,8 @@ export default function BlogList({ posts, locale }: BlogListProps) {
     const sortMenuRef = useRef<HTMLDivElement>(null);
 
     const categories = locale === 'ja'
-        ? ['すべて', 'Web', 'Product', 'Marketing', 'SEO・GEO', 'AI', 'AIニュース']
-        : ['All', 'Web', 'Product', 'Marketing', 'SEO・GEO', 'AI', 'AI News'];
+        ? ['すべて', 'Web', 'Product', 'Marketing', 'SEO・GEO', 'AI', 'AIニュース', '生活・旅']
+        : ['All', 'Web', 'Product', 'Marketing', 'SEO・GEO', 'AI', 'AI News', 'Life / Travel'];
 
     // Close sort menu when clicking outside
     useEffect(() => {
@@ -51,6 +51,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                 if (cat === 'marketing') return t.includes('marketing');
                 if (cat === 'seo・geo') return t.includes('seo') || t.includes('geo');
                 if (cat === 'ai') return t.includes('ai') || t.includes('llm') || t.includes('generative');
+                if (cat === 'life / travel' || cat === '生活・旅') return t.includes('life') || t.includes('travel') || t.includes('生活') || t.includes('旅') || t.includes('personal');
                 return t === cat;
             });
         })

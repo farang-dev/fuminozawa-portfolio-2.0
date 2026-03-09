@@ -22,7 +22,7 @@ export async function generateStaticParams() {
     }));
 }
 
-import { redirect } from 'next/navigation';
+import { redirect, permanentRedirect } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     // Check if the post exists in Japanese
     const jaPost = await getBlogPostByUid(slug, 'ja-jp');
     if (jaPost) {
-      redirect(`/ja/blog/${slug}`);
+      permanentRedirect(`/ja/blog/${slug}`);
     }
     notFound();
   }
@@ -98,10 +98,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   if (isAiNews && !onAiDomain) {
     // Redirect AI News posts from main domain to subdomain
-    redirect(`https://${AI_NEWS_DOMAIN}/blog/${slug}`);
+    permanentRedirect(`https://${AI_NEWS_DOMAIN}/blog/${slug}`);
   } else if (!isAiNews && onAiDomain) {
     // Redirect regular posts from subdomain back to main domain
-    redirect(`https://fuminozawa-info.site/blog/${slug}`);
+    permanentRedirect(`https://fuminozawa-info.site/blog/${slug}`);
   }
 
   // Ensure description is at least 100 characters for JSON-LD

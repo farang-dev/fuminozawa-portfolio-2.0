@@ -371,19 +371,25 @@ body.light .dark-mode-toggle:hover {
 }
 
 .tagline {
-  font-size: 0.9rem;
-  color: #429bd8;
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  color: #2b6cb0;
   margin-bottom: 30px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-  max-width: 400px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  /* Soft shadow for depth */
 }
 
 body.dark .tagline {
-  color: #8ba3e3;
+  color: #90cdf4;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .glitch-effect:hover {
