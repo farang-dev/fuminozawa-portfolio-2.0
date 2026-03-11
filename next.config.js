@@ -67,6 +67,18 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/news/:slug',
+        destination: '/blog/:slug',
+      },
+      {
+        source: '/ja/news/:slug',
+        destination: '/ja/blog/:slug',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

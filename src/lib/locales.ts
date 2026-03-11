@@ -72,14 +72,23 @@ export function getLocalePrefix(locale: LocaleCode): string {
  */
 export function getAlternateUrls(fullPath: string, baseUrl = 'https://fuminozawa-info.site') {
     // Determine which base URL to use based on the path
-    const isAiNews = fullPath.startsWith('blog/ai-news') || fullPath.startsWith('ja/blog/ai-news');
+    const isAiNews = fullPath.startsWith('blog/ai-news') || fullPath.startsWith('ja/blog/ai-news') ||
+        fullPath.startsWith('news/') || fullPath.startsWith('ja/news/');
     const effectiveBaseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : baseUrl;
 
     // Split path and query
     const [path, queryString] = fullPath.split('?');
 
     // Clean the route path: remove /ja prefix and surrounding slashes
-    const cleanRoute = path.replace(/^\/+(ja\/?)?/, '').replace(/\/+$/, '');
+    let cleanRoute = path.replace(/^\/+(ja\/?)?/, '').replace(/\/+$/, '');
+
+    // Special case: AI News index should be just / on the AI subdomain
+    if (cleanRoute === 'blog/ai-news') {
+        cleanRoute = '';
+    } else if (isAiNews && cleanRoute.startsWith('blog/')) {
+        // If it's AI News and the path starts with blog/, change it to news/ for the ai subdomain
+        cleanRoute = cleanRoute.replace(/^blog\//, 'news/');
+    }
 
     const constructUrl = (prefix: string) => {
         const segments = [effectiveBaseUrl, prefix, cleanRoute].filter(Boolean);

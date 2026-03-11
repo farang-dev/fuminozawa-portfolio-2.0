@@ -212,7 +212,7 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
                                 }}
                             >
                                 <Link
-                                    href={`${locale === 'ja' ? '/ja/blog/' : '/blog/'}${post.slug}`}
+                                    href={`${locale === 'ja' ? '/ja/news/' : '/news/'}${post.slug}`}
                                     className="group flex gap-4 sm:gap-6 items-start bg-white/80 backdrop-blur-sm border border-gray-100 rounded-2xl p-4 sm:p-5 hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-100 transition-all duration-300"
                                 >
                                     {/* Thumbnail */}

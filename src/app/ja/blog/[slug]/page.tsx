@@ -56,8 +56,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     const isAiNews = isAiNewsPost(post.tags);
     const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
-    const url = `${baseUrl}/ja/blog/${post.slug}`;
-    const alternateUrls = getAlternateUrls(`blog/${post.slug}`, isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site');
+    const url = `${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`;
+    const alternateUrls = getAlternateUrls(`${isAiNews ? 'news' : 'blog'}/${post.slug}`, isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site');
 
     return generateSEOMetadata({
         title: `${post.title} | AI・マーケティング・Web戦略 Fumi Nozawa`,
@@ -86,7 +86,8 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
         // Check if the post exists in English
         const enPost = await getBlogPostByUid(slug, 'en-us');
         if (enPost) {
-            permanentRedirect(`/blog/${slug}`);
+            const isAi = isAiNewsPost(enPost.tags);
+            permanentRedirect(`/${isAi ? 'news' : 'blog'}/${slug}`);
         }
         notFound();
     }
@@ -97,7 +98,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
 
     if (isAiNews && !onAiDomain) {
         // Redirect AI News posts from main domain to subdomain
-        permanentRedirect(`https://${AI_NEWS_DOMAIN}/ja/blog/${slug}`);
+        permanentRedirect(`https://${AI_NEWS_DOMAIN}/ja/news/${slug}`);
     } else if (!isAiNews && onAiDomain) {
         // Redirect regular posts from subdomain back to main domain
         permanentRedirect(`https://fuminozawa-info.site/ja/blog/${slug}`);
@@ -125,7 +126,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
     const jsonLd = generateArticleJSONLD({
         title: post.title,
         description: description,
-        url: `${baseUrl}/ja/blog/${post.slug}`,
+        url: `${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`,
         datePublished: post.publishedDate,
         dateModified: post.updatedDate,
         image: post.featuredImage?.url,
@@ -148,7 +149,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                         <Breadcrumbs
                             items={[
                                 { label: 'ホーム', href: '/' },
-                                { label: 'ブログ', href: '/ja/blog' },
+                                { label: isAiNews ? 'ニュース' : 'ブログ', href: isAiNews ? '/ja' : '/ja/blog' },
                                 { label: post.title, href: post.slug, active: true },
                             ]}
                         />
@@ -224,7 +225,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                             <PrismicContent field={post.content} />
 
                             {/* Social Share */}
-                            <SocialShare url={`${baseUrl}/ja/blog/${post.slug}`} title={post.title} locale="ja" />
+                            <SocialShare url={`${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`} title={post.title} locale="ja" />
 
                             {/* Profile Snippet */}
                             <ProfileSnippet locale="ja" />
@@ -246,7 +247,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
 
                         <div className="flex space-x-4">
                             <a
-                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${baseUrl}/ja/blog/${post.slug}`)}`}
+                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-blue-400 transition-colors p-2 rounded-lg hover:bg-gray-100"
@@ -258,7 +259,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                                 </svg>
                             </a>
                             <a
-                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${baseUrl}/ja/blog/${post.slug}`)}`}
+                                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-gray-100"

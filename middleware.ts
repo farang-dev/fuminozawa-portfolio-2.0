@@ -19,15 +19,22 @@ export function middleware(request: NextRequest) {
     const isAiSubdomain = host === AI_NEWS_DOMAIN || (host && host.startsWith('ai.'));
 
     if (isAiSubdomain) {
-        // If they access the root of the subdomain, rewrite to AI News page
+        // 1. Root handling: Rewrite top to AI news listing
         if (pathname === '/' || pathname === '/ja') {
             const localeSuffix = pathname.startsWith('/ja') ? '/ja' : '';
             return NextResponse.rewrite(new URL(`${localeSuffix}/blog/ai-news`, request.url));
         }
 
-        // Block non-AI-news (and non-blog) paths on the subdomain
-        // We allow /blog/ patterns so the BlogPost page can decide if it's AI news or not
-        const allowedPaths = ['/blog/ai-news', '/ja/blog/ai-news', '/blog/', '/ja/blog/'];
+        // 2. Redirect /blog/[slug] to /news/[slug] on the AI subdomain
+        const blogPostRegex = /^\/(ja\/)?blog\/((?!ai-news$).+)$/;
+        if (blogPostRegex.test(pathname)) {
+            const newPath = pathname.replace('/blog/', '/news/');
+            return NextResponse.redirect(new URL(newPath, request.url), 301);
+        }
+
+        // 3. Block non-AI-news paths on the subdomain
+        // We allow /news/ patterns and the internal /blog/ai-news rewrite
+        const allowedPaths = ['/blog/ai-news', '/ja/blog/ai-news', '/news/', '/ja/news/'];
         const isAllowed = allowedPaths.some(p => pathname.startsWith(p));
 
         if (!isAllowed) {
@@ -38,11 +45,16 @@ export function middleware(request: NextRequest) {
     }
 
     // 2. Main Domain Handling
-    // Redirect /blog/ai-news from main domain to subdomain
+    // Redirect AI News patterns from main domain to subdomain with /news/ path
     if (pathname.startsWith('/blog/ai-news') || pathname.startsWith('/ja/blog/ai-news')) {
         const url = new URL(pathname, `https://${AI_NEWS_DOMAIN}`);
-        return NextResponse.redirect(url, 301); // Permanent Redirect for SEO
+        return NextResponse.redirect(url, 301);
     }
+
+    // Individual AI news posts from main domain to subdomain /news/
+    // This is also handled in the BlogPostPage but doing it here is faster for SEO
+    // We'll let BlogPostPage handle the logic for determining if a slug is AI news or not
+    // since middleware doesn't have easy access to Prismic tags.
 
     // 2a. Consolidation Redirects: /writing -> /blog
     if (pathname === '/writing') {

@@ -24,13 +24,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const aiEntries = [
       ...enAiPosts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
+        url: `${baseUrl}/news/${post.slug}`,
         lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.8,
       })),
       ...jaAiPosts.map((post) => ({
-        url: `${baseUrl}/ja/blog/${post.slug}`,
+        url: `${baseUrl}/ja/news/${post.slug}`,
         lastModified: post.publishedDate ? new Date(post.publishedDate) : new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.8,

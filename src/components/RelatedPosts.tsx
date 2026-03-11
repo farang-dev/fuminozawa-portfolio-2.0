@@ -28,7 +28,7 @@ export default function RelatedPosts({ currentPostId, posts, locale }: RelatedPo
                 {relatedPosts.map((post) => {
                     const isAiNews = isAiNewsPost(post.tags);
                     const postUrl = isAiNews
-                        ? (locale === 'ja' ? `https://ai.fuminozawa-info.site/ja/blog/${post.slug}` : `https://ai.fuminozawa-info.site/blog/${post.slug}`)
+                        ? (locale === 'ja' ? `https://ai.fuminozawa-info.site/ja/news/${post.slug}` : `https://ai.fuminozawa-info.site/news/${post.slug}`)
                         : (locale === 'ja' ? `/ja/blog/${post.slug}` : `/blog/${post.slug}`);
 
                     return (
