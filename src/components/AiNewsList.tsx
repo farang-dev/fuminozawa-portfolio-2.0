@@ -258,7 +258,7 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
                                             )}
                                         </div>
 
-                                        <h2 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2">
+                                        <h2 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">
                                             {post.title}
                                         </h2>
 
