@@ -8,22 +8,22 @@ import PrismicCodeBlock from './PrismicCodeBlock';
  */
 export const richTextComponents: any = {
     heading1: ({ children }: any) => (
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mt-10 mb-4 tracking-tight">
+        <h1 className="max-w-2xl mx-auto text-3xl sm:text-4xl font-bold text-gray-900 mt-14 mb-6 tracking-tight">
             {children}
         </h1>
     ),
     heading2: ({ children }: any) => (
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 mt-10 mb-4 tracking-tight border-t pt-6 border-gray-100">
+        <h2 className="max-w-2xl mx-auto text-2xl sm:text-3xl font-semibold text-gray-900 mt-16 mb-8 tracking-tight border-t pt-8 border-gray-100">
             {children}
         </h2>
     ),
     heading3: ({ children }: any) => (
-        <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mt-8 mb-4">
+        <h3 className="max-w-2xl mx-auto text-xl sm:text-2xl font-semibold text-gray-900 mt-14 mb-6">
             {children}
         </h3>
     ),
     paragraph: ({ children }: any) => (
-        <p className="text-gray-800 leading-relaxed mb-4 text-base sm:text-lg last:mb-0">
+        <p className="max-w-2xl mx-auto text-gray-800 leading-[1.8] mb-8 text-base sm:text-lg last:mb-0">
             {children}
         </p>
     ),
@@ -34,25 +34,25 @@ export const richTextComponents: any = {
         <em className="italic text-gray-800">{children}</em>
     ),
     listItem: ({ children }: any) => (
-        <li className="text-gray-800 leading-relaxed ml-6 list-disc marker:text-blue-500 pl-2 [&_p]:inline [&_p]:m-0">
+        <li className="text-gray-800 leading-[1.8] ml-6 list-disc marker:text-blue-500 pl-2 [&_p]:inline [&_p]:m-0">
             {children}
         </li>
     ),
     oListItem: ({ children }: any) => (
-        <li className="text-gray-800 leading-relaxed ml-6 list-decimal marker:text-blue-500 marker:font-bold pl-2 [&_p]:inline [&_p]:m-0">
+        <li className="text-gray-800 leading-[1.8] ml-6 list-decimal marker:text-blue-500 marker:font-bold pl-2 [&_p]:inline [&_p]:m-0">
             {children}
         </li>
     ),
     list: ({ children }: any) => (
-        <ul className="mb-4 mt-1 space-y-3">{children}</ul>
+        <ul className="max-w-2xl mx-auto mb-8 mt-2 space-y-3">{children}</ul>
     ),
     oList: ({ children }: any) => (
-        <ol className="mb-4 mt-1 space-y-3">{children}</ol>
+        <ol className="max-w-2xl mx-auto mb-8 mt-2 space-y-3">{children}</ol>
     ),
     image: ({ node }: any) => {
         if (!node.url) return null;
         return (
-            <figure className="my-10 flex flex-col items-center">
+            <figure className="my-14 flex flex-col items-center">
                 <div className="relative w-full rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-gray-50">
                     <Image
                         src={node.url}
@@ -86,12 +86,12 @@ export const richTextComponents: any = {
     },
     embed: ({ node }: any) => (
         <div
-            className="my-10 rounded-2xl overflow-hidden shadow-lg border border-gray-100"
+            className="my-14 rounded-2xl overflow-hidden shadow-lg border border-gray-100 w-full"
             dangerouslySetInnerHTML={{ __html: node.oembed.html || '' }}
         />
     ),
     quote: ({ children }: any) => (
-        <blockquote className="border-l-4 border-blue-500 bg-blue-50/20 px-8 py-6 my-10 italic text-gray-700 text-xl font-light leading-relaxed rounded-r-xl">
+        <blockquote className="max-w-2xl mx-auto border-l-4 border-blue-500 bg-blue-50/20 px-8 py-6 my-10 italic text-gray-700 text-xl font-light leading-[1.8] rounded-r-xl">
             {children}
         </blockquote>
     ),
@@ -120,7 +120,7 @@ export const richTextComponents: any = {
                         .filter((row: string[]) => row.length > 0);
 
                     return (
-                        <figure className="my-10 font-sans">
+                        <figure className="max-w-3xl mx-auto my-12 font-sans">
                             <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm bg-white scrollbar-thin scrollbar-thumb-gray-200">
                                 <table className="w-full text-left border-collapse min-w-[600px]">
                                     <thead className="bg-gray-50/80 border-b border-gray-200">
@@ -136,7 +136,7 @@ export const richTextComponents: any = {
                                         {rows.map((row: string[], i: number) => (
                                             <tr key={i} className="hover:bg-gray-50/30 transition-colors">
                                                 {row.map((cell: string, j: number) => (
-                                                    <td key={j} className="px-6 py-4 text-sm text-gray-700 leading-relaxed">
+                                                    <td key={j} className="px-6 py-4 text-sm text-gray-700 leading-[1.8]">
                                                         {cell.startsWith('**') && cell.endsWith('**') ?
                                                             <strong className="font-bold text-gray-900">{cell.slice(2, -2)}</strong> : cell}
                                                     </td>
@@ -157,11 +157,15 @@ export const richTextComponents: any = {
             }
         }
 
-        return <PrismicCodeBlock text={node.text} />;
+        return (
+            <div className="max-w-3xl mx-auto my-8">
+                <PrismicCodeBlock text={node.text} />
+            </div>
+        );
     },
     label: ({ node, children }: any) => {
         if (node.data.label === 'section-line' || node.data.label === 'divider') {
-            return <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />;
+            return <hr className="max-w-2xl mx-auto my-16 border-t-2 border-gray-100" />;
         }
         if (node.data.label === 'code' || node.data.label === 'inlinecode') {
             return (
@@ -172,9 +176,9 @@ export const richTextComponents: any = {
         }
         return <span className={node.data.label}>{children}</span>;
     },
-    hr: () => <hr className="my-16 border-t-2 border-gray-100 w-1/2 mx-auto" />,
+    hr: () => <hr className="max-w-2xl mx-auto my-16 border-t-2 border-gray-100" />,
     table: ({ children }: any) => (
-        <figure className="my-10">
+        <figure className="max-w-3xl mx-auto my-12">
             <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm bg-white scrollbar-thin scrollbar-thumb-gray-200">
                 <table className="w-full text-left border-collapse min-w-[600px]">
                     {children}
@@ -206,22 +210,22 @@ export const richTextComponents: any = {
         </th>
     ),
     td: ({ children }: any) => (
-        <td className="px-6 py-4 text-sm text-gray-700 leading-relaxed border-t border-gray-100">
+        <td className="px-6 py-4 text-sm text-gray-700 leading-[1.8] border-t border-gray-100">
             {children}
         </td>
     ),
     heading4: ({ children }: any) => (
-        <h4 className="text-lg sm:text-xl font-semibold text-gray-900 mt-6 mb-3">
+        <h4 className="max-w-2xl mx-auto text-lg sm:text-xl font-semibold text-gray-900 mt-10 mb-4">
             {children}
         </h4>
     ),
     heading5: ({ children }: any) => (
-        <h5 className="text-base sm:text-lg font-semibold text-gray-900 mt-4 mb-2">
+        <h5 className="max-w-2xl mx-auto text-base sm:text-lg font-semibold text-gray-900 mt-8 mb-3">
             {children}
         </h5>
     ),
     heading6: ({ children }: any) => (
-        <h6 className="text-sm sm:text-base font-semibold text-gray-900 mt-4 mb-2 uppercase tracking-wide">
+        <h6 className="max-w-2xl mx-auto text-sm sm:text-base font-semibold text-gray-900 mt-8 mb-3 uppercase tracking-wide">
             {children}
         </h6>
     ),
@@ -297,3 +301,4 @@ export default function PrismicContent({ field, className = '' }: PrismicContent
         </div>
     );
 }
+

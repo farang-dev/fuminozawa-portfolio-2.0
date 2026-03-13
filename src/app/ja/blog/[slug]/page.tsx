@@ -173,7 +173,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
 
                         <div className="p-6 sm:p-12">
                             {/* Article Header */}
-                            <header className="mb-10">
+                            <header className="mb-10 max-w-2xl mx-auto">
                                 <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
                                     {post.title}
                                 </h1>
@@ -215,7 +215,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                                 </div>
 
                                 {post.description && !isAiNewsPost(post.tags) && (
-                                    <p className="text-gray-600 text-xl leading-relaxed font-light italic border-l-4 border-blue-200 pl-6 my-8">
+                                    <p className="text-gray-600 text-xl leading-[1.8] font-light italic border-l-4 border-blue-200 pl-6 my-8">
                                         {post.description}
                                     </p>
                                 )}
@@ -224,11 +224,13 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                             {/* Article Content */}
                             <PrismicContent field={post.content} />
 
-                            {/* Social Share */}
-                            <SocialShare url={`${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`} title={post.title} locale="ja" />
+                            <div className="max-w-2xl mx-auto mt-16">
+                                {/* Social Share */}
+                                <SocialShare url={`${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`} title={post.title} locale="ja" />
 
-                            {/* Profile Snippet */}
-                            <ProfileSnippet locale="ja" />
+                                {/* Profile Snippet */}
+                                <ProfileSnippet locale="ja" />
+                            </div>
 
                             {/* Related Posts */}
                             <RelatedPosts currentPostId={post.id} posts={allPosts} locale="ja" />
