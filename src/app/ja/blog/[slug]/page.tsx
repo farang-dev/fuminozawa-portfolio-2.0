@@ -214,11 +214,6 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
                                     </Link>
                                 </div>
 
-                                {post.description && !isAiNewsPost(post.tags) && (
-                                    <p className="text-gray-600 text-xl leading-[1.8] font-light italic border-l-4 border-blue-200 pl-6 my-8">
-                                        {post.description}
-                                    </p>
-                                )}
                             </header>
 
                             {/* Article Content */}
