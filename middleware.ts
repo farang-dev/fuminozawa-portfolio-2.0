@@ -25,6 +25,14 @@ export function middleware(request: NextRequest) {
             return NextResponse.rewrite(new URL(`${localeSuffix}/blog/ai-news`, request.url));
         }
 
+        // 1a. Redirect /blog/ai-news to / (the canonical root) on the subdomain
+        if (pathname === '/blog/ai-news') {
+            return NextResponse.redirect(new URL('/', request.url), 301);
+        }
+        if (pathname === '/ja/blog/ai-news') {
+            return NextResponse.redirect(new URL('/ja', request.url), 301);
+        }
+
         // 2. Redirect /blog/[slug] to /news/[slug] on the AI subdomain
         const blogPostRegex = /^\/(ja\/)?blog\/((?!ai-news$).+)$/;
         if (blogPostRegex.test(pathname)) {
@@ -45,10 +53,12 @@ export function middleware(request: NextRequest) {
     }
 
     // 2. Main Domain Handling
-    // Redirect AI News patterns from main domain to subdomain with /news/ path
-    if (pathname.startsWith('/blog/ai-news') || pathname.startsWith('/ja/blog/ai-news')) {
-        const url = new URL(pathname, `https://${AI_NEWS_DOMAIN}`);
-        return NextResponse.redirect(url, 301);
+    // Redirect AI News patterns from main domain to subdomain root
+    if (pathname === '/blog/ai-news') {
+        return NextResponse.redirect(new URL(`https://${AI_NEWS_DOMAIN}/`), 301);
+    }
+    if (pathname === '/ja/blog/ai-news') {
+        return NextResponse.redirect(new URL(`https://${AI_NEWS_DOMAIN}/ja`), 301);
     }
 
     // Individual AI news posts from main domain to subdomain /news/

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getBlogPosts } from '@/lib/prismic-blog';
-import { generateSEOMetadata } from '@/lib/seo';
+import { generateSEOMetadata, generateBreadcrumbJSONLD, generateCollectionJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import BlogList from '@/components/BlogList';
@@ -21,8 +21,29 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlogPageJa() {
     const posts = await getBlogPosts('ja-jp', { excludeAiNews: true });
 
+    const breadcrumbJsonLd = generateBreadcrumbJSONLD([
+        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
+        { name: "ブログ", item: "https://fuminozawa-info.site/ja/blog" }
+    ]);
+
+    const collectionJsonLd = generateCollectionJSONLD({
+        name: "野澤眞史 ジャーナル",
+        description: "テクノロジー、デジタル体験、AI、SEOに関する野澤眞史によるインサイト。",
+        url: "https://fuminozawa-info.site/ja/blog",
+        locale: "ja-jp"
+    });
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+            />
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
                 {/* Header */}
                 <div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -57,5 +78,6 @@ export default async function BlogPageJa() {
                 )}
             </div>
         </div>
+        </>
     );
 }

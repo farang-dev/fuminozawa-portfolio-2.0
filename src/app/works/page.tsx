@@ -1,7 +1,7 @@
 import { getBlogPosts } from '@/lib/prismic-blog';
 import HomeClient from '../HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD, generateSEOMetadata, generateCollectionJSONLD } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata, generateCollectionJSONLD, generateBreadcrumbJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,6 +30,11 @@ export default async function WorksPage() {
         locale: 'en-us'
     });
 
+    const breadcrumbJsonLd = generateBreadcrumbJSONLD([
+        { name: "Home", item: "https://fuminozawa-info.site" },
+        { name: "Works", item: "https://fuminozawa-info.site/works" }
+    ]);
+
     return (
         <>
             <script
@@ -39,6 +44,10 @@ export default async function WorksPage() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
             <HomeClient initialWritings={posts} initialLocale="en" initialTab="works" />
         </>

@@ -2,7 +2,7 @@ import { getBlogPosts } from '@/lib/prismic-blog';
 import { getWorks } from '@/lib/prismic-works';
 import HomeClient from '../HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD, generateSEOMetadata, generateServiceJSONLD } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata, generateServiceJSONLD, generatePersonJSONLD, generateFAQJSONLD, generateBreadcrumbJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,21 +29,24 @@ export default async function HomeJa() {
         locale: 'ja-jp'
     });
 
-    // Person Schema for E-E-A-T (Localized)
-    const personJsonLd = {
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: 'Fumi Nozawa',
-        url: 'https://fuminozawa-info.site',
-        jobTitle: 'Software Engineer & Marketer',
-        sameAs: [
-            'https://www.linkedin.com/in/masafumi-nozawa/',
-            'https://github.com/farang-dev',
-            'https://www.facebook.com/masafumi.nozawa.5/',
-            'https://instagram.com/fumi_fumar/'
-        ],
-        description: 'Next.js、SEO、デジタルマーケティング戦略の専門家'
-    };
+    const personJsonLd = generatePersonJSONLD({ locale: 'ja-jp' });
+    const faqJsonLd = generateFAQJSONLD([
+        {
+            question: "野澤眞史とは誰ですか？",
+            answer: "野澤眞史（Fumi Nozawa）は、日本とグローバル市場を繋ぐフリーランスのデジタルマーケター兼Webエンジニアです。SEO、GEO、AI活用戦略を専門としています。"
+        },
+        {
+            question: "どのようなサービスを提供していますか？",
+            answer: "デジタルエクスペリエンス（Web/UX改善）、NextGenパフォーマンス（SEO/GEO/広告）、日本市場参入（GTM）、AIオペレーション設計などを一気通貫で提供しています。"
+        },
+        {
+            question: "AIやGEOに対応していますか？",
+            answer: "はい、生成AIを実務に組み込むワークフロー設計や、生成AI時代の検索最適化（GEO：Generative Engine Optimization）を専門としており、最新の技術動向に基づいた支援が可能です。"
+        }
+    ]);
+    const breadcrumbJsonLd = generateBreadcrumbJSONLD([
+        { name: "ホーム", item: "https://fuminozawa-info.site/ja" }
+    ]);
 
     return (
         <>
@@ -58,6 +61,14 @@ export default async function HomeJa() {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
             <HomeClient initialWritings={posts} initialWorks={works} initialLocale="ja" initialTab="services" />
         </>

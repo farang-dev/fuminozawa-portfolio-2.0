@@ -234,8 +234,83 @@ export function generateServiceJSONLD({
         sameAs: [
             'https://www.linkedin.com/in/masafumi-nozawa/',
             'https://www.facebook.com/masafumi.nozawa.5/',
-            'https://github.com/farang-dev'
+            'https://github.com/farang-dev',
+            'https://x.com/fuminozawa_',
+            'https://instagram.com/fumi_fumar/'
+        ],
+        provider: {
+            '@type': 'Person',
+            name: 'Fumi Nozawa',
+            url: siteUrl
+        }
+    };
+}
+
+export function generatePersonJSONLD({
+    locale = 'en-us'
+}: {
+    locale?: LocaleCode;
+}) {
+    const isEn = locale === 'en-us';
+    const siteUrl = 'https://fuminozawa-info.site';
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Fumi Nozawa',
+        url: siteUrl,
+        jobTitle: isEn ? 'Digital Marketer & Web Developer' : 'デジタルマーケター & Webエンジニア',
+        image: `${siteUrl}/profile.jpg`,
+        sameAs: [
+            'https://www.linkedin.com/in/masafumi-nozawa/',
+            'https://github.com/farang-dev',
+            'https://www.facebook.com/masafumi.nozawa.5/',
+            'https://instagram.com/fumi_fumar/',
+            'https://x.com/fuminozawa_'
+        ],
+        description: isEn
+            ? 'Expert in Next.js, SEO, GEO, and Digital Marketing Strategy with a focus on Japan Market Entry.'
+            : 'Next.js、SEO、GEO、デジタルマーケティング戦略、日本市場参入を専門とするスペシャリスト。',
+        knowsAbout: [
+            'Digital Marketing',
+            'Search Engine Optimization (SEO)',
+            'Generative Engine Optimization (GEO)',
+            'Web Development',
+            'Next.js',
+            'React',
+            'TypeScript',
+            'AI Operations',
+            'Japan Market Entry',
+            'Growth Strategy'
         ]
+    };
+}
+
+export function generateFAQJSONLD(faqItems: { question: string; answer: string }[]) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map(item => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: item.answer
+            }
+        }))
+    };
+}
+
+export function generateBreadcrumbJSONLD(items: { name: string; item: string }[]) {
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name,
+            item: item.item
+        }))
     };
 }
 

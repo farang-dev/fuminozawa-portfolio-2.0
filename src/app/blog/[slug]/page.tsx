@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { getBlogPostByUid, getAllBlogPostUids, getAlternateLocalePosts, getBlogPosts, isAiNewsPost } from '@/lib/prismic-blog';
-import { generateSEOMetadata, generateArticleJSONLD } from '@/lib/seo';
+import { generateSEOMetadata, generateArticleJSONLD, generateBreadcrumbJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 import { notFound } from 'next/navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -135,12 +135,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     locale: 'en-us',
   });
 
+  const breadcrumbJsonLd = generateBreadcrumbJSONLD([
+    { name: "Home", item: "https://fuminozawa-info.site" },
+    { name: isAiNews ? "AI News" : "Blog", item: isAiNews ? "https://ai.fuminozawa-info.site" : "https://fuminozawa-info.site/blog" },
+    { name: post.title, item: `${baseUrl}/${isAiNews ? 'news' : 'blog'}/${post.slug}` }
+  ]);
+
   return (
     <>
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">

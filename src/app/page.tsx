@@ -2,7 +2,7 @@ import { getBlogPosts } from '@/lib/prismic-blog';
 import { getWorks } from '@/lib/prismic-works';
 import HomeClient from './HomeClient';
 import type { Metadata } from 'next';
-import { generateWebsiteJSONLD, generateSEOMetadata, generateServiceJSONLD } from '@/lib/seo';
+import { generateWebsiteJSONLD, generateSEOMetadata, generateServiceJSONLD, generatePersonJSONLD, generateFAQJSONLD, generateBreadcrumbJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 
 
@@ -30,21 +30,24 @@ export default async function Home() {
     locale: 'en-us'
   });
 
-  // Person Schema for E-E-A-T
-  const personJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Fumi Nozawa',
-    url: 'https://fuminozawa-info.site',
-    jobTitle: 'Software Engineer & Marketer',
-    sameAs: [
-      'https://www.linkedin.com/in/masafumi-nozawa/',
-      'https://github.com/farang-dev',
-      'https://www.facebook.com/masafumi.nozawa.5/',
-      'https://instagram.com/fumi_fumar/'
-    ],
-    description: 'Expert in Next.js, SEO, and Digital Marketing Strategy.'
-  };
+  const personJsonLd = generatePersonJSONLD({ locale: 'en-us' });
+  const faqJsonLd = generateFAQJSONLD([
+    {
+      question: "Who is Fumi Nozawa?",
+      answer: "Fumi Nozawa is a freelance Digital Marketer and Web Engineer bridging Japan and the global market. He specializes in SEO, GEO, and AI-driven growth strategies."
+    },
+    {
+      question: "What services does Fumi Nozawa provide?",
+      answer: "Fumi provides end-to-end support for Digital Experience, NextGen Performance (SEO/GEO), Japan Market Entry (GTM), and AI Operational Design."
+    },
+    {
+      question: "Does Fumi Nozawa specialize in AI and GEO?",
+      answer: "Yes, Fumi specializes in Generative Engine Optimization (GEO) and embedding AI into business operations to increase productivity and visibility in AI-driven search."
+    }
+  ]);
+  const breadcrumbJsonLd = generateBreadcrumbJSONLD([
+    { name: "Home", item: "https://fuminozawa-info.site" }
+  ]);
 
   return (
     <>
@@ -59,6 +62,14 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <HomeClient initialWritings={posts} initialWorks={works} initialLocale="en" initialTab="services" />
     </>

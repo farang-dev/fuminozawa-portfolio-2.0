@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getAiNewsPosts } from '@/lib/prismic-blog';
-import { generateSEOMetadata } from '@/lib/seo';
+import { generateSEOMetadata, generateBreadcrumbJSONLD, generateCollectionJSONLD } from '@/lib/seo';
 import { getAlternateUrls } from '@/lib/locales';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import AiNewsList from '@/components/AiNewsList';
@@ -21,8 +21,29 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AiNewsPageJa() {
     const posts = await getAiNewsPosts('ja-jp');
 
+    const breadcrumbJsonLd = generateBreadcrumbJSONLD([
+        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
+        { name: "AIニュース", item: "https://ai.fuminozawa-info.site/ja" }
+    ]);
+
+    const collectionJsonLd = generateCollectionJSONLD({
+        name: "AIニュース | 野澤眞史",
+        description: "AIの進化を実務の視点で読み解く。最新のAIニュース、生成AIの動向、LLMの技術的アップデートを厳選して発信。",
+        url: "https://ai.fuminozawa-info.site/ja",
+        locale: "ja-jp"
+    });
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+            />
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-8 sm:pt-16 sm:pb-12">
                 {/* Header */}
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -57,5 +78,6 @@ export default async function AiNewsPageJa() {
                 )}
             </div>
         </div>
+        </>
     );
 }
