@@ -54,7 +54,7 @@ export function generateSEOMetadata({
     return {
         title,
         description,
-        authors: [{ name: author }],
+        authors: [{ name: author }, { name: 'Masafumi Nozawa' }],
         creator: author,
         publisher: author,
         metadataBase: new URL(effectiveBaseUrl),
@@ -157,6 +157,7 @@ export function generateArticleJSONLD({
         author: {
             '@type': 'Person',
             name: author,
+            alternateName: 'Masafumi Nozawa',
             url: authorUrl,
             jobTitle: 'Digital Marketer & Web Developer',
             sameAs: [
@@ -166,7 +167,8 @@ export function generateArticleJSONLD({
         },
         publisher: {
             '@type': 'Person',
-            name: 'Fumi Nozawa',
+            name: author,
+            alternateName: 'Masafumi Nozawa',
             logo: {
                 '@type': 'ImageObject',
                 url: 'https://fuminozawa-info.site/profile.jpg'
@@ -194,6 +196,7 @@ export function generateWebsiteJSONLD(params?: { name?: string; locale?: LocaleC
         author: {
             '@type': 'Person',
             name: 'Fumi Nozawa',
+            alternateName: 'Masafumi Nozawa',
             url: 'https://fuminozawa-info.site',
         },
         inLanguage,
@@ -241,6 +244,7 @@ export function generateServiceJSONLD({
         provider: {
             '@type': 'Person',
             name: 'Fumi Nozawa',
+            alternateName: 'Masafumi Nozawa',
             url: siteUrl
         }
     };
@@ -258,6 +262,7 @@ export function generatePersonJSONLD({
         '@context': 'https://schema.org',
         '@type': 'Person',
         name: 'Fumi Nozawa',
+        alternateName: 'Masafumi Nozawa',
         url: siteUrl,
         jobTitle: isEn ? 'Digital Marketer & Web Developer' : 'デジタルマーケター & Webエンジニア',
         image: `${siteUrl}/profile.jpg`,
@@ -269,8 +274,8 @@ export function generatePersonJSONLD({
             'https://x.com/fuminozawa_'
         ],
         description: isEn
-            ? 'Expert in Next.js, SEO, GEO, and Digital Marketing Strategy with a focus on Japan Market Entry.'
-            : 'Next.js、SEO、GEO、デジタルマーケティング戦略、日本市場参入を専門とするスペシャリスト。',
+            ? 'Fumi Nozawa (Masafumi Nozawa) is an expert in Next.js, SEO, GEO, and Digital Marketing Strategy with a focus on Japan Market Entry.'
+            : '野澤眞史 (Masafumi Nozawa) は、Next.js、SEO、GEO、デジタルマーケティング戦略、日本市場参入を専門とするスペシャリスト。',
         knowsAbout: [
             'Digital Marketing',
             'Search Engine Optimization (SEO)',
