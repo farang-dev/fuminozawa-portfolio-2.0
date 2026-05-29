@@ -46,7 +46,7 @@ export function middleware(request: NextRequest) {
         const isAllowed = allowedPaths.some(p => pathname.startsWith(p));
 
         if (!isAllowed) {
-            return NextResponse.redirect(new URL(pathname, 'https://fuminozawa-info.site'));
+            return NextResponse.redirect(new URL(pathname, 'https://fumi-nozawa.space'));
         }
 
         return NextResponse.next();

@@ -30,8 +30,8 @@ export function generateSEOMetadata({
     alternateUrls,
     tags,
 }: SEOProps): Metadata {
-    const baseUrl = 'https://fuminozawa-info.site';
-    const aiBaseUrl = 'https://ai.fuminozawa-info.site';
+    const baseUrl = 'https://fumi-nozawa.space';
+    const aiBaseUrl = 'https://ai.fumi-nozawa.space';
 
     // Logic to determine if this is an AI News related content
     const isAiNewsContent = tags?.some(t => ['AI News', 'AIニュース'].includes(t)) ||
@@ -120,7 +120,7 @@ export function generateArticleJSONLD({
     dateModified,
     image,
     author = 'Fumi Nozawa',
-    authorUrl = 'https://fuminozawa-info.site',
+    authorUrl = 'https://fumi-nozawa.space',
     locale = 'en-us',
     tags = [],
 }: {
@@ -171,7 +171,7 @@ export function generateArticleJSONLD({
             alternateName: 'Masafumi Nozawa',
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://fuminozawa-info.site/profile.jpg'
+                url: 'https://fumi-nozawa.space/profile.jpg'
             }
         },
         mainEntityOfPage: {
@@ -192,12 +192,12 @@ export function generateWebsiteJSONLD(params?: { name?: string; locale?: LocaleC
         '@context': 'https://schema.org',
         '@type': 'WebSite',
         name,
-        url: 'https://fuminozawa-info.site',
+        url: 'https://fumi-nozawa.space',
         author: {
             '@type': 'Person',
             name: 'Fumi Nozawa',
             alternateName: 'Masafumi Nozawa',
-            url: 'https://fuminozawa-info.site',
+            url: 'https://fumi-nozawa.space',
         },
         inLanguage,
     };
@@ -209,7 +209,7 @@ export function generateServiceJSONLD({
     locale?: LocaleCode;
 }) {
     const isEn = locale === 'en-us';
-    const siteUrl = 'https://fuminozawa-info.site';
+    const siteUrl = 'https://fumi-nozawa.space';
 
     return {
         '@context': 'https://schema.org',
@@ -256,7 +256,7 @@ export function generatePersonJSONLD({
     locale?: LocaleCode;
 }) {
     const isEn = locale === 'en-us';
-    const siteUrl = 'https://fuminozawa-info.site';
+    const siteUrl = 'https://fumi-nozawa.space';
 
     return {
         '@context': 'https://schema.org',
@@ -332,7 +332,7 @@ export function generateGalleryJSONLD({
         description: isEn
             ? 'A collection of visual stories and marketing insights from Instagram.'
             : 'Instagramから発信するビジュアルストーリーとマーケティングのインサイト。',
-        url: isEn ? 'https://fuminozawa-info.site/gallery' : 'https://fuminozawa-info.site/ja/gallery',
+        url: isEn ? 'https://fumi-nozawa.space/gallery' : 'https://fumi-nozawa.space/ja/gallery',
         author: {
             '@type': 'Person',
             name: 'Fumi Nozawa'

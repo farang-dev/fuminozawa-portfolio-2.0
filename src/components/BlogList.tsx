@@ -108,7 +108,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                                 return (
                                     <a
                                         key={category}
-                                        href={locale === 'ja' ? 'https://ai.fuminozawa-info.site/ja' : 'https://ai.fuminozawa-info.site'}
+                                        href={locale === 'ja' ? 'https://ai.fumi-nozawa.space/ja' : 'https://ai.fumi-nozawa.space'}
                                         className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap text-gray-500 hover:text-gray-900 hover:bg-gray-50 flex items-center gap-2"
                                     >
                                         <span>{category}</span>
@@ -205,7 +205,7 @@ export default function BlogList({ posts, locale }: BlogListProps) {
                                 {(() => {
                                     const isAiNews = post.tags?.some(tag => ['AI News', 'AIニュース'].includes(tag));
                                     const baseUrl = isAiNews
-                                        ? (locale === 'ja' ? 'https://ai.fuminozawa-info.site/ja/blog/' : 'https://ai.fuminozawa-info.site/blog/')
+                                        ? (locale === 'ja' ? 'https://ai.fumi-nozawa.space/ja/blog/' : 'https://ai.fumi-nozawa.space/blog/')
                                         : (locale === 'ja' ? '/ja/blog/' : '/blog/');
                                     const props = isAiNews ? { href: `${baseUrl}${post.slug}` } : { href: `${baseUrl}${post.slug}` };
 

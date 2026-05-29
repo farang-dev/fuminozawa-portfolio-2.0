@@ -55,9 +55,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const isAiNews = isAiNewsPost(post.tags);
-    const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
+    const baseUrl = isAiNews ? 'https://ai.fumi-nozawa.space' : 'https://fumi-nozawa.space';
     const url = `${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}`;
-    const alternateUrls = getAlternateUrls(`${isAiNews ? 'news' : 'blog'}/${post.slug}`, isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site');
+    const alternateUrls = getAlternateUrls(`${isAiNews ? 'news' : 'blog'}/${post.slug}`, isAiNews ? 'https://ai.fumi-nozawa.space' : 'https://fumi-nozawa.space');
 
     return generateSEOMetadata({
         title: `${post.title} | AI・マーケティング・Web戦略 Fumi Nozawa`,
@@ -101,7 +101,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
         permanentRedirect(`https://${AI_NEWS_DOMAIN}/ja/news/${slug}`);
     } else if (!isAiNews && onAiDomain) {
         // Redirect regular posts from subdomain back to main domain
-        permanentRedirect(`https://fuminozawa-info.site/ja/blog/${slug}`);
+        permanentRedirect(`https://fumi-nozawa.space/ja/blog/${slug}`);
     }
 
     // Ensure description is at least 100 characters for JSON-LD
@@ -120,7 +120,7 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
         .map(([locale]) => locale as any);
 
     // baseUrl is used for JSON-LD and social sharing links
-    const baseUrl = isAiNews ? 'https://ai.fuminozawa-info.site' : 'https://fuminozawa-info.site';
+    const baseUrl = isAiNews ? 'https://ai.fumi-nozawa.space' : 'https://fumi-nozawa.space';
 
     // Generate JSON-LD structured data
     const jsonLd = generateArticleJSONLD({
@@ -135,8 +135,8 @@ export default async function BlogPostPageJa({ params }: { params: Promise<{ slu
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
-        { name: isAiNews ? "AIニュース" : "ブログ", item: isAiNews ? "https://ai.fuminozawa-info.site/ja" : "https://fuminozawa-info.site/ja/blog" },
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" },
+        { name: isAiNews ? "AIニュース" : "ブログ", item: isAiNews ? "https://ai.fumi-nozawa.space/ja" : "https://fumi-nozawa.space/ja/blog" },
         { name: post.title, item: `${baseUrl}/ja/${isAiNews ? 'news' : 'blog'}/${post.slug}` }
     ]);
 

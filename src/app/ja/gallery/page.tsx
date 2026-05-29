@@ -7,7 +7,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "Gallery | Fumi Nozawa",
         description: "Photography and creative work by Fumi Nozawa. A curated collection of moments and visual stories.",
-        canonical: 'https://fuminozawa-info.site/ja/gallery',
+        canonical: 'https://fumi-nozawa.space/ja/gallery',
         locale: 'ja-jp',
     });
 }
@@ -15,8 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function GalleryPage() {
     const galleryJsonLd = generateGalleryJSONLD({ locale: 'ja-jp' });
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
-        { name: "ギャラリー", item: "https://fuminozawa-info.site/ja/gallery" }
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" },
+        { name: "ギャラリー", item: "https://fumi-nozawa.space/ja/gallery" }
     ]);
 
     return (

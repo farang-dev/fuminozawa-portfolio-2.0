@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "リンク・お問い合わせ | 野澤眞史",
         description: "SNSアカウントやお問い合わせ用メールフォームなど、野澤眞史への連絡先一覧。デジタルマーケティングやWeb開発のご相談はこちらから。",
-        canonical: 'https://fuminozawa-info.site/ja/links',
+        canonical: 'https://fumi-nozawa.space/ja/links',
         locale: 'ja-jp',
         alternateUrls,
     });
@@ -24,8 +24,8 @@ export default async function LinksPageJa() {
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
-        { name: "リンク", item: "https://fuminozawa-info.site/ja/links" }
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" },
+        { name: "リンク", item: "https://fumi-nozawa.space/ja/links" }
     ]);
 
     return (

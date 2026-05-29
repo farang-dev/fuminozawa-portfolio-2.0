@@ -6,7 +6,7 @@ const PRIVATE_KEY = process.env.GOOGLE_INDEXING_PRIVATE_KEY?.replace(/\\n/g, '\n
 /**
  * Notifies Google that a URL has been updated or newly created.
  * 
- * @param url The full absolute URL of the page (e.g. https://fuminozawa-info.site/blog/my-post)
+ * @param url The full absolute URL of the page (e.g. https://fumi-nozawa.space/blog/my-post)
  */
 export async function notifyGoogleIndexing(url: string) {
     if (!CLIENT_EMAIL || !PRIVATE_KEY) {

@@ -914,7 +914,7 @@ export default function Home({
                   writings.slice(0, 10).map((writing) => {
                     const isAiNews = writing.tags?.some(tag => ['AI News', 'AIニュース'].includes(tag));
                     const baseUrl = isAiNews
-                      ? (language === 'ja' ? 'https://ai.fuminozawa-info.site/ja/blog/' : 'https://ai.fuminozawa-info.site/blog/')
+                      ? (language === 'ja' ? 'https://ai.fumi-nozawa.space/ja/blog/' : 'https://ai.fumi-nozawa.space/blog/')
                       : (language === 'ja' ? '/ja/blog/' : '/blog/');
                     const postUrl = `${baseUrl}${writing.slug}`;
                     const LinkComponent = isAiNews ? 'a' : Link;

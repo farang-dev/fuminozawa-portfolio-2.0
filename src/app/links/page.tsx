@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "Connect & Links | Fumi Nozawa",
         description: "Connect with Fumi Nozawa on social media or reach out via email for digital marketing and web engineering projects.",
-        canonical: 'https://fuminozawa-info.site/links',
+        canonical: 'https://fumi-nozawa.space/links',
         locale: 'en-us',
         alternateUrls,
     });
@@ -24,8 +24,8 @@ export default async function LinksPage() {
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "Home", item: "https://fuminozawa-info.site" },
-        { name: "Links", item: "https://fuminozawa-info.site/links" }
+        { name: "Home", item: "https://fumi-nozawa.space" },
+        { name: "Links", item: "https://fumi-nozawa.space/links" }
     ]);
 
     return (

@@ -73,9 +73,9 @@ git push origin main
 
 ### 2. **Submit Sitemap to Google Search Console**
 - Go to: https://search.google.com/search-console
-- Select your property: `fuminozawa-info.site`
+- Select your property: `fumi-nozawa.space`
 - Navigate to: Sitemaps → Add new sitemap
-- Submit: `https://fuminozawa-info.site/sitemap.xml`
+- Submit: `https://fumi-nozawa.space/sitemap.xml`
 
 ### 3. **Request Indexing for Each Blog Post**
 In Google Search Console:
@@ -85,28 +85,28 @@ In Google Search Console:
 
 Priority URLs to request:
 ```
-https://fuminozawa-info.site/blog
-https://fuminozawa-info.site/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
-https://fuminozawa-info.site/blog/2367cfa6-7265-813b-9ef1-de0ab34b0c23
-https://fuminozawa-info.site/blog/2367cfa6-7265-81d1-8d80-dd68418f5236
-https://fuminozawa-info.site/blog/2367cfa6-7265-81d9-b2b2-c68f3d763ae8
-https://fuminozawa-info.site/blog/2877cfa6-7265-8087-b027-f6079c2140df
-https://fuminozawa-info.site/blog/2887cfa6-7265-80f1-89b4-e47e9a7ff714
-https://fuminozawa-info.site/blog/2967cfa6-7265-8015-aac4-cf2e55f52ac2
-https://fuminozawa-info.site/blog/2967cfa6-7265-808f-8547-ed0b82d7d06b
-https://fuminozawa-info.site/blog/2967cfa6-7265-809d-8022-d7f76dc0218e
-https://fuminozawa-info.site/blog/2987cfa6-7265-8064-8879-de8de86b5dae
+https://fumi-nozawa.space/blog
+https://fumi-nozawa.space/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
+https://fumi-nozawa.space/blog/2367cfa6-7265-813b-9ef1-de0ab34b0c23
+https://fumi-nozawa.space/blog/2367cfa6-7265-81d1-8d80-dd68418f5236
+https://fumi-nozawa.space/blog/2367cfa6-7265-81d9-b2b2-c68f3d763ae8
+https://fumi-nozawa.space/blog/2877cfa6-7265-8087-b027-f6079c2140df
+https://fumi-nozawa.space/blog/2887cfa6-7265-80f1-89b4-e47e9a7ff714
+https://fumi-nozawa.space/blog/2967cfa6-7265-8015-aac4-cf2e55f52ac2
+https://fumi-nozawa.space/blog/2967cfa6-7265-808f-8547-ed0b82d7d06b
+https://fumi-nozawa.space/blog/2967cfa6-7265-809d-8022-d7f76dc0218e
+https://fumi-nozawa.space/blog/2987cfa6-7265-8064-8879-de8de86b5dae
 ```
 
 ### 4. **Verify robots.txt is Accessible**
 After deployment, check:
-- https://fuminozawa-info.site/robots.txt
+- https://fumi-nozawa.space/robots.txt
 - Should show the new content with sitemap reference
 
 ### 5. **Verify Sitemap is Accessible**
 After deployment, check:
-- https://fuminozawa-info.site/sitemap.xml
-- https://fuminozawa-info.site/sitemap-0.xml
+- https://fumi-nozawa.space/sitemap.xml
+- https://fumi-nozawa.space/sitemap-0.xml
 - Should list all blog posts with proper dates
 
 ### 6. **Test Structured Data**
@@ -175,16 +175,16 @@ After deployment, verify:
 
 ```bash
 # Check if pages are being served as static
-curl -I https://fuminozawa-info.site/blog
+curl -I https://fumi-nozawa.space/blog
 
 # Verify sitemap
-curl https://fuminozawa-info.site/sitemap.xml
+curl https://fumi-nozawa.space/sitemap.xml
 
 # Verify robots.txt
-curl https://fuminozawa-info.site/robots.txt
+curl https://fumi-nozawa.space/robots.txt
 
 # Check for JSON-LD (should see application/ld+json)
-curl https://fuminozawa-info.site/blog/2357cfa6-7265-80af-8915-cc2b7721e70e | grep -A 20 "application/ld+json"
+curl https://fumi-nozawa.space/blog/2357cfa6-7265-80af-8915-cc2b7721e70e | grep -A 20 "application/ld+json"
 ```
 
 ---

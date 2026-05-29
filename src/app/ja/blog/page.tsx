@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: 'ブログ - デジタルマーケティングとWeb開発のナレッジ | Fumi Nozawa (野澤眞史)',
         description: 'Web開発・戦略の視点から、UX、エンジニアリング、生成AI、SEO、SNS、マーケティングの最新トレンドまで。テクノロジーとデジタル体験の交差点を考察する野澤眞史のブログ。',
-        canonical: 'https://fuminozawa-info.site/ja/blog',
+        canonical: 'https://fumi-nozawa.space/ja/blog',
         locale: 'ja-jp',
         alternateUrls,
     });
@@ -22,14 +22,14 @@ export default async function BlogPageJa() {
     const posts = await getBlogPosts('ja-jp', { excludeAiNews: true });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
-        { name: "ブログ", item: "https://fuminozawa-info.site/ja/blog" }
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" },
+        { name: "ブログ", item: "https://fumi-nozawa.space/ja/blog" }
     ]);
 
     const collectionJsonLd = generateCollectionJSONLD({
         name: "野澤眞史 ジャーナル",
         description: "テクノロジー、デジタル体験、AI、SEOに関する野澤眞史によるインサイト。",
-        url: "https://fuminozawa-info.site/ja/blog",
+        url: "https://fumi-nozawa.space/ja/blog",
         locale: "ja-jp"
     });
 

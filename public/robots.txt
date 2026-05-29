@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://fuminozawa-info.site
+Host: https://fumi-nozawa.space
 
 # Sitemaps
-Sitemap: https://fuminozawa-info.site/sitemap.xml
+Sitemap: https://fumi-nozawa.space/sitemap.xml

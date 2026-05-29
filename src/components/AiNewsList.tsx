@@ -123,8 +123,8 @@ export default function AiNewsList({ posts, locale }: AiNewsListProps) {
                                 <a
                                     key={category}
                                     href={category === 'All' || category === 'すべて'
-                                        ? (locale === 'ja' ? 'https://fuminozawa-info.site/ja/blog' : 'https://fuminozawa-info.site/blog')
-                                        : (locale === 'ja' ? `https://fuminozawa-info.site/ja/blog?category=${category}` : `https://fuminozawa-info.site/blog?category=${category}`)
+                                        ? (locale === 'ja' ? 'https://fumi-nozawa.space/ja/blog' : 'https://fumi-nozawa.space/blog')
+                                        : (locale === 'ja' ? `https://fumi-nozawa.space/ja/blog?category=${category}` : `https://fumi-nozawa.space/blog?category=${category}`)
                                     }
                                     className="px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap text-gray-500 hover:text-gray-900 hover:bg-gray-50"
                                 >

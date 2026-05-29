@@ -97,12 +97,12 @@ Other browsers → /blog → stays on → /blog
 ## 📊 URL Structure
 
 ### English
-- Blog listing: `https://fuminozawa-info.site/blog`
-- Blog post: `https://fuminozawa-info.site/blog/my-post-slug`
+- Blog listing: `https://fumi-nozawa.space/blog`
+- Blog post: `https://fumi-nozawa.space/blog/my-post-slug`
 
 ### Japanese
-- Blog listing: `https://fuminozawa-info.site/ja/blog`
-- Blog post: `https://fuminozawa-info.site/ja/blog/my-post-slug`
+- Blog listing: `https://fumi-nozawa.space/ja/blog`
+- Blog post: `https://fumi-nozawa.space/ja/blog/my-post-slug`
 
 ## 🎨 Design Highlights
 

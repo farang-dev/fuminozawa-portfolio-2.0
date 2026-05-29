@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: 'AI News - Latest AI & Generative AI Trends | Fumi Nozawa',
         description: 'A curated feed of the most impactful AI breakthroughs, LLM evolutions, and generative AI strategies. Stay ahead of the curve with insights for marketers and builders.',
-        canonical: 'https://ai.fuminozawa-info.site',
+        canonical: 'https://ai.fumi-nozawa.space',
         locale: 'en-us',
         alternateUrls,
     });
@@ -22,14 +22,14 @@ export default async function AiNewsPage() {
     const posts = await getAiNewsPosts('en-us');
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "Home", item: "https://fuminozawa-info.site" },
-        { name: "AI News", item: "https://ai.fuminozawa-info.site" }
+        { name: "Home", item: "https://fumi-nozawa.space" },
+        { name: "AI News", item: "https://ai.fumi-nozawa.space" }
     ]);
 
     const collectionJsonLd = generateCollectionJSONLD({
         name: "AI News | Fumi Nozawa",
         description: "A curated feed of the most impactful AI breakthroughs, LLM evolutions, and generative AI strategies.",
-        url: "https://ai.fuminozawa-info.site",
+        url: "https://ai.fumi-nozawa.space",
         locale: "en-us"
     });
 
@@ -49,7 +49,7 @@ export default async function AiNewsPage() {
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                     <div>
                         <a
-                            href="https://fuminozawa-info.site/blog"
+                            href="https://fumi-nozawa.space/blog"
                             className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all font-bold group mb-6"
                         >
                             <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span>

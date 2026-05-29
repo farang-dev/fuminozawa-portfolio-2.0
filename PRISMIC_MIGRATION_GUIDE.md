@@ -139,22 +139,22 @@ export default async function sitemap() {
 
   const blogUrls = [
     ...enPosts.map(post => ({
-      url: `https://fuminozawa-info.site/blog/${post.slug}`,
+      url: `https://fumi-nozawa.space/blog/${post.slug}`,
       lastModified: post.updatedDate || post.publishedDate,
       alternates: {
         languages: {
-          en: `https://fuminozawa-info.site/blog/${post.slug}`,
-          ja: `https://fuminozawa-info.site/ja/blog/${post.slug}`,
+          en: `https://fumi-nozawa.space/blog/${post.slug}`,
+          ja: `https://fumi-nozawa.space/ja/blog/${post.slug}`,
         },
       },
     })),
     ...jaPosts.map(post => ({
-      url: `https://fuminozawa-info.site/ja/blog/${post.slug}`,
+      url: `https://fumi-nozawa.space/ja/blog/${post.slug}`,
       lastModified: post.updatedDate || post.publishedDate,
       alternates: {
         languages: {
-          en: `https://fuminozawa-info.site/blog/${post.slug}`,
-          ja: `https://fuminozawa-info.site/ja/blog/${post.slug}`,
+          en: `https://fumi-nozawa.space/blog/${post.slug}`,
+          ja: `https://fumi-nozawa.space/ja/blog/${post.slug}`,
         },
       },
     })),

@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "ブログ・考察 | 野澤眞史",
         description: "Web開発・戦略の視点から、Web体験、エンジニアリング、生成AI、SEO/GEO、SNS、マーケティングの最新トレンドまで、テクノロジーとデジタル体験の交差点を考察。",
-        canonical: 'https://fuminozawa-info.site/ja/writing',
+        canonical: 'https://fumi-nozawa.space/ja/writing',
         locale: 'ja-jp',
         alternateUrls,
     });
@@ -24,8 +24,8 @@ export default async function WritingPageJa() {
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
-        { name: "考察ブログ", item: "https://fuminozawa-info.site/ja/writing" }
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" },
+        { name: "考察ブログ", item: "https://fumi-nozawa.space/ja/writing" }
     ]);
 
     return (

@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return generateSEOMetadata({
     title: 'Blog - Digital Marketing & Web Engineering Insights | Fumi Nozawa',
     description: 'Insights into the intersection of technology and digital experience—from development and strategy to AI, SEO, and marketing trends. Fumi Nozawa\'s official blog.',
-    canonical: 'https://fuminozawa-info.site/blog',
+    canonical: 'https://fumi-nozawa.space/blog',
     locale: 'en-us',
     alternateUrls,
   });
@@ -22,14 +22,14 @@ export default async function BlogPage() {
   const posts = await getBlogPosts('en-us', { excludeAiNews: true });
 
   const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-    { name: "Home", item: "https://fuminozawa-info.site" },
-    { name: "Blog", item: "https://fuminozawa-info.site/blog" }
+    { name: "Home", item: "https://fumi-nozawa.space" },
+    { name: "Blog", item: "https://fumi-nozawa.space/blog" }
   ]);
 
   const collectionJsonLd = generateCollectionJSONLD({
     name: "Fumi Nozawa Journal",
     description: "Insights into technology, digital experience, AI, and SEO by Fumi Nozawa.",
-    url: "https://fuminozawa-info.site/blog",
+    url: "https://fumi-nozawa.space/blog",
     locale: "en-us"
   });
 

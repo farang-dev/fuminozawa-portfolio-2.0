@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "Fumi Nozawa (野澤眞史) | フリーランス デジタルマーケター & Webエンジニア",
         description: "日本とグローバル市場の架け橋となるフリーランスのデジタルマーケター兼Webエンジニア。日本市場参入・海外展開戦略から、Web開発・AI活用まで一気通貫で支援します。",
-        canonical: 'https://fuminozawa-info.site/ja',
+        canonical: 'https://fumi-nozawa.space/ja',
         locale: 'ja-jp',
         alternateUrls,
     });
@@ -45,7 +45,7 @@ export default async function HomeJa() {
         }
     ]);
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" }
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" }
     ]);
 
     return (

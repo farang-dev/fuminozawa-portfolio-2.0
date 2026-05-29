@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "Works | Fumi Nozawa",
         description: "Explore the portfolio of Fumi Nozawa, featuring web development projects, digital marketing campaigns, and creative direction.",
-        canonical: 'https://fuminozawa-info.site/works',
+        canonical: 'https://fumi-nozawa.space/works',
         locale: 'en-us',
         alternateUrls,
     });
@@ -26,13 +26,13 @@ export default async function WorksPage() {
     const collectionJsonLd = generateCollectionJSONLD({
         name: 'Works Portfolio | Fumi Nozawa',
         description: 'Explore web development projects, digital marketing campaigns, and creative direction by Fumi Nozawa.',
-        url: 'https://fuminozawa-info.site/works',
+        url: 'https://fumi-nozawa.space/works',
         locale: 'en-us'
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "Home", item: "https://fuminozawa-info.site" },
-        { name: "Works", item: "https://fuminozawa-info.site/works" }
+        { name: "Home", item: "https://fumi-nozawa.space" },
+        { name: "Works", item: "https://fumi-nozawa.space/works" }
     ]);
 
     return (

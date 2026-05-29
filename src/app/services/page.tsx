@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "Services | Fumi Nozawa | Digital Marketer & Web Engineer",
         description: "Expert digital marketing services specializing in SEO, GEO, AI automation, and Japan market entry strategy.",
-        canonical: 'https://fuminozawa-info.site/services',
+        canonical: 'https://fumi-nozawa.space/services',
         locale: 'en-us',
         alternateUrls,
     });
@@ -28,8 +28,8 @@ export default async function ServicesPage() {
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "Home", item: "https://fuminozawa-info.site" },
-        { name: "Services", item: "https://fuminozawa-info.site/services" }
+        { name: "Home", item: "https://fumi-nozawa.space" },
+        { name: "Services", item: "https://fumi-nozawa.space/services" }
     ]);
 
     const faqJsonLd = generateFAQJSONLD([

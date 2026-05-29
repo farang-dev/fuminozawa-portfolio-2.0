@@ -5,10 +5,10 @@ import { headers } from 'next/headers';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const headersList = await headers();
-  const host = headersList.get('host') || 'fuminozawa-info.site';
+  const host = headersList.get('host') || 'fumi-nozawa.space';
 
   const isAiDomain = host === AI_NEWS_DOMAIN || host.startsWith('ai.');
-  const baseUrl = isAiDomain ? `https://${AI_NEWS_DOMAIN}` : 'https://fuminozawa-info.site';
+  const baseUrl = isAiDomain ? `https://${AI_NEWS_DOMAIN}` : 'https://fumi-nozawa.space';
 
   // Fetch all posts from both locales
   const [enPosts, jaPosts] = await Promise.all([

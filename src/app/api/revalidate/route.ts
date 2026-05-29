@@ -5,7 +5,7 @@ import { createClient } from '@/../prismicio';
 
 export const dynamic = 'force-dynamic';
 
-const SITE_URL = 'https://fuminozawa-info.site'; // Replace with your actual production URL
+const SITE_URL = 'https://fumi-nozawa.space'; // Replace with your actual production URL
 
 /**
  * Prismic Webhook handler for cache revalidation and Google Indexing notification.

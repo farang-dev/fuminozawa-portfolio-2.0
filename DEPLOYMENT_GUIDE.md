@@ -69,7 +69,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Crawl-delay: 0
-Sitemap: https://fuminozawa-info.site/sitemap.xml
+Sitemap: https://fumi-nozawa.space/sitemap.xml
 ```
 
 ### ✅ Semantic HTML
@@ -125,18 +125,18 @@ After deployment completes, run:
 ```
 
 Or manually check:
-- ✅ https://fuminozawa-info.site/robots.txt
-- ✅ https://fuminozawa-info.site/sitemap.xml
-- ✅ https://fuminozawa-info.site/blog
-- ✅ https://fuminozawa-info.site/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
+- ✅ https://fumi-nozawa.space/robots.txt
+- ✅ https://fumi-nozawa.space/sitemap.xml
+- ✅ https://fumi-nozawa.space/blog
+- ✅ https://fumi-nozawa.space/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
 
 ### 3. Google Search Console Actions
 
 #### A. Submit Sitemap
 1. Go to: https://search.google.com/search-console
-2. Select property: `fuminozawa-info.site`
+2. Select property: `fumi-nozawa.space`
 3. Navigate to: **Sitemaps**
-4. Add new sitemap: `https://fuminozawa-info.site/sitemap.xml`
+4. Add new sitemap: `https://fumi-nozawa.space/sitemap.xml`
 5. Click **Submit**
 
 #### B. Request Indexing (Priority URLs)
@@ -144,21 +144,21 @@ Use URL Inspection tool for these URLs:
 
 **Main Pages:**
 ```
-https://fuminozawa-info.site/blog
+https://fumi-nozawa.space/blog
 ```
 
 **All Blog Posts:**
 ```
-https://fuminozawa-info.site/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
-https://fuminozawa-info.site/blog/2367cfa6-7265-813b-9ef1-de0ab34b0c23
-https://fuminozawa-info.site/blog/2367cfa6-7265-81d1-8d80-dd68418f5236
-https://fuminozawa-info.site/blog/2367cfa6-7265-81d9-b2b2-c68f3d763ae8
-https://fuminozawa-info.site/blog/2877cfa6-7265-8087-b027-f6079c2140df
-https://fuminozawa-info.site/blog/2887cfa6-7265-80f1-89b4-e47e9a7ff714
-https://fuminozawa-info.site/blog/2967cfa6-7265-8015-aac4-cf2e55f52ac2
-https://fuminozawa-info.site/blog/2967cfa6-7265-808f-8547-ed0b82d7d06b
-https://fuminozawa-info.site/blog/2967cfa6-7265-809d-8022-d7f76dc0218e
-https://fuminozawa-info.site/blog/2987cfa6-7265-8064-8879-de8de86b5dae
+https://fumi-nozawa.space/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
+https://fumi-nozawa.space/blog/2367cfa6-7265-813b-9ef1-de0ab34b0c23
+https://fumi-nozawa.space/blog/2367cfa6-7265-81d1-8d80-dd68418f5236
+https://fumi-nozawa.space/blog/2367cfa6-7265-81d9-b2b2-c68f3d763ae8
+https://fumi-nozawa.space/blog/2877cfa6-7265-8087-b027-f6079c2140df
+https://fumi-nozawa.space/blog/2887cfa6-7265-80f1-89b4-e47e9a7ff714
+https://fumi-nozawa.space/blog/2967cfa6-7265-8015-aac4-cf2e55f52ac2
+https://fumi-nozawa.space/blog/2967cfa6-7265-808f-8547-ed0b82d7d06b
+https://fumi-nozawa.space/blog/2967cfa6-7265-809d-8022-d7f76dc0218e
+https://fumi-nozawa.space/blog/2987cfa6-7265-8064-8879-de8de86b5dae
 ```
 
 For each URL:
@@ -206,10 +206,10 @@ Check these reports daily:
 ### Manual Checks
 ```bash
 # Check if indexed (after 7 days)
-site:fuminozawa-info.site/blog
+site:fumi-nozawa.space/blog
 
 # Check specific post
-site:fuminozawa-info.site/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
+site:fumi-nozawa.space/blog/2357cfa6-7265-80af-8915-cc2b7721e70e
 ```
 
 ---

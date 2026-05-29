@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: "提供サービス | 野澤眞史 | デジタルマーケター & Webエンジニア",
         description: "SEO、生成AI活用、マーケティングオートメーション、日本市場参入支援など、テクノロジーを活用したデジタルマーケティングの実務を提供します。",
-        canonical: 'https://fuminozawa-info.site/ja/services',
+        canonical: 'https://fumi-nozawa.space/ja/services',
         locale: 'ja-jp',
         alternateUrls,
     });
@@ -28,8 +28,8 @@ export default async function ServicesPageJa() {
     });
 
     const breadcrumbJsonLd = generateBreadcrumbJSONLD([
-        { name: "ホーム", item: "https://fuminozawa-info.site/ja" },
-        { name: "サービス", item: "https://fuminozawa-info.site/ja/services" }
+        { name: "ホーム", item: "https://fumi-nozawa.space/ja" },
+        { name: "サービス", item: "https://fumi-nozawa.space/ja/services" }
     ]);
 
     const faqJsonLd = generateFAQJSONLD([

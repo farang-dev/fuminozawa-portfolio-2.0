@@ -28,11 +28,11 @@ function LanguageSwitcherInner({
         // Determine the base URL. If we're on the AI subdomain, we usually stay there
         // unless we're navigating to a non-AI path.
         const isCurrentAiSubdomain = typeof window !== 'undefined' &&
-            (window.location.hostname === 'ai.fuminozawa-info.site' || window.location.hostname.startsWith('ai.'));
+            (window.location.hostname === 'ai.fumi-nozawa.space' || window.location.hostname.startsWith('ai.'));
 
         let targetHost = '';
         if (isCurrentAiSubdomain) {
-            targetHost = 'https://ai.fuminozawa-info.site';
+            targetHost = 'https://ai.fumi-nozawa.space';
         }
 
         // Normalize the path without locale

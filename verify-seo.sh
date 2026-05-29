@@ -7,7 +7,7 @@ echo "🔍 SEO Verification Checklist"
 echo "=============================="
 echo ""
 
-SITE_URL="https://fuminozawa-info.site"
+SITE_URL="https://fumi-nozawa.space"
 
 echo "1. Checking robots.txt..."
 curl -s "$SITE_URL/robots.txt" | head -20
