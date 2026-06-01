@@ -67,6 +67,32 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'fuminozawa-info.site',
+          },
+        ],
+        destination: 'https://fumi-nozawa.space/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.fuminozawa-info.site',
+          },
+        ],
+        destination: 'https://fumi-nozawa.space/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
