@@ -44,7 +44,7 @@ export default function RootLayout({
           `}
         </Script>
         <Script
-          src="/api/embed/bd504fa2-b279-4a3c-805a-e1c8ac0d742c.js"
+          src="https://chat-pi-ivory-40.vercel.app/api/embed/6c6a027d-76dc-496a-a2d7-8005ea99a800.js"
           strategy="afterInteractive"
         />
       </head>
