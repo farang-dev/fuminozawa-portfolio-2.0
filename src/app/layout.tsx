@@ -43,6 +43,10 @@ export default function RootLayout({
             gtag('config', 'G-QDXNCB397Q');
           `}
         </Script>
+        <Script
+          src="/api/embed/bd504fa2-b279-4a3c-805a-e1c8ac0d742c.js"
+          strategy="afterInteractive"
+        />
       </head>
       <body suppressHydrationWarning className="antialiased">
         <ClientBody>{children}</ClientBody>
