@@ -53,14 +53,14 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
    NOTION_DATABASE_ID=your_notion_database_id
    ```
 
-4. **Configure Instagram API** (Optional)
-   
-   Update the access token in `/src/app/api/instagram/route.ts`:
-   ```typescript
-   const accessToken = 'YOUR_INSTAGRAM_ACCESS_TOKEN';
-   ```
-   
-   See [Instagram Setup Guide](#instagram-setup) below for detailed instructions.
+ 4. **Configure Instagram API** (Optional)
+    
+    Add your Instagram access token to `.env.local`:
+    ```env
+    INSTAGRAM_ACCESS_TOKEN=your_long_lived_token
+    ```
+    
+    See [Instagram Setup Guide](#instagram-setup) below for detailed instructions.
 
 5. **Run the development server**
    ```bash
@@ -135,10 +135,16 @@ curl -i -X GET "https://graph.facebook.com/v18.0/oauth/access_token?grant_type=f
 
 ### Step 5: Update the Code
 
-Replace the token in `/src/app/api/instagram/route.ts`:
-```typescript
-const accessToken = 'YOUR_LONG_LIVED_TOKEN';
+Add the token to `.env.local`:
+```env
+INSTAGRAM_ACCESS_TOKEN=YOUR_LONG_LIVED_TOKEN
 ```
+
+### Token Auto-Refresh
+
+The token has a 60-day validity period. The `/api/instagram` endpoint automatically calls Instagram's `refresh_access_token` endpoint on each request to extend the token's life by another 60 days (as long as the token is still valid).
+
+To keep the token alive even without visitor traffic, the [scheduled GitHub Action](.github/workflows/scheduled-deploy.yml) hits `/api/instagram` daily, which refreshes the token automatically.
 
 ## 📚 Blog Setup (Notion)
 

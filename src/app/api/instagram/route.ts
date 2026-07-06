@@ -19,12 +19,27 @@ interface InstagramResponse {
   };
 }
 
-const ACCESS_TOKEN = 'IGAAPjGZANahIxBZAGFfNnA5UndXRDdXZAU41MXdaeDRjT1Vac3pzNk1hMXA0NFlxNmNTS1FjMGZAMV1lsYzNYN2x1LTQ1bFRFdkRfWlRob0ZAMOFhBSzBPTThUS2tfbXEwRmpxRndOdkFOYk1jZAk5WQ0E5elFkUDVJSVhITW41dy1VYwZDZD';
 const FIELDS = 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp';
 
-async function fetchCarouselChildren(albumId: string): Promise<InstagramChildMedia[]> {
+async function refreshAccessToken(token: string): Promise<string | null> {
   try {
-    const url = `https://graph.instagram.com/${albumId}/children?fields=id,media_url,media_type&access_token=${ACCESS_TOKEN}`;
+    const url = `https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.warn(`Token refresh failed: ${res.status}`);
+      return null;
+    }
+    const data = await res.json();
+    return data.access_token ?? null;
+  } catch (err) {
+    console.warn('Token refresh error:', err);
+    return null;
+  }
+}
+
+async function fetchCarouselChildren(albumId: string, accessToken: string): Promise<InstagramChildMedia[]> {
+  try {
+    const url = `https://graph.instagram.com/${albumId}/children?fields=id,media_url,media_type&access_token=${accessToken}`;
     const res = await fetch(url);
     if (!res.ok) return [];
     const data = await res.json();
@@ -36,9 +51,18 @@ async function fetchCarouselChildren(albumId: string): Promise<InstagramChildMed
 
 export async function GET() {
   try {
+    const baseToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+    if (!baseToken) {
+      return NextResponse.json({ error: 'Instagram access token not configured' }, { status: 500 });
+    }
+
+    // トークンをリフレッシュして寿命を延ばす（有効期限内なら＋60日）
+    const refreshedToken = await refreshAccessToken(baseToken);
+    const accessToken = refreshedToken ?? baseToken;
+
     // Fetch all posts with pagination (up to 5 pages × 100)
     let allMedia: RawInstagramMedia[] = [];
-    let nextUrl: string = `https://graph.instagram.com/me/media?fields=${FIELDS}&limit=100&access_token=${ACCESS_TOKEN}`;
+    let nextUrl: string = `https://graph.instagram.com/me/media?fields=${FIELDS}&limit=100&access_token=${accessToken}`;
     let pageCount = 0;
 
     while (nextUrl && pageCount < 5) {
@@ -46,7 +70,6 @@ export async function GET() {
       if (!res.ok) throw new Error(`Instagram API error: ${res.status}`);
       const data: InstagramResponse = await res.json();
 
-      // Keep images and carousels only
       const filtered = data.data.filter(
         (item) => item.media_type === 'IMAGE' || item.media_type === 'CAROUSEL_ALBUM'
       );
@@ -56,11 +79,10 @@ export async function GET() {
       pageCount++;
     }
 
-    // Fetch children for all carousel albums in parallel
     const enriched: InstagramMedia[] = await Promise.all(
       allMedia.map(async (item): Promise<InstagramMedia> => {
         if (item.media_type === 'CAROUSEL_ALBUM') {
-          const children = await fetchCarouselChildren(item.id);
+          const children = await fetchCarouselChildren(item.id, accessToken);
           return {
             ...item,
             caption: item.caption ?? '',

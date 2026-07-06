@@ -2,14 +2,22 @@ name: Scheduled Deployment
 
 on:
   schedule:
-    # 毎日午前3時（UTC）に実行 - 日本時間だと正午頃
+    # 毎日午前3時（UTC）に実行
     - cron: '0 3 * * *'
   
-  # 手動でワークフローを実行できるようにする
   workflow_dispatch:
 
 jobs:
-  deploy:
+  refresh-instagram-token:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instagram Token Refresh
+        run: |
+          # ギャラリーページにアクセス → APIが起動されトークンがリフレッシュされる
+          curl -s -o /dev/null -w "%{http_code}" "https://www.fuminozawa.com/api/instagram"
+
+  trigger-deploy:
+    needs: refresh-instagram-token
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Vercel Deployment
