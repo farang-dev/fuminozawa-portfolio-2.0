@@ -29,6 +29,9 @@ export default async function GalleryPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
+            <p className="text-center text-sm text-[rgba(0,0,0,0.6)] dark:text-[rgba(255,255,255,0.6)] max-w-2xl mx-auto px-4 mb-8">
+                Fumi Nozawa is a part-time fashion photographer who supports local artists and takes photos of people he meets. Aside from taking photos as a photographer, he has experience directing photoshoots.
+            </p>
             <GalleryClient locale="ja" />
         </>
     );
