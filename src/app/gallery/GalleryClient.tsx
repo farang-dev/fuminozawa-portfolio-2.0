@@ -189,7 +189,7 @@ const CarouselModal = ({ item, onClose }: { item: InstagramMedia; onClose: () =>
 };
 
 // ---------- Main Gallery ----------
-export default function GalleryClient({ locale = 'en' }: { locale?: 'en' | 'ja' }) {
+export default function GalleryClient({ locale = 'en', description }: { locale?: 'en' | 'ja'; description?: string }) {
     const [media, setMedia] = useState<InstagramMedia[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -248,7 +248,13 @@ export default function GalleryClient({ locale = 'en' }: { locale?: 'en' | 'ja' 
                 {media.length === 0 ? (
                     <div className="flex items-center justify-center h-screen" />
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
+                    <>
+                        {description && (
+                            <p className="text-center text-sm text-white/60 max-w-2xl mx-auto mb-8 px-2">
+                                {description}
+                            </p>
+                        )}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
                         {media.slice(0, visibleCount).map((item, index) => (
                             <div key={item.id} className="group relative overflow-hidden h-full">
                                 <LazyImage
@@ -269,6 +275,7 @@ export default function GalleryClient({ locale = 'en' }: { locale?: 'en' | 'ja' 
                             </div>
                         )}
                     </div>
+                    </>
                 )}
             </div>
 

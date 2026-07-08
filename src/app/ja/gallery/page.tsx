@@ -29,12 +29,7 @@ export default async function GalleryPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
-            <div className="bg-black px-4 sm:px-6 lg:px-8 pt-20 pb-4">
-                <p className="text-center text-sm text-white/60 max-w-2xl mx-auto">
-                    Fumi Nozawaは、ファッションフォトグラファーとして活動しながら、地元のアーティストを支援し、出会った人々のポートレートを撮影しています。フォトグラファーとしての撮影に加え、フォトシュートのディレクション経験も有しています。
-                </p>
-            </div>
-            <GalleryClient locale="ja" />
+            <GalleryClient locale="ja" description="Fumi Nozawaは、ファッションフォトグラファーとして活動する傍ら、地元のアーティストの支援や、出会う人々のポートレート撮影を行っています。撮影のみならず、ビジュアルディレクションにも携わり、企画から仕上げまで一貫したクリエイティブワークを手がけています。" />
         </>
     );
 }
