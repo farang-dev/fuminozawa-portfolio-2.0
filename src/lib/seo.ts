@@ -106,6 +106,7 @@ export function generateSEOMetadata({
                 'max-snippet': -1,
             },
         },
+        keywords: ['Fumi Nozawa', 'Masafumi Nozawa', '野澤眞史', 'Digital Marketer', 'Web Developer', 'Japan', ...(tags || [])],
         verification: {
             // Property already verified in Search Console
         },
@@ -335,7 +336,8 @@ export function generateGalleryJSONLD({
         url: isEn ? 'https://fumi-nozawa.space/gallery' : 'https://fumi-nozawa.space/ja/gallery',
         author: {
             '@type': 'Person',
-            name: 'Fumi Nozawa'
+            name: 'Fumi Nozawa',
+            alternateName: 'Masafumi Nozawa'
         }
     };
 }
@@ -359,6 +361,11 @@ export function generateCollectionJSONLD({
         description,
         url,
         inLanguage,
+        author: {
+            '@type': 'Person',
+            name: 'Fumi Nozawa',
+            alternateName: 'Masafumi Nozawa'
+        },
         mainEntity: {
             '@type': 'ItemList',
             'itemListElement': []
