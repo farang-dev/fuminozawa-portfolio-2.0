@@ -33,6 +33,12 @@ export function generateSEOMetadata({
     const baseUrl = 'https://fumi-nozawa.space';
     const aiBaseUrl = 'https://ai.fumi-nozawa.space';
 
+    // Ensure Masafumi Nozawa is always present in the title for SEO
+    const ensureFullName = (t: string) => {
+        if (t.includes('Masafumi Nozawa') || t.includes('野澤眞史')) return t;
+        return `${t} | Masafumi Nozawa`;
+    };
+
     // Logic to determine if this is an AI News related content
     const isAiNewsContent = tags?.some(t => ['AI News', 'AIニュース'].includes(t)) ||
         (canonical && (canonical.includes('ai-news') || canonical.includes('ai.')));
@@ -52,7 +58,7 @@ export function generateSEOMetadata({
         : (isAiNewsContent ? 'AIニュース | 野澤眞史' : '野澤眞史 | デジタルマーケター & Webエンジニア');
 
     return {
-        title,
+        title: ensureFullName(title),
         description,
         authors: [{ name: author }, { name: 'Masafumi Nozawa' }],
         creator: author,
@@ -120,7 +126,7 @@ export function generateArticleJSONLD({
     datePublished,
     dateModified,
     image,
-    author = 'Fumi Nozawa',
+    author = 'Masafumi Nozawa',
     authorUrl = 'https://fumi-nozawa.space',
     locale = 'en-us',
     tags = [],

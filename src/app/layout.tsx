@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fumi Nozawa - Portfolio",
-  description: "Software Engineer specializing in Next.js and TypeScript",
+  title: "Masafumi Nozawa (Fumi Nozawa) | Digital Marketer & Developer",
+  description: "Portfolio of Masafumi Nozawa (Fumi Nozawa) - Freelance Digital Marketer & Web Engineer specializing in SEO, GEO, Japan Market Entry, and AI-driven growth strategies.",
   icons: {
     icon: "/favicon.svg",
   },

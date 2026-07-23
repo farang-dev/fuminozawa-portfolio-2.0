@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return generateSEOMetadata({
         title: 'AI News - Latest AI & Generative AI Trends | Fumi Nozawa',
         description: 'A curated feed of the most impactful AI breakthroughs, LLM evolutions, and generative AI strategies. Stay ahead of the curve with insights for marketers and builders.',
-        canonical: 'https://ai.fumi-nozawa.space',
+        canonical: 'https://fumi-nozawa.space/blog/ai-news',
         locale: 'en-us',
         alternateUrls,
     });

@@ -13,6 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
         canonical: 'https://fumi-nozawa.space/writing',
         locale: 'en-us',
         alternateUrls,
+        noindex: true,
     });
 }
 
