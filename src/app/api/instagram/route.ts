@@ -62,7 +62,7 @@ export async function GET() {
 
     // Fetch all posts with pagination (up to 5 pages × 100)
     let allMedia: RawInstagramMedia[] = [];
-    let nextUrl: string = `https://graph.instagram.com/me/media?fields=${FIELDS}&limit=100&access_token=${accessToken}`;
+    let nextUrl = `https://graph.instagram.com/me/media?fields=${FIELDS}&limit=100&access_token=${accessToken}`;
     let pageCount = 0;
 
     while (nextUrl && pageCount < 5) {

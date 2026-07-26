@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getWorks } from '@/lib/prismic-works';
-import { LocaleCode } from '@/lib/locales';
+import type { LocaleCode } from '@/lib/locales';
 
 export async function GET(request: Request) {
     try {

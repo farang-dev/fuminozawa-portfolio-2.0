@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
         }
 
         // 1. Revalidate data cache via tags
-        // @ts-ignore
         revalidateTag('prismic', 'max');
         console.log(`[Revalidate] [${timestamp}] Tag "prismic" invalidated.`);
 
@@ -36,7 +35,7 @@ export async function POST(request: NextRequest) {
         console.log(`[Revalidate] [${timestamp}] Paths revalidated (blog listing and full layout).`);
 
         // 3. Google Indexing API Notification
-        let urlsToIndex: string[] = [
+        const urlsToIndex: string[] = [
             `${SITE_URL}/blog`,
             `${SITE_URL}/ja/blog`,
             `${SITE_URL}/`,

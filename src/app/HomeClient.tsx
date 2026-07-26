@@ -187,7 +187,7 @@ export default function Home({
       subtitle:
         "伝わる体験をつくる。Web改修・UX改善・PMとしての実装を一貫して担当。",
       description:
-        "Webは装飾ではなく「伝わり方」で決まる。私はデータとユーザー理解を起点に、要件定義からUX再設計、実装のPMまで一気通貫で引き受けます。短期間の工数でも優先度を正しく決め、成果に直結する改善を実行します。",
+        "Web、結局は見た目じゃなくて"伝わるかどうか"で決まる。データとユーザー理解を起点に、要件定義からUX再設計、実装のPMまで一気通貫で引き受けます。短期間の工数でも優先度を正しく決め、成果に直結する改善を実行します。",
       deliverables: [
         "データ分析とUX分析（行動／理解負荷）",
         "課題抽出・要件定義（Diagnosis）",
@@ -200,7 +200,7 @@ export default function Home({
     },
     {
       id: "nextgen-performance",
-      title: "NextGen Performance",
+      title: "Organic & Paid Growth",
       subtitle:
         "生成AI時代に適応した、成果が出続けるパフォーマンス設計。GEO／SEO／広告／コンテンツを統合。",
       description:
@@ -217,7 +217,7 @@ export default function Home({
     },
     {
       id: "japan-market-entry",
-      title: "Japan Market Entry (GTM)",
+      title: "Japan Market Entry",
       subtitle:
         "深い文化理解とローカルUX／マーケティングの実務で、日本における現地化と勝ち筋を作ります。",
       description:
@@ -272,7 +272,7 @@ export default function Home({
     },
     {
       id: "nextgen-performance",
-      title: "NextGen Performance",
+      title: "Organic & Paid Growth",
       subtitle:
         "Performance design adapted for the generative AI era. Integrating GEO / SEO / advertising / content for sustained results.",
       description:
@@ -289,7 +289,7 @@ export default function Home({
     },
     {
       id: "japan-market-entry",
-      title: "Japan Market Entry (GTM)",
+      title: "Japan Market Entry",
       subtitle:
         "Helping global brands win in Japan. Deep cultural understanding and local UX/marketing execution to create localization strategies and winning approaches.",
       description:
@@ -805,7 +805,7 @@ export default function Home({
                   <>
                     <li className="chip">Full-stack Marketer</li>
                     <li className="chip">Web Dev & UI/UX</li>
-                    <li className="chip">Japan Market Entry (GTM)</li>
+                    <li className="chip">Japan Market Entry</li>
                     <li className="chip">Brand Strategy & Identity</li>
                     <li className="chip">SEO・GEO</li>
                     <li className="chip">Paid Media (PPC)</li>

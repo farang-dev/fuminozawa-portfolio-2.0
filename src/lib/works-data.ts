@@ -1,4 +1,4 @@
-import { WorkItem } from "./prismic-works";
+import type { WorkItem } from "./prismic-works";
 
 export const fallbackWorksEn: WorkItem[] = [
     // Strategic Web & Digital Marketing
