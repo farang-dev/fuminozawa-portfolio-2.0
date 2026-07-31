@@ -781,8 +781,8 @@ export default function Home({
                 src="/profile.jpg"
                 alt="fuminozawa Profile"
                 className="profile-image"
-                width="112"
-                height="112"
+                width="100"
+                height="100"
               />
               <div className="avatar-placeholder">
                 <i className="fas fa-user" />
