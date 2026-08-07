@@ -248,7 +248,7 @@ const MarqueeColumn = ({ items, speed, reverse, onClick }: {
 };
 
 // ---------- Main Gallery ----------
-const MARQUEE_SPEEDS = [110, 90, 130];
+const MARQUEE_SPEEDS = [70, 55, 85];
 
 export default function GalleryClient({ locale = 'en', description }: { locale?: 'en' | 'ja'; description?: string }) {
     const [media, setMedia] = useState<InstagramMedia[]>([]);
