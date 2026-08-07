@@ -256,15 +256,17 @@ export default function GalleryClient({ locale = 'en', description }: { locale?:
     const [error, setError] = useState<string | null>(null);
     const [visibleCount, setVisibleCount] = useState(30);
     const [selectedItem, setSelectedItem] = useState<InstagramMedia | null>(null);
-    const [columnCount, setColumnCount] = useState(3);
+    const [isMobile, setIsMobile] = useState(false);
 
-    // Responsive column count: 2 on mobile, 3 on desktop
+    // Mobile: static single-column list. Desktop: animated 3-column marquee.
     useEffect(() => {
-        const update = () => setColumnCount(window.innerWidth < 768 ? 2 : 3);
+        const update = () => setIsMobile(window.innerWidth < 768);
         update();
         window.addEventListener('resize', update);
         return () => window.removeEventListener('resize', update);
     }, []);
+
+    const columnCount = isMobile ? 1 : 3;
 
     // Distribute media evenly into the marquee columns
     const columns = useMemo(() => {
@@ -322,13 +324,24 @@ export default function GalleryClient({ locale = 'en', description }: { locale?:
             </Link>
 
             {description && (
-                <p className="text-center text-sm text-white/60 max-w-2xl mx-auto mb-5 px-2 pt-24 sm:pt-28">
+                <p className="text-center text-sm text-white/60 max-w-2xl mx-auto mb-5 px-20 sm:px-8 pt-8">
                     {description}
                 </p>
             )}
 
             {media.length === 0 ? (
                 <div className="flex-1" />
+            ) : isMobile ? (
+                <div className="flex flex-col gap-3 px-3 pb-6">
+                    {media.slice(0, visibleCount).map((item, i) => (
+                        <LazyImage
+                            key={item.id}
+                            item={item}
+                            index={i}
+                            onClick={() => setSelectedItem(item)}
+                        />
+                    ))}
+                </div>
             ) : (
                 <div className="flex gap-3 sm:gap-4 px-3 sm:px-6 lg:px-8 pb-4 flex-1 min-h-0 overflow-hidden">
                     {columns.map((col, ci) => (
