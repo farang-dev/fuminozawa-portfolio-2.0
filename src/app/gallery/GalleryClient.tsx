@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { type InstagramMedia, getInstagramMedia } from '@/lib/instagram';
@@ -19,7 +19,7 @@ const LazyImage = ({ item, index, onClick }: {
     return (
         <div
             ref={ref}
-            className="relative overflow-hidden bg-gray-900 w-full cursor-pointer"
+            className="group relative overflow-hidden bg-gray-900 w-full shrink-0 cursor-pointer"
             style={{ aspectRatio: '4/5' }}
             onClick={onClick}
         >
@@ -188,23 +188,99 @@ const CarouselModal = ({ item, onClose }: { item: InstagramMedia; onClose: () =>
 
 };
 
+// ---------- Marquee Column (constant pixel speed) ----------
+const MarqueeColumn = ({ items, speed, reverse, onClick }: {
+    items: InstagramMedia[];
+    speed: number;
+    reverse: boolean;
+    onClick: (item: InstagramMedia) => void;
+}) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const offsetRef = useRef(0);
+    const distanceRef = useRef(0);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        // Loop distance = height of one duplicated set (half the content + half the gap)
+        const measure = () => {
+            const gap = Number.parseFloat(getComputedStyle(el).rowGap) || 0;
+            distanceRef.current = (el.scrollHeight + gap) / 2;
+        };
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(el);
+
+        let raf = 0;
+        let last = performance.now();
+        const dir = reverse ? -1 : 1;
+
+        const tick = (now: number) => {
+            const dt = Math.min((now - last) / 1000, 0.05);
+            last = now;
+            if (distanceRef.current > 0) {
+                offsetRef.current = (offsetRef.current + dir * speed * dt) % distanceRef.current;
+                if (offsetRef.current < 0) offsetRef.current += distanceRef.current;
+                el.style.transform = `translate3d(0, ${-offsetRef.current}px, 0)`;
+            }
+            raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+
+        return () => {
+            cancelAnimationFrame(raf);
+            ro.disconnect();
+        };
+    }, [speed, reverse]);
+
+    return (
+        <div ref={ref} className="flex flex-col gap-3 sm:gap-4 will-change-transform">
+            {items.map((item, i) => (
+                <LazyImage key={`a-${item.id}`} item={item} index={i} onClick={() => onClick(item)} />
+            ))}
+            {items.map((item, i) => (
+                <LazyImage key={`b-${item.id}`} item={item} index={i + items.length} onClick={() => onClick(item)} />
+            ))}
+        </div>
+    );
+};
+
 // ---------- Main Gallery ----------
+const MARQUEE_SPEEDS = [110, 90, 130];
+
 export default function GalleryClient({ locale = 'en', description }: { locale?: 'en' | 'ja'; description?: string }) {
     const [media, setMedia] = useState<InstagramMedia[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [visibleCount, setVisibleCount] = useState(30);
     const [selectedItem, setSelectedItem] = useState<InstagramMedia | null>(null);
+    const [columnCount, setColumnCount] = useState(3);
 
-    const loadMoreImages = useCallback(() => {
-        setVisibleCount(prev => Math.min(prev + 20, media.length));
-    }, [media.length]);
-
-    const { ref, inView } = useInView({ threshold: 0, rootMargin: '800px 0px' });
-
+    // Responsive column count: 2 on mobile, 3 on desktop
     useEffect(() => {
-        if (inView) loadMoreImages();
-    }, [inView, loadMoreImages]);
+        const update = () => setColumnCount(window.innerWidth < 768 ? 2 : 3);
+        update();
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
+
+    // Distribute media evenly into the marquee columns
+    const columns = useMemo(() => {
+        const cols: InstagramMedia[][] = Array.from({ length: columnCount }, () => []);
+        media.slice(0, visibleCount).forEach((item, i) => cols[i % columnCount].push(item));
+        return cols;
+    }, [media, visibleCount, columnCount]);
+
+    // Auto-load more images over time (hero fills the viewport, so no scroll trigger)
+    useEffect(() => {
+        if (loading || media.length === 0 || visibleCount >= media.length) return;
+        const id = setInterval(() => {
+            setVisibleCount(prev => Math.min(prev + 20, media.length));
+        }, 2500);
+        return () => clearInterval(id);
+    }, [loading, media.length, visibleCount]);
 
     useEffect(() => {
         getInstagramMedia()
@@ -236,7 +312,8 @@ export default function GalleryClient({ locale = 'en', description }: { locale?:
     }
 
     return (
-        <div className="min-h-screen bg-black py-8 px-4 sm:px-6 lg:px-8">
+        <>
+        <div className="min-h-screen bg-black flex flex-col">
             {/* Back link */}
             <Link href={homeLink} className="fixed top-8 left-8 z-10 p-3 bg-black bg-opacity-70 rounded-full hover:bg-opacity-90 transition-all duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -244,45 +321,35 @@ export default function GalleryClient({ locale = 'en', description }: { locale?:
                 </svg>
             </Link>
 
-            <div className="max-w-full mx-auto">
-                {media.length === 0 ? (
-                    <div className="flex items-center justify-center h-screen" />
-                ) : (
-                    <>
-                        {description && (
-                            <p className="text-center text-sm text-white/60 max-w-2xl mx-auto mb-8 px-2">
-                                {description}
-                            </p>
-                        )}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
-                        {media.slice(0, visibleCount).map((item, index) => (
-                            <div key={item.id} className="group relative overflow-hidden h-full">
-                                <LazyImage
-                                    item={item}
-                                    index={index}
-                                    onClick={() => setSelectedItem(item)}
-                                />
-                            </div>
-                        ))}
+            {description && (
+                <p className="text-center text-sm text-white/60 max-w-2xl mx-auto mb-5 px-2 pt-24 sm:pt-28">
+                    {description}
+                </p>
+            )}
 
-                        {visibleCount < media.length && (
-                            <div ref={ref} className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-center items-center py-12">
-                                <div className="flex flex-col items-center">
-                                    <div className="w-10 h-10 border-3 border-white border-t-transparent rounded-full animate-spin mb-2" />
-                                    <div className="text-white text-sm opacity-80">Loading more images...</div>
-                                    <div className="text-white text-xs opacity-60 mt-1">Showing {visibleCount} of {media.length} images</div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    </>
-                )}
-            </div>
-
-            {/* Modal */}
-            {selectedItem && (
-                <CarouselModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+            {media.length === 0 ? (
+                <div className="flex-1" />
+            ) : (
+                <div className="flex gap-3 sm:gap-4 px-3 sm:px-6 lg:px-8 pb-4 flex-1 min-h-0 overflow-hidden">
+                    {columns.map((col, ci) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: column count is static and never reorders
+                        <div key={ci} className="flex-1 min-w-0 relative overflow-hidden">
+                            <MarqueeColumn
+                                items={col}
+                                speed={MARQUEE_SPEEDS[ci % MARQUEE_SPEEDS.length]}
+                                reverse={ci % 2 === 1}
+                                onClick={setSelectedItem}
+                            />
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
+
+        {/* Modal */}
+        {selectedItem && (
+            <CarouselModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+        )}
+        </>
     );
 }
